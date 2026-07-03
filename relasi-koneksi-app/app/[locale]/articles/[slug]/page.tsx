@@ -57,14 +57,14 @@ export default async function ArticleDetailPage({ params }: Props) {
     <article className="mx-auto max-w-3xl px-4 py-12">
       <header className="animate-slide-up">
         {categoryLabel && (
-          <span className="rounded-full bg-terracotta/10 px-3 py-1 text-xs font-semibold text-terracotta">
+          <span className="rounded-full bg-marigold/20 px-3 py-1 text-xs font-semibold text-forest">
             {categoryLabel}
           </span>
         )}
-        <h1 className="mt-4 text-3xl font-extrabold leading-tight text-jungle sm:text-4xl">
+        <h1 className="mt-4 text-3xl font-extrabold leading-tight text-forest sm:text-4xl">
           {title}
         </h1>
-        <p className="mt-3 text-sm text-volcanic/60">
+        <p className="mt-3 text-sm text-forest/60">
           {t("publishedOn")}{" "}
           <time dateTime={article.publishedAt}>
             {format.dateTime(new Date(article.publishedAt), { dateStyle: "long" })}
@@ -74,7 +74,7 @@ export default async function ArticleDetailPage({ params }: Props) {
       </header>
 
       {showFallbackNote && (
-        <p className="mt-6 rounded-lg bg-jungle/5 px-4 py-3 text-sm text-jungle">
+        <p className="mt-6 rounded-lg bg-tamblingan/10 px-4 py-3 text-sm text-tamblingan">
           {t("indonesianOnly")}
         </p>
       )}

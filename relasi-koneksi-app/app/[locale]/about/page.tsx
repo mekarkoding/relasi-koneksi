@@ -35,25 +35,25 @@ export default async function AboutPage({
       <SectionHeading title={t("title")} subtitle={t("subtitle")} />
 
       <section className="animate-slide-up">
-        <h3 className="text-xl font-bold text-jungle">{t("villageProfileTitle")}</h3>
-        <p className="mt-3 leading-relaxed text-volcanic/80">{t("villageProfileBody")}</p>
+        <h3 className="text-xl font-bold text-forest">{t("villageProfileTitle")}</h3>
+        <p className="mt-3 leading-relaxed text-forest/80">{t("villageProfileBody")}</p>
       </section>
 
       <section className="animate-slide-up mt-10">
-        <h3 className="text-xl font-bold text-jungle">{t("kknTitle")}</h3>
-        <p className="mt-3 leading-relaxed text-volcanic/80">{t("kknBody")}</p>
+        <h3 className="text-xl font-bold text-forest">{t("kknTitle")}</h3>
+        <p className="mt-3 leading-relaxed text-forest/80">{t("kknBody")}</p>
       </section>
 
       <section className="animate-slide-up mt-10 rounded-2xl bg-white p-6 shadow-sm">
-        <h3 className="text-xl font-bold text-jungle">{t("contactTitle")}</h3>
-        <p className="mt-3 text-sm text-volcanic/80">
+        <h3 className="text-xl font-bold text-forest">{t("contactTitle")}</h3>
+        <p className="mt-3 text-sm text-forest/80">
           <span className="font-semibold">{t("addressLabel")}:</span> {tFooter("address")}
         </p>
         <a
           href={MAP_LINK}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-block rounded-xl bg-jungle px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-jungle-light"
+          className="mt-4 inline-block rounded-xl bg-tamblingan px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-tamblingan-light"
         >
           {t("viewMap")} ↗
         </a>

@@ -13,13 +13,13 @@ export function Footer() {
   const tNav = useTranslations("nav");
 
   return (
-    <footer className="mt-16 bg-jungle text-sand">
+    <footer className="mt-16 bg-tamblingan text-mist">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-3">
         <div>
           <p className="text-lg font-extrabold">
-            RELASI<span className="text-terracotta-light">.</span>
+            RELASI<span className="text-marigold">.</span>
           </p>
-          <p className="mt-3 text-sm text-sand/80">{t("address")}</p>
+          <p className="mt-3 text-sm text-mist/80">{t("address")}</p>
         </div>
 
         <div>
@@ -29,7 +29,7 @@ export function Footer() {
               <li key={key}>
                 <Link
                   href={href}
-                  className="text-sand/80 transition-all duration-300 ease-in-out hover:text-white"
+                  className="text-mist/80 transition-all duration-300 ease-in-out hover:text-white"
                 >
                   {tNav(key)}
                 </Link>
@@ -46,7 +46,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sand/80 transition-all duration-300 ease-in-out hover:text-white"
+                className="text-mist/80 transition-all duration-300 ease-in-out hover:text-white"
               >
                 Instagram
               </a>
@@ -56,7 +56,7 @@ export function Footer() {
                 href="https://youtube.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sand/80 transition-all duration-300 ease-in-out hover:text-white"
+                className="text-mist/80 transition-all duration-300 ease-in-out hover:text-white"
               >
                 YouTube
               </a>
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-4 text-center text-xs text-sand/60">
+      <div className="border-t border-white/10 py-4 text-center text-xs text-mist/60">
         {t("credit")} · © {new Date().getFullYear()} {t("rights")}
       </div>
     </footer>

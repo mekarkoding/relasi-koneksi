@@ -19,7 +19,7 @@ const HTMLFlipBook = dynamic(() => import("react-pageflip"), {
 
 function FlipBookSkeleton() {
   return (
-    <div className="mx-auto h-[500px] w-full max-w-sm animate-pulse rounded-xl bg-sand-dark" />
+    <div className="mx-auto h-[500px] w-full max-w-sm animate-pulse rounded-xl bg-mist-dark" />
   );
 }
 
@@ -28,7 +28,7 @@ function SpeciesCard({ page }: { page: BookletPage }) {
   const t = useTranslations("booklet");
 
   return (
-    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-sand-dark bg-white">
+    <div className="flex h-full flex-col overflow-hidden rounded-xl border border-mist-dark bg-white">
       <div className="relative h-1/2 shrink-0">
         <Image
           src={page.photo}
@@ -39,13 +39,13 @@ function SpeciesCard({ page }: { page: BookletPage }) {
         />
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-lg font-bold text-jungle">
+        <h3 className="text-lg font-bold text-forest">
           {pickLocale(locale, page.commonName_id, page.commonName_en)}
         </h3>
-        <p className="text-sm italic text-volcanic/60">
+        <p className="text-sm italic text-forest/60">
           {t("scientificName")}: {page.scientificName}
         </p>
-        <p className="mt-2 text-sm leading-relaxed text-volcanic/80">
+        <p className="mt-2 text-sm leading-relaxed text-forest/80">
           {pickLocale(locale, page.description_id, page.description_en)}
         </p>
       </div>
@@ -68,18 +68,18 @@ function SequentialViewer({ pages }: { pages: BookletPage[] }) {
           type="button"
           onClick={() => setIndex((i) => Math.max(0, i - 1))}
           disabled={index === 0}
-          className="rounded-lg bg-jungle px-4 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-jungle-light disabled:opacity-40"
+          className="rounded-lg bg-tamblingan px-4 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-tamblingan-light disabled:opacity-40"
         >
           ←
         </button>
-        <span className="text-sm text-volcanic/60">
+        <span className="text-sm text-forest/60">
           {t("page")} {index + 1} / {pages.length}
         </span>
         <button
           type="button"
           onClick={() => setIndex((i) => Math.min(pages.length - 1, i + 1))}
           disabled={index === pages.length - 1}
-          className="rounded-lg bg-jungle px-4 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-jungle-light disabled:opacity-40"
+          className="rounded-lg bg-tamblingan px-4 py-2 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-tamblingan-light disabled:opacity-40"
         >
           →
         </button>
@@ -98,7 +98,7 @@ export function FlipBook({ pages }: { pages: BookletPage[] }) {
 
   return (
     <div className="animate-fade-in">
-      <p className="mb-4 text-center text-sm text-volcanic/60">{t("instruction")}</p>
+      <p className="mb-4 text-center text-sm text-forest/60">{t("instruction")}</p>
       <ErrorBoundaryLite onError={() => setFlipFailed(true)}>
         <div className="flex justify-center">
           {/* react-pageflip types mark every prop required, so all are set */}

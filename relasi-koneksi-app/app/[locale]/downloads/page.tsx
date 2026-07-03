@@ -39,8 +39,8 @@ export default async function DownloadsPage({
       <div className="grid gap-10 lg:grid-cols-2">
         {/* After-movie (lazy facade embed, PRD 4.6) */}
         <section className="animate-slide-up">
-          <h3 className="text-xl font-bold text-jungle">{t("afterMovieTitle")}</h3>
-          <p className="mt-2 text-sm text-volcanic/70">{t("afterMovieDescription")}</p>
+          <h3 className="text-xl font-bold text-forest">{t("afterMovieTitle")}</h3>
+          <p className="mt-2 text-sm text-forest/70">{t("afterMovieDescription")}</p>
           {afterMovieId && (
             <div className="relative mt-5 aspect-video">
               <LazyYouTubeEmbed videoId={afterMovieId} title={t("afterMovieTitle")} />
@@ -50,8 +50,8 @@ export default async function DownloadsPage({
 
         {/* Digital guidebook (static PDF in the repo, PRD 4.6) */}
         <section className="animate-slide-up">
-          <h3 className="text-xl font-bold text-jungle">{t("guidebookTitle")}</h3>
-          <p className="mt-2 text-sm text-volcanic/70">{t("guidebookDescription")}</p>
+          <h3 className="text-xl font-bold text-forest">{t("guidebookTitle")}</h3>
+          <p className="mt-2 text-sm text-forest/70">{t("guidebookDescription")}</p>
           <div className="mt-5 flex items-start gap-6 rounded-2xl bg-white p-6 shadow-sm">
             <Image
               src={downloads.guidebookCover}
@@ -65,7 +65,7 @@ export default async function DownloadsPage({
               <a
                 href={downloads.guidebookPdfPath}
                 download
-                className="inline-block rounded-xl bg-terracotta px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-terracotta-dark"
+                className="inline-block rounded-xl bg-marigold px-5 py-2.5 text-sm font-semibold text-forest transition-all duration-300 ease-in-out hover:bg-marigold-dark"
               >
                 {t("downloadGuidebook")}
               </a>
