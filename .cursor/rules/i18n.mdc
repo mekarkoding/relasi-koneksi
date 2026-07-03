@@ -1,0 +1,143 @@
+---
+description: Internationalization rules with next-intl - subpath routing, translations
+globs: "**/{messages,app}/**/*.{ts,tsx,json}"
+alwaysApply: false
+---
+
+# Internationalization (next-intl)
+
+## Routing Configuration
+
+- **Subpath routing**: `/id` and `/en` only
+- **Default locale**: Indonesian (`id`)
+- **No automatic browser-language detection**
+- Root `/` serves/redirects to `/id`
+
+```typescript
+// i18n.config.ts
+export const locales = ['id', 'en'] as const
+export const defaultLocale = 'id' as const
+export type Locale = (typeof locales)[number]
+```
+
+## Translation Files
+
+All UI strings must be in translation JSON files - **no hardcoded UI strings in components**.
+
+```
+messages/
+  id.json    # Indonesian translations
+  en.json    # English translations
+```
+
+### Structure Example
+
+```json
+// messages/id.json
+{
+  "nav": {
+    "home": "Beranda",
+    "attractions": "Wisata",
+    "homestay": "Homestay",
+    "articles": "Artikel",
+    "booklet": "Buklet Flora & Fauna",
+    "downloads": "Galeri & Unduhan",
+    "about": "Tentang"
+  },
+  "common": {
+    "contactWhatsApp": "Hubungi via WhatsApp",
+    "readMore": "Baca Selengkapnya",
+    "download": "Unduh"
+  },
+  "homestay": {
+    "facilities": "Fasilitas",
+    "priceRange": "Kisaran Harga",
+    "whatsappGreeting": "Halo, saya tertarik untuk menginap di {name}. Apakah tersedia kamar?"
+  }
+}
+```
+
+```json
+// messages/en.json
+{
+  "nav": {
+    "home": "Home",
+    "attractions": "Attractions",
+    "homestay": "Homestay",
+    "articles": "Articles",
+    "booklet": "Flora & Fauna Booklet",
+    "downloads": "Gallery & Downloads",
+    "about": "About"
+  },
+  "common": {
+    "contactWhatsApp": "Contact via WhatsApp",
+    "readMore": "Read More",
+    "download": "Download"
+  },
+  "homestay": {
+    "facilities": "Facilities",
+    "priceRange": "Price Range",
+    "whatsappGreeting": "Hello, I am interested in staying at {name}. Do you have availability?"
+  }
+}
+```
+
+## Usage in Components
+
+```tsx
+import { useTranslations } from 'next-intl'
+
+export function HomestayCard({ homestay }: { homestay: Homestay }) {
+  const t = useTranslations('homestay')
+  const locale = useLocale()
+  
+  // ❌ BAD - Hardcoded string
+  return <button>Contact via WhatsApp</button>
+  
+  // ✅ GOOD - Translated string
+  return <button>{t('contactWhatsApp')}</button>
+}
+```
+
+## Article Fallback Rule
+
+If an article's English content (`title_en`, `body_en`) is empty:
+- Show Indonesian content
+- Display a note: "Available in Indonesian only" / "Tersedia dalam Bahasa Indonesia saja"
+- **Never show a broken/blank page**
+
+```tsx
+function getArticleContent(article: Article, locale: Locale) {
+  const hasEnglish = locale === 'en' && article.title_en && article.body_en
+  
+  return {
+    title: hasEnglish ? article.title_en : article.title_id,
+    body: hasEnglish ? article.body_en : article.body_id,
+    showFallbackNote: locale === 'en' && !hasEnglish,
+  }
+}
+```
+
+## SEO Requirements
+
+Each page must emit correct `hreflang` alternates:
+
+```tsx
+// In page metadata
+export function generateMetadata({ params }: Props): Metadata {
+  return {
+    alternates: {
+      languages: {
+        'id': `/id${path}`,
+        'en': `/en${path}`,
+      },
+    },
+  }
+}
+```
+
+## Language Switcher
+
+- Visible on every page in top navigation
+- Displays as "ID | EN" toggle
+- Switching preserves current page path

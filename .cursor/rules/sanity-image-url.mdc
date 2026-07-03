@@ -1,0 +1,91 @@
+---
+description: Sanity image URL builder configuration for CDN optimization
+globs: "**/lib/sanity/**/*.ts"
+alwaysApply: false
+---
+
+# Sanity Image URL Builder
+
+Sanity images MUST be served through the Sanity image CDN URL builder combined with `next/image`.
+
+## Setup
+
+```typescript
+// lib/sanity/image.ts
+import imageUrlBuilder from '@sanity/image-url'
+import { client } from './client'
+
+const builder = imageUrlBuilder(client)
+
+export function urlForImage(source: any) {
+  return builder.image(source)
+}
+```
+
+## Usage with next/image
+
+```tsx
+import Image from 'next/image'
+import { urlForImage } from '@/lib/sanity/image'
+
+// ✅ CORRECT - Sanity CDN + next/image
+<Image
+  src={urlForImage(article.coverImage)
+    .width(800)
+    .height(600)
+    .format('webp')
+    .url()}
+  alt={article.coverImage.alt || article.title}
+  width={800}
+  height={600}
+  sizes="(max-width: 768px) 100vw, 800px"
+/>
+
+// ❌ WRONG - Direct Sanity URL without builder
+<Image
+  src={article.coverImage.asset.url}
+  alt={article.title}
+  width={800}
+  height={600}
+/>
+
+// ❌ WRONG - Not using next/image at all
+<img src={urlForImage(article.coverImage).url()} alt={article.title} />
+```
+
+## URL Builder Methods
+
+```typescript
+urlForImage(source)
+  .width(800)           // Resize width
+  .height(600)          // Resize height
+  .format('webp')       // Convert to WebP
+  .quality(80)          // Compression quality
+  .fit('crop')          // Crop mode
+  .crop('center')       // Crop position
+  .url()                // Generate final URL
+```
+
+## next.config.js - Remote Patterns
+
+```javascript
+// next.config.js
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+        pathname: '/images/**',
+      },
+    ],
+  },
+}
+```
+
+## Why Both?
+
+1. **Sanity CDN**: Resizes and converts images at the edge
+2. **next/image**: Provides responsive srcset, lazy loading, blur placeholder, and prevents layout shift
+
+Using both together ensures optimal performance on all devices.

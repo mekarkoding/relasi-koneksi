@@ -1,0 +1,97 @@
+{
+  "nav": {
+    "home": "Home",
+    "attractions": "Attractions",
+    "homestay": "Homestay",
+    "articles": "Articles",
+    "booklet": "Flora & Fauna Booklet",
+    "downloads": "Gallery & Downloads",
+    "about": "About",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "common": {
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "download": "Download",
+    "back": "Back",
+    "loading": "Loading...",
+    "playVideo": "Play video"
+  },
+  "home": {
+    "heroTitle": "Welcome to Mekar Banjar Village",
+    "heroSubtitle": "Explore the natural beauty, culture, and hospitality of our village",
+    "heroCta": "Explore Attractions",
+    "attractionsTitle": "Featured Destinations",
+    "attractionsSubtitle": "Must-visit places around the village",
+    "articlesTitle": "Latest Articles",
+    "articlesSubtitle": "Fresh news and stories from the village",
+    "homestayTitle": "Stay in the Village",
+    "homestaySubtitle": "Experience living with the local community",
+    "homestayCta": "Browse Homestays",
+    "afterMovieTitle": "KKN Mekar Banjar After-Movie",
+    "afterMovieSubtitle": "Watch the journey of our program"
+  },
+  "attractions": {
+    "title": "Village Attractions",
+    "subtitle": "Explore natural and cultural destinations in our village",
+    "viewOnMap": "View on Map",
+    "notFound": "Attraction not found"
+  },
+  "homestay": {
+    "title": "Homestay",
+    "subtitle": "Comfortable lodging options with village residents",
+    "facilities": "Facilities",
+    "priceRange": "Price Range",
+    "contactWhatsApp": "Contact via WhatsApp",
+    "whatsappGreeting": "Hello, I am interested in staying at {name}. Do you have rooms available?"
+  },
+  "articles": {
+    "title": "Articles",
+    "subtitle": "News and stories from Mekar Banjar Village",
+    "allCategories": "All Categories",
+    "publishedOn": "Published on",
+    "by": "by",
+    "empty": "No articles yet. Stay tuned for stories from the villagers!",
+    "indonesianOnly": "This article is available in Indonesian only."
+  },
+  "booklet": {
+    "title": "Flora & Fauna Booklet",
+    "subtitle": "Discover the village's natural richness through an interactive booklet",
+    "instruction": "Swipe or tap to turn the pages",
+    "scientificName": "Scientific name",
+    "page": "Page"
+  },
+  "downloads": {
+    "title": "Gallery & Downloads",
+    "subtitle": "Documentation and outputs of the KKN Mekar Banjar program",
+    "afterMovieTitle": "After-Movie",
+    "afterMovieDescription": "Video documentation of the KKN Mekar Banjar program journey in the village.",
+    "guidebookTitle": "Digital Guidebook",
+    "guidebookDescription": "A complete village travel guide in PDF format, ready to download.",
+    "downloadGuidebook": "Download Guidebook"
+  },
+  "about": {
+    "title": "About the Village",
+    "subtitle": "Village profile and the KKN Mekar Banjar program",
+    "villageProfileTitle": "Village Profile",
+    "villageProfileBody": "Mekar Banjar is a tourism village with distinctive natural and cultural richness. Surrounded by green hills and terraced rice fields, the village offers an authentic rural living experience.",
+    "kknTitle": "KKN Mekar Banjar Program",
+    "kknBody": "This website was developed by the KKN Mekar Banjar team as part of a community service program to promote the village's tourism potential.",
+    "contactTitle": "Contact",
+    "addressLabel": "Address",
+    "viewMap": "View Location on Map"
+  },
+  "footer": {
+    "address": "Mekar Banjar Village, Contoh District, Contoh Regency, Bali",
+    "quickLinks": "Quick Links",
+    "followUs": "Follow Us",
+    "credit": "Developed by the KKN Mekar Banjar Team",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for is not available.",
+    "backHome": "Back to Home"
+  }
+}

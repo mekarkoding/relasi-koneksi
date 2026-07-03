@@ -1,0 +1,132 @@
+---
+description: Performance requirements - Lighthouse 90+ mobile, lazy loading, fonts
+alwaysApply: true
+---
+
+# Performance Requirements
+
+## Target Metrics
+
+| Metric | Target | Test Pages |
+|--------|--------|------------|
+| Lighthouse Performance (mobile) | ≥90 | Home, Article detail, Homestay |
+| Image discipline | 0 plain `<img>` tags | Entire codebase |
+| Layout Shift (CLS) | Minimal | All pages |
+
+## Image Optimization (See: nextjs-images.mdc)
+
+All images MUST go through `next/image`. This is the core of performance.
+
+## YouTube Embeds - Lazy/Facade Loading
+
+**Never load the YouTube iframe on initial page load.** Use a facade pattern:
+
+```tsx
+// components/LazyYouTubeEmbed.tsx
+'use client'
+
+import { useState } from 'react'
+import Image from 'next/image'
+
+interface Props {
+  videoId: string
+  title?: string
+}
+
+export function LazyYouTubeEmbed({ videoId, title = 'YouTube video' }: Props) {
+  const [isLoaded, setIsLoaded] = useState(false)
+
+  if (isLoaded) {
+    return (
+      <iframe
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
+        title={title}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="w-full h-full"
+      />
+    )
+  }
+
+  return (
+    <button
+      onClick={() => setIsLoaded(true)}
+      className="relative w-full h-full group cursor-pointer"
+      aria-label={`Play ${title}`}
+    >
+      <Image
+        src={`https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`}
+        alt={title}
+        fill
+        className="object-cover"
+        sizes="(max-width: 768px) 100vw, 800px"
+      />
+      {/* Play button overlay */}
+      <div className="absolute inset-0 flex items-center justify-center bg-black/20 group-hover:bg-black/30 transition">
+        <svg className="w-16 h-16 text-white" viewBox="0 0 68 48">
+          <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c0.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-0.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" fill="#f00"/>
+          <path d="M 45,24 27,14 27,34" fill="#fff"/>
+        </svg>
+      </div>
+    </button>
+  )
+}
+```
+
+Alternative: Use `lite-youtube-embed` or `next/dynamic` with SSR disabled.
+
+## Fonts - next/font
+
+Use `next/font` with self-hosted Google fonts. Maximum 2 font families.
+
+```tsx
+// app/[locale]/layout.tsx
+import { Inter, Noto_Sans } from 'next/font/google'
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+})
+
+const notoSans = Noto_Sans({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-noto',
+})
+
+export default function RootLayout({ children }) {
+  return (
+    <html className={`${inter.variable} ${notoSans.variable}`}>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+
+**FORBIDDEN**: External font links in `<head>` that block rendering.
+
+## Client Components
+
+- Use client components **only where interactivity requires them**:
+  - Language switcher
+  - Flip-book
+  - Mobile menu
+  - YouTube facade
+- **No heavy client libraries** for content pages
+- Keep bundle size minimal
+
+## Rendering Strategy
+
+| Page Type | Strategy |
+|-----------|----------|
+| Home | SSG |
+| Attractions | SSG |
+| Homestay | SSG |
+| Articles listing | SSG + ISR (60s) |
+| Article detail | SSG + ISR (60s) |
+| Booklet | SSG |
+| Downloads | SSG |
+| About | SSG |
+
+**NO client-side data fetching** for primary page content.

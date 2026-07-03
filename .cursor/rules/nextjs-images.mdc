@@ -1,0 +1,118 @@
+---
+description: STRICT RULE - next/image optimization is mandatory with zero exceptions
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# STRICT RULE: Next.js Image Optimization
+
+**Every image on the public website MUST use the `<Image>` component from `next/image`. Plain `<img>` tags are FORBIDDEN.**
+
+Violating this rule is an **automatic implementation failure**.
+
+## Required Patterns
+
+### 1. Always Use next/image
+
+```tsx
+// ❌ FORBIDDEN - Plain img tag
+<img src="/photo.jpg" alt="Photo" />
+
+// ✅ REQUIRED - next/image component
+import Image from 'next/image'
+
+<Image 
+  src="/photo.jpg" 
+  alt="Photo" 
+  width={800} 
+  height={600} 
+/>
+```
+
+### 2. Always Define Dimensions or Use Fill
+
+```tsx
+// ❌ BAD - No dimensions
+<Image src="/photo.jpg" alt="Photo" />
+
+// ✅ GOOD - Explicit dimensions
+<Image src="/photo.jpg" alt="Photo" width={800} height={600} />
+
+// ✅ GOOD - Fill with sized container
+<div className="relative w-full h-64">
+  <Image src="/photo.jpg" alt="Photo" fill className="object-cover" />
+</div>
+```
+
+### 3. Always Provide Meaningful Alt Text
+
+```tsx
+// ❌ BAD - Empty or generic alt
+<Image src="/homestay.jpg" alt="" width={400} height={300} />
+<Image src="/homestay.jpg" alt="image" width={400} height={300} />
+
+// ✅ GOOD - Descriptive alt
+<Image src="/homestay.jpg" alt="Traditional bamboo homestay with mountain view" width={400} height={300} />
+```
+
+### 4. Use Priority for Above-the-Fold Images
+
+```tsx
+// Hero images - use priority
+<Image 
+  src="/hero.jpg" 
+  alt="Village panorama" 
+  width={1920} 
+  height={1080} 
+  priority 
+/>
+
+// Below-the-fold - default lazy loading (do not disable)
+<Image src="/gallery-1.jpg" alt="Gallery photo" width={400} height={300} />
+```
+
+### 5. Use Sizes for Responsive Images
+
+```tsx
+// ❌ BAD - No sizes, mobile downloads desktop-sized files
+<Image src="/photo.jpg" alt="Photo" fill />
+
+// ✅ GOOD - Sizes prevent oversized downloads
+<Image 
+  src="/photo.jpg" 
+  alt="Photo" 
+  fill 
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
+/>
+```
+
+### 6. Sanity Images via CDN URL Builder
+
+```tsx
+import { urlForImage } from '@/lib/sanity/image'
+
+// ✅ Sanity images through CDN + next/image
+<Image
+  src={urlForImage(article.coverImage).width(800).height(600).url()}
+  alt={article.coverImage.alt || article.title}
+  width={800}
+  height={600}
+/>
+```
+
+### 7. Static Images via Static Imports
+
+```tsx
+// ✅ Local images - static import for build-time optimization
+import homestayPhoto from '@/public/images/homestays/villa-sunrise.jpg'
+
+<Image 
+  src={homestayPhoto} 
+  alt="Villa Sunrise exterior" 
+  placeholder="blur" 
+/>
+```
+
+## Rationale
+
+The previous website failed because of heavy unoptimized images. Any code that bypasses image optimization is an automatic implementation failure.

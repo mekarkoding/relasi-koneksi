@@ -1,0 +1,137 @@
+---
+description: Content split between Sanity (articles/categories) and hardcoded data files
+globs: "**/data/**/*.ts"
+alwaysApply: false
+---
+
+# Data Architecture: Sanity vs Hardcoded
+
+## Content Split Rule
+
+| Content | Source | Reason |
+|---------|--------|--------|
+| Articles | Sanity | Villagers publish via WYSIWYG |
+| Categories | Sanity | Referenced by articles |
+| Homestays | Hardcoded | Villagers cannot edit |
+| Attractions | Hardcoded | Villagers cannot edit |
+| Booklet | Hardcoded | Villagers cannot edit |
+| Downloads | Hardcoded | Villagers cannot edit |
+
+## Required TypeScript Interfaces
+
+### Homestay
+
+```typescript
+// data/homestays.ts
+import { StaticImageData } from 'next/image'
+
+export interface Homestay {
+  id: string
+  name_id: string
+  name_en: string
+  description_id: string
+  description_en: string
+  photos: StaticImageData[]  // Static imports for next/image optimization
+  priceRange: string         // e.g., "Rp 200.000 - 350.000 / malam"
+  facilities: string[]       // e.g., ["WiFi", "AC", "Breakfast"]
+  whatsappNumber: string     // e.g., "6281234567890"
+}
+
+// Example entry
+import photo1 from '@/public/images/homestays/villa-sunrise-1.jpg'
+import photo2 from '@/public/images/homestays/villa-sunrise-2.jpg'
+
+export const homestays: Homestay[] = [
+  {
+    id: 'villa-sunrise',
+    name_id: 'Villa Sunrise',
+    name_en: 'Villa Sunrise',
+    description_id: 'Penginapan nyaman dengan pemandangan matahari terbit',
+    description_en: 'Comfortable lodging with sunrise view',
+    photos: [photo1, photo2],
+    priceRange: 'Rp 250.000 - 400.000 / malam',
+    facilities: ['WiFi', 'AC', 'Sarapan', 'Parkir'],
+    whatsappNumber: '6281234567890',
+  },
+]
+```
+
+### Attraction
+
+```typescript
+// data/attractions.ts
+import { StaticImageData } from 'next/image'
+
+export interface Attraction {
+  id: string
+  slug: string
+  name_id: string
+  name_en: string
+  description_id: string
+  description_en: string
+  photos: StaticImageData[]
+  mapLink: string  // Google Maps URL
+}
+
+export const attractions: Attraction[] = [
+  // entries...
+]
+```
+
+### Booklet Page
+
+```typescript
+// data/booklet.ts
+import { StaticImageData } from 'next/image'
+
+export interface BookletPage {
+  id: string
+  photo: StaticImageData
+  commonName_id: string
+  commonName_en: string
+  scientificName: string
+  description_id: string
+  description_en: string
+}
+
+export const bookletPages: BookletPage[] = [
+  // entries...
+]
+```
+
+### Downloads
+
+```typescript
+// data/downloads.ts
+import { StaticImageData } from 'next/image'
+
+export interface Downloads {
+  afterMovieYoutubeUrl: string
+  guidebookPdfPath: string        // Path in public folder
+  guidebookCover: StaticImageData // Static import
+}
+
+export const downloads: Downloads = {
+  afterMovieYoutubeUrl: 'https://www.youtube.com/watch?v=...',
+  guidebookPdfPath: '/files/guidebook.pdf',
+  guidebookCover: guidebookCoverImage,
+}
+```
+
+## Why Hardcoded?
+
+1. **Villager scope**: Villagers should ONLY manage articles via KONEKSI Studio
+2. **Controlled updates**: Changes to homestays, attractions, etc. require code review
+3. **Type safety**: TypeScript interfaces catch malformed entries
+4. **Build-time optimization**: Static imports enable next/image optimization
+5. **No CMS complexity**: Keeps Sanity Studio simple for non-technical users
+
+## Do NOT Create Sanity Schemas For
+
+- ❌ Homestays
+- ❌ Attractions  
+- ❌ Booklet pages
+- ❌ Downloads
+- ❌ Site settings
+- ❌ Navigation
+- ❌ Footer content

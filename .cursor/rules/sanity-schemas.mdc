@@ -1,0 +1,87 @@
+---
+description: STRICT RULE - Sanity schemas limited to article and category only
+globs: "**/sanity/**/*.ts"
+alwaysApply: false
+---
+
+# STRICT RULE: Sanity CMS Scope
+
+**Exactly TWO Sanity document types exist. Nothing else.**
+
+Do NOT create additional Sanity document types without human approval.
+
+## Allowed Document Types
+
+### 1. Article Document
+
+```typescript
+// schemas/article.ts
+import { defineField, defineType } from 'sanity'
+
+export default defineType({
+  name: 'article',
+  title: 'Artikel',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title_id', title: 'Judul (ID)', type: 'string', validation: (r) => r.required() }),
+    defineField({ name: 'title_en', title: 'Title (EN)', type: 'string' }),
+    defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title_id' }, validation: (r) => r.required() }),
+    defineField({ 
+      name: 'coverImage', 
+      title: 'Cover Image', 
+      type: 'image',
+      options: { hotspot: true },
+      fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
+      validation: (r) => r.required()
+    }),
+    defineField({ name: 'category', title: 'Kategori', type: 'reference', to: [{ type: 'category' }], validation: (r) => r.required() }),
+    defineField({ name: 'excerpt_id', title: 'Ringkasan (ID)', type: 'text', rows: 3, validation: (r) => r.required().max(200) }),
+    defineField({ name: 'excerpt_en', title: 'Excerpt (EN)', type: 'text', rows: 3, validation: (r) => r.max(200) }),
+    defineField({ name: 'body_id', title: 'Isi (ID)', type: 'portableText', validation: (r) => r.required() }),
+    defineField({ name: 'body_en', title: 'Body (EN)', type: 'portableText' }),
+    defineField({ name: 'publishedAt', title: 'Tanggal Publikasi', type: 'datetime', initialValue: () => new Date().toISOString() }),
+    defineField({ name: 'authorName', title: 'Nama Penulis', type: 'string', validation: (r) => r.required() }),
+  ],
+})
+```
+
+### 2. Category Document
+
+```typescript
+// schemas/category.ts
+import { defineField, defineType } from 'sanity'
+
+export default defineType({
+  name: 'category',
+  title: 'Kategori',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title_id', title: 'Nama (ID)', type: 'string', validation: (r) => r.required() }),
+    defineField({ name: 'title_en', title: 'Name (EN)', type: 'string', validation: (r) => r.required() }),
+    defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title_id' }, validation: (r) => r.required() }),
+  ],
+})
+```
+
+## Villager Permission Boundary
+
+| Action | Allowed |
+|--------|---------|
+| Create/edit/publish `article` | ✅ Yes |
+| Select existing `category` | ✅ Yes |
+| Create new `category` | ✅ Yes (keep simple) |
+| Edit homestays | ❌ NO (hardcoded) |
+| Edit attractions | ❌ NO (hardcoded) |
+| Edit booklet | ❌ NO (hardcoded) |
+| Edit downloads | ❌ NO (hardcoded) |
+| Edit site settings | ❌ NO (doesn't exist) |
+| Edit page structure | ❌ NO (code only) |
+
+## What Does NOT Go in Sanity
+
+These are **hardcoded in the repository** as TypeScript data files:
+
+- `data/homestays.ts` - Homestay listings
+- `data/attractions.ts` - Tourist attractions
+- `data/booklet.ts` - Flora & fauna booklet pages
+- `data/downloads.ts` - After-movie URL + guidebook metadata

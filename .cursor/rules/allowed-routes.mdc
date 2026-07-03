@@ -1,0 +1,68 @@
+---
+description: Allowed routes and sitemap - do not create unlisted routes
+globs: "**/app/**/*.tsx"
+alwaysApply: false
+---
+
+# Allowed Routes (Do Not Create Others Without Approval)
+
+## Seven Top-Level Sections
+
+| # | Nav Label (ID / EN) | Route | Content Source |
+|---|---------------------|-------|----------------|
+| 1 | Beranda / Home | `/{locale}` | Sanity (latest 3 articles) + hardcoded teasers |
+| 2 | Wisata / Attractions | `/{locale}/attractions` | `data/attractions.ts` |
+| 2a | Attraction Detail | `/{locale}/attractions/[slug]` | `data/attractions.ts` |
+| 3 | Homestay / Homestay | `/{locale}/homestay` | `data/homestays.ts` |
+| 4 | Artikel / Articles | `/{locale}/articles` | Sanity (listing) |
+| 4a | Article Detail | `/{locale}/articles/[slug]` | Sanity (Portable Text) |
+| 5 | Buklet Flora & Fauna | `/{locale}/booklet` | `data/booklet.ts` |
+| 6 | Galeri & Unduhan | `/{locale}/downloads` | `data/downloads.ts` |
+| 7 | Tentang / About | `/{locale}/about` | Hardcoded + messages JSON |
+
+## Additional Required Pages
+
+- `/{locale}/404` - Bilingual 404 page
+- `/sitemap.xml` - Auto-generated sitemap
+- `/robots.txt` - Robots file
+
+## App Router Structure
+
+```
+app/
+├── [locale]/
+│   ├── page.tsx                    # Home
+│   ├── layout.tsx                  # Root layout with nav/footer
+│   ├── not-found.tsx               # 404 page
+│   ├── attractions/
+│   │   ├── page.tsx                # Attractions listing
+│   │   └── [slug]/
+│   │       └── page.tsx            # Attraction detail
+│   ├── homestay/
+│   │   └── page.tsx                # Homestay listing
+│   ├── articles/
+│   │   ├── page.tsx                # Articles listing
+│   │   └── [slug]/
+│   │       └── page.tsx            # Article detail (Portable Text)
+│   ├── booklet/
+│   │   └── page.tsx                # Flora & fauna flip-book
+│   ├── downloads/
+│   │   └── page.tsx                # Gallery & downloads
+│   └── about/
+│       └── page.tsx                # About & contact
+├── sitemap.ts                       # Sitemap generator
+└── robots.ts                        # Robots.txt generator
+```
+
+## URL Path Conventions
+
+- URL path segments stay in **English** for simplicity and consistency
+- Navigation labels are translated per locale
+- Article slugs come from `title_id` (Indonesian), same slug for both locales
+
+## FORBIDDEN
+
+- ❌ Do not create routes not listed above without human approval
+- ❌ Do not create API routes for content (use SSG/ISR)
+- ❌ Do not create admin/dashboard routes (use Sanity Studio)
+- ❌ Do not create user authentication routes
