@@ -5,7 +5,7 @@ interface Props {
 
 export function SectionHeading({ title, subtitle }: Props) {
   return (
-    <div className="animate-slide-up mb-8">
+    <div className="mb-8">
       <h2 className="text-2xl font-extrabold tracking-tight text-forest sm:text-3xl">
         {title}
       </h2>

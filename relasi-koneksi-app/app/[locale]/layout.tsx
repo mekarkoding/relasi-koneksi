@@ -6,6 +6,8 @@ import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { Providers } from "@/components/Providers";
+import { NavPrefetch } from "@/components/NavPrefetch";
 import { siteUrl } from "@/lib/seo";
 import "../globals.css";
 
@@ -19,7 +21,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "RELASI — Desa Wisata Mekar Banjar",
+    default: "RELASI",
     template: "%s · RELASI",
   },
   description:
@@ -47,9 +49,12 @@ export default async function LocaleLayout({
     <html lang={locale} className={jakarta.variable}>
       <body className="flex min-h-screen flex-col font-sans">
         <NextIntlClientProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <Providers>
+            <NavPrefetch />
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </Providers>
         </NextIntlClientProvider>
       </body>
     </html>

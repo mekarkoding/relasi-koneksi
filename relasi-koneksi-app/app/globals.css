@@ -51,6 +51,23 @@
       transform: translateY(0);
     }
   }
+
+  --animate-hero-glow: hero-glow 3.2s ease-in-out infinite;
+
+  @keyframes hero-glow {
+    0%,
+    100% {
+      text-shadow:
+        0 2px 16px rgba(244, 247, 245, 0.35),
+        0 0 28px rgba(212, 163, 115, 0.28);
+    }
+    50% {
+      text-shadow:
+        0 2px 22px rgba(244, 247, 245, 0.6),
+        0 0 48px rgba(212, 163, 115, 0.5),
+        0 0 72px rgba(212, 163, 115, 0.25);
+    }
+  }
 }
 
 body {
@@ -83,4 +100,13 @@ body {
 }
 .stagger > *:nth-child(6) {
   animation-delay: 0.5s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-glow {
+    animation: none;
+    text-shadow:
+      0 2px 16px rgba(244, 247, 245, 0.4),
+      0 0 28px rgba(212, 163, 115, 0.3);
+  }
 }
