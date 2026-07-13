@@ -8,6 +8,7 @@ import { urlForImage } from "@/lib/sanity/image";
 import { PortableTextRenderer } from "@/components/PortableTextRenderer";
 import { pickLocale } from "@/lib/locale-content";
 import { localeAlternates } from "@/lib/seo";
+import { resolveArticleBody } from "@/lib/sanity/types";
 
 export const revalidate = 60; // ISR: publish latency ≤ 60s (PRD 7.1)
 export const dynamicParams = true;
@@ -42,12 +43,12 @@ export default async function ArticleDetailPage({ params }: Props) {
   const t = await getTranslations("articles");
   const format = await getFormatter();
 
-  // Fallback rule (PRD 4.1): empty English body -> show Indonesian + note
-  const hasEnglishBody = Boolean(article.body_en && article.body_en.length > 0);
-  const useEnglish = locale === "en" && hasEnglishBody;
-  const title = useEnglish && article.title_en ? article.title_en : article.title_id;
-  const body = useEnglish ? article.body_en! : article.body_id;
-  const showFallbackNote = locale === "en" && !hasEnglishBody;
+  // Indonesian-only flag drives EN-locale fallback + warning (PRD 4.1)
+  const { body, showIndonesianOnlyNote } = resolveArticleBody(article, locale);
+  const title =
+    article.indonesianOnly !== false
+      ? article.title_id
+      : pickLocale(locale, article.title_id, article.title_en);
 
   const categoryLabel = article.category
     ? pickLocale(locale, article.category.title_id, article.category.title_en)
@@ -73,7 +74,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         </p>
       </header>
 
-      {showFallbackNote && (
+      {showIndonesianOnlyNote && (
         <p className="mt-6 rounded-lg bg-tamblingan/10 px-4 py-3 text-sm text-tamblingan">
           {t("indonesianOnly")}
         </p>

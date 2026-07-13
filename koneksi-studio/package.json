@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "sanity dev",
     "build": "sanity build",
-    "deploy": "sanity deploy"
+    "deploy": "sanity deploy",
+    "migrate:article-blocks": "sanity migration run migrate-article-blocks --no-dry-run --no-confirm"
   },
   "dependencies": {
     "react": "^19.0.0",

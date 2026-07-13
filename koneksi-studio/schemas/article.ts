@@ -1,4 +1,10 @@
-import { defineField, defineType } from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
+import {AutoSlugInput} from '../components/AutoSlugInput'
+import {LanguageModeToggle} from '../components/LanguageModeToggle'
+
+function newBlockKey() {
+  return Math.random().toString(36).slice(2, 14)
+}
 
 export default defineType({
   name: 'article',
@@ -20,16 +26,18 @@ export default defineType({
     defineField({
       name: 'slug',
       title: 'Slug',
-      description: 'Alamat halaman artikel. Klik "Generate" setelah menulis judul.',
+      description:
+        'Alamat halaman artikel. Otomatis dibuat dari judul Indonesia (2 detik setelah berhenti mengetik).',
       type: 'slug',
-      options: { source: 'title_id', maxLength: 96 },
+      options: {source: 'title_id', maxLength: 96},
+      components: {input: AutoSlugInput},
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'coverImage',
       title: 'Gambar Sampul',
       type: 'image',
-      options: { hotspot: true },
+      options: {hotspot: true},
       fields: [
         defineField({
           name: 'alt',
@@ -44,7 +52,7 @@ export default defineType({
       name: 'category',
       title: 'Kategori',
       type: 'reference',
-      to: [{ type: 'category' }],
+      to: [{type: 'category'}],
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -63,15 +71,27 @@ export default defineType({
       validation: (rule) => rule.max(200),
     }),
     defineField({
-      name: 'body_id',
-      title: 'Isi Artikel (Bahasa Indonesia)',
-      type: 'portableText',
+      name: 'indonesianOnly',
+      title: 'Mode Bahasa',
+      type: 'boolean',
+      initialValue: true,
+      components: {input: LanguageModeToggle},
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'body_en',
-      title: 'Article Body (English)',
-      type: 'portableText',
+      name: 'blocks',
+      title: 'Isi Artikel',
+      description:
+        'Setiap block berisi isi artikel. Minimal 1 block. Jika mode bilingual, isi Indonesia dan English wajib lengkap.',
+      type: 'array',
+      of: [defineArrayMember({type: 'articleBlock'})],
+      initialValue: () => [
+        {
+          _type: 'articleBlock',
+          _key: newBlockKey(),
+        },
+      ],
+      validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: 'publishedAt',
@@ -91,7 +111,7 @@ export default defineType({
     {
       title: 'Terbaru',
       name: 'publishedAtDesc',
-      by: [{ field: 'publishedAt', direction: 'desc' }],
+      by: [{field: 'publishedAt', direction: 'desc'}],
     },
   ],
   preview: {

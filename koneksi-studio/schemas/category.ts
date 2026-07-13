@@ -1,4 +1,5 @@
-import { defineField, defineType } from 'sanity'
+import {defineField, defineType} from 'sanity'
+import {AutoSlugInput} from '../components/AutoSlugInput'
 
 export default defineType({
   name: 'category',
@@ -22,9 +23,11 @@ export default defineType({
     defineField({
       name: 'slug',
       title: 'Slug',
-      description: 'Digunakan untuk filter di halaman artikel. Klik "Generate".',
+      description:
+        'Digunakan untuk filter di halaman artikel. Otomatis dibuat dari nama Indonesia (2 detik setelah berhenti mengetik).',
       type: 'slug',
-      options: { source: 'title_id', maxLength: 96 },
+      options: {source: 'title_id', maxLength: 96},
+      components: {input: AutoSlugInput},
       validation: (rule) => rule.required(),
     }),
   ],
