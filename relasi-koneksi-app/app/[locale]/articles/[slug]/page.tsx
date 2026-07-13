@@ -85,6 +85,7 @@ export default async function ArticleDetailPage({ params }: Props) {
           alt={article.coverImage.alt || title}
           fill
           priority
+          unoptimized
           sizes="(max-width: 768px) 100vw, 768px"
           className="object-cover"
         />

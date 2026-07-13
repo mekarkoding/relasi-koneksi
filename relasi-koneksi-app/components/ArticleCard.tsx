@@ -24,6 +24,7 @@ export function ArticleCard({ article }: { article: ArticlePreview }) {
             src={urlForImage(article.coverImage).width(800).height(600).url()}
             alt={article.coverImage.alt || title}
             fill
+            unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
           />

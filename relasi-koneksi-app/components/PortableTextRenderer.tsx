@@ -56,6 +56,7 @@ const components: PortableTextComponents = {
             alt={value.alt || ""}
             width={1200}
             height={800}
+            unoptimized
             sizes="(max-width: 768px) 100vw, 768px"
             className="rounded-xl"
           />
