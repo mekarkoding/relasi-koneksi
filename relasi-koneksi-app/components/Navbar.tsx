@@ -2,8 +2,19 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import {
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "framer-motion";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useEntranceScroll } from "@/components/home/EntranceScrollProvider";
+import {
+  ENTRANCE_REVEAL_END,
+  ENTRANCE_REVEAL_START,
+} from "@/lib/entrance-timing";
 
 const NAV_ITEMS = [
   { key: "home", href: "/" },
@@ -16,32 +27,52 @@ const NAV_ITEMS = [
 ] as const;
 
 /**
- * Sticky top navigation (PRD 4.7): logo, 7 section links, language
- * switcher; collapses to a hamburger menu on mobile.
+ * Sticky top navigation (PRD 4.7).
+ * On home, slides down with the entrance reveal (transform only — no backdrop-blur while moving).
  */
 export function Navbar() {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const entrance = useEntranceScroll();
+  const fallbackProgress = useMotionValue(1);
+  const progress = entrance?.progress ?? fallbackProgress;
+  const isHome = pathname === "/";
+  const animateEntrance = Boolean(isHome && !reduceMotion && entrance);
+
+  const navY = useTransform(
+    progress,
+    [ENTRANCE_REVEAL_START, ENTRANCE_REVEAL_END, 1],
+    ["-100%", "0%", "0%"],
+  );
 
   return (
-    <header className="sticky top-0 z-[60] border-b border-mist-dark bg-mist/90 backdrop-blur">
-      <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
+    <motion.header
+      className={
+        isHome
+          ? "fixed inset-x-0 top-0 z-[60] border-b border-mist-dark bg-mist will-change-transform"
+          : "sticky top-0 z-[60] border-b border-mist-dark bg-mist/90 backdrop-blur"
+      }
+      style={animateEntrance ? { y: navY } : { y: 0 }}
+      initial={false}
+    >
+      <nav className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-6 sm:px-8">
         <Link
           href="/"
-          className="font-extrabold tracking-tight text-forest transition-all duration-300 ease-in-out hover:text-tamblingan"
+          className="shrink-0 font-extrabold tracking-tight text-forest transition-colors duration-300 hover:text-tamblingan"
           onClick={() => setOpen(false)}
         >
           RELASI<span className="text-tamblingan">.</span>
         </Link>
 
-        {/* Desktop links */}
-        <ul className="hidden items-center gap-5 lg:flex">
+        <ul className="hidden items-center gap-8 lg:flex">
           {NAV_ITEMS.map(({ key, href }) => (
             <li key={key}>
               <Link
                 href={href}
-                className={`text-sm font-medium transition-all duration-300 ease-in-out hover:text-tamblingan ${
+                prefetch
+                className={`text-sm font-medium transition-colors duration-300 hover:text-tamblingan ${
                   pathname === href ? "text-tamblingan" : "text-forest/80"
                 }`}
               >
@@ -51,13 +82,12 @@ export function Navbar() {
           ))}
         </ul>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <LanguageSwitcher />
 
-          {/* Hamburger (mobile) */}
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-md text-forest transition-all duration-300 ease-in-out hover:bg-mist-dark lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-md text-forest transition-colors duration-300 hover:bg-mist-dark lg:hidden"
             aria-expanded={open}
             aria-label={open ? t("closeMenu") : t("openMenu")}
             onClick={() => setOpen((v) => !v)}
@@ -73,15 +103,15 @@ export function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
       {open && (
-        <ul className="animate-fade-in space-y-1 border-t border-mist-dark px-4 py-3 lg:hidden">
+        <ul className="animate-fade-in space-y-2 border-t border-mist-dark px-6 py-4 sm:px-8 lg:hidden">
           {NAV_ITEMS.map(({ key, href }) => (
             <li key={key}>
               <Link
                 href={href}
+                prefetch
                 onClick={() => setOpen(false)}
-                className={`block rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out ${
+                className={`block rounded-md px-4 py-3 text-sm font-medium transition-colors duration-300 ${
                   pathname === href
                     ? "bg-marigold/20 text-tamblingan"
                     : "text-forest/80 hover:bg-mist-dark"
@@ -93,6 +123,6 @@ export function Navbar() {
           ))}
         </ul>
       )}
-    </header>
+    </motion.header>
   );
 }

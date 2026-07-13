@@ -12,6 +12,10 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "img.youtube.com", pathname: "/vi/**" },
     ],
   },
+  experimental: {
+    // Tree-shake heavy packages used by the entrance / studio-adjacent deps
+    optimizePackageImports: ["framer-motion", "next-intl"],
+  },
 };
 
 export default withNextIntl(nextConfig);
