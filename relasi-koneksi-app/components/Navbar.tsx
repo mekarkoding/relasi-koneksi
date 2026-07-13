@@ -25,14 +25,14 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-sand-dark bg-sand/90 backdrop-blur">
+    <header className="sticky top-0 z-[60] border-b border-mist-dark bg-mist/90 backdrop-blur">
       <nav className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4">
         <Link
           href="/"
-          className="font-extrabold tracking-tight text-jungle transition-all duration-300 ease-in-out hover:text-terracotta"
+          className="font-extrabold tracking-tight text-forest transition-all duration-300 ease-in-out hover:text-tamblingan"
           onClick={() => setOpen(false)}
         >
-          RELASI<span className="text-terracotta">.</span>
+          RELASI<span className="text-tamblingan">.</span>
         </Link>
 
         {/* Desktop links */}
@@ -41,8 +41,8 @@ export function Navbar() {
             <li key={key}>
               <Link
                 href={href}
-                className={`text-sm font-medium transition-all duration-300 ease-in-out hover:text-terracotta ${
-                  pathname === href ? "text-terracotta" : "text-volcanic/80"
+                className={`text-sm font-medium transition-all duration-300 ease-in-out hover:text-tamblingan ${
+                  pathname === href ? "text-tamblingan" : "text-forest/80"
                 }`}
               >
                 {t(key)}
@@ -57,7 +57,7 @@ export function Navbar() {
           {/* Hamburger (mobile) */}
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-md text-volcanic transition-all duration-300 ease-in-out hover:bg-sand-dark lg:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-md text-forest transition-all duration-300 ease-in-out hover:bg-mist-dark lg:hidden"
             aria-expanded={open}
             aria-label={open ? t("closeMenu") : t("openMenu")}
             onClick={() => setOpen((v) => !v)}
@@ -75,7 +75,7 @@ export function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <ul className="animate-fade-in space-y-1 border-t border-sand-dark px-4 py-3 lg:hidden">
+        <ul className="animate-fade-in space-y-1 border-t border-mist-dark px-4 py-3 lg:hidden">
           {NAV_ITEMS.map(({ key, href }) => (
             <li key={key}>
               <Link
@@ -83,8 +83,8 @@ export function Navbar() {
                 onClick={() => setOpen(false)}
                 className={`block rounded-md px-3 py-2 text-sm font-medium transition-all duration-300 ease-in-out ${
                   pathname === href
-                    ? "bg-terracotta/10 text-terracotta"
-                    : "text-volcanic/80 hover:bg-sand-dark"
+                    ? "bg-marigold/20 text-tamblingan"
+                    : "text-forest/80 hover:bg-mist-dark"
                 }`}
               >
                 {t(key)}

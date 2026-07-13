@@ -57,14 +57,14 @@ export default async function AttractionDetailPage({ params }: Props) {
         />
       </div>
 
-      <h1 className="animate-slide-up mt-8 text-3xl font-extrabold text-jungle">{name}</h1>
-      <p className="mt-4 leading-relaxed text-volcanic/80">{description}</p>
+      <h1 className="animate-slide-up mt-8 text-3xl font-extrabold text-forest">{name}</h1>
+      <p className="mt-4 leading-relaxed text-forest/80">{description}</p>
 
       <a
         href={attraction.mapLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 inline-block rounded-xl bg-jungle px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-jungle-light"
+        className="mt-6 inline-block rounded-xl bg-tamblingan px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:bg-tamblingan-light"
       >
         {t("viewOnMap")} ↗
       </a>

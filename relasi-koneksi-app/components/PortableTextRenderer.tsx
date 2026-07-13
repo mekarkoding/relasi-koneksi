@@ -13,14 +13,14 @@ import { extractYouTubeId } from "@/lib/youtube";
 const components: PortableTextComponents = {
   block: {
     h2: ({ children }) => (
-      <h2 className="mt-10 mb-4 text-2xl font-bold text-jungle">{children}</h2>
+      <h2 className="mt-10 mb-4 text-2xl font-bold text-forest">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-8 mb-3 text-xl font-semibold text-jungle">{children}</h3>
+      <h3 className="mt-8 mb-3 text-xl font-semibold text-forest">{children}</h3>
     ),
     normal: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
     blockquote: ({ children }) => (
-      <blockquote className="my-6 border-l-4 border-terracotta pl-4 italic text-volcanic/80">
+      <blockquote className="my-6 border-l-4 border-marigold pl-4 italic text-forest/80">
         {children}
       </blockquote>
     ),
@@ -34,7 +34,7 @@ const components: PortableTextComponents = {
         href={value?.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-medium text-terracotta underline underline-offset-2 transition-all duration-300 ease-in-out hover:text-terracotta-dark"
+        className="font-medium text-tamblingan underline underline-offset-2 transition-all duration-300 ease-in-out hover:text-tamblingan-dark"
       >
         {children}
       </a>
@@ -56,11 +56,12 @@ const components: PortableTextComponents = {
             alt={value.alt || ""}
             width={1200}
             height={800}
+            unoptimized
             sizes="(max-width: 768px) 100vw, 768px"
             className="rounded-xl"
           />
           {value.caption && (
-            <figcaption className="mt-2 text-center text-sm text-volcanic/60">
+            <figcaption className="mt-2 text-center text-sm text-forest/60">
               {value.caption}
             </figcaption>
           )}

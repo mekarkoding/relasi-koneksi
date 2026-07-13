@@ -47,8 +47,8 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
             href="/articles"
             className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-in-out ${
               !category
-                ? "bg-terracotta text-white"
-                : "bg-sand-dark text-volcanic/70 hover:bg-terracotta/15"
+                ? "bg-tamblingan text-white"
+                : "bg-mist-dark text-forest/70 hover:bg-marigold/25"
             }`}
           >
             {t("allCategories")}
@@ -59,8 +59,8 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
               href={`/articles?category=${c.slug}`}
               className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-in-out ${
                 category === c.slug
-                  ? "bg-terracotta text-white"
-                  : "bg-sand-dark text-volcanic/70 hover:bg-terracotta/15"
+                  ? "bg-tamblingan text-white"
+                  : "bg-mist-dark text-forest/70 hover:bg-marigold/25"
               }`}
             >
               {pickLocale(locale, c.title_id, c.title_en)}
@@ -76,7 +76,7 @@ export default async function ArticlesPage({ params, searchParams }: Props) {
           ))}
         </div>
       ) : (
-        <p className="py-12 text-center text-volcanic/60">{t("empty")}</p>
+        <p className="py-12 text-center text-forest/60">{t("empty")}</p>
       )}
     </div>
   );

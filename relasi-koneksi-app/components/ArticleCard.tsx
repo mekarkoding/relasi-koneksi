@@ -24,25 +24,26 @@ export function ArticleCard({ article }: { article: ArticlePreview }) {
             src={urlForImage(article.coverImage).width(800).height(600).url()}
             alt={article.coverImage.alt || title}
             fill
+            unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
           />
           {categoryLabel && (
-            <span className="absolute left-3 top-3 rounded-full bg-terracotta px-3 py-1 text-xs font-semibold text-white">
+            <span className="absolute left-3 top-3 rounded-full bg-marigold px-3 py-1 text-xs font-semibold text-forest">
               {categoryLabel}
             </span>
           )}
         </div>
         <div className="p-5">
-          <time className="text-xs text-volcanic/50" dateTime={article.publishedAt}>
+          <time className="text-xs text-forest/50" dateTime={article.publishedAt}>
             {format.dateTime(new Date(article.publishedAt), {
               dateStyle: "long",
             })}
           </time>
-          <h3 className="mt-1 line-clamp-2 text-lg font-bold text-jungle transition-all duration-300 ease-in-out group-hover:text-terracotta">
+          <h3 className="mt-1 line-clamp-2 text-lg font-bold text-forest transition-all duration-300 ease-in-out group-hover:text-tamblingan">
             {title}
           </h3>
-          <p className="mt-2 line-clamp-3 text-sm text-volcanic/70">{excerpt}</p>
+          <p className="mt-2 line-clamp-3 text-sm text-forest/70">{excerpt}</p>
         </div>
       </Link>
     </article>
