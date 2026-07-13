@@ -43,6 +43,12 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
   return sanityFetch<Article | null>(
     groq`*[_type == "article" && slug.current == $slug][0]{
       ${articlePreviewFields},
+      indonesianOnly,
+      blocks[]{
+        _key,
+        body_id,
+        body_en
+      },
       body_id,
       body_en
     }`,

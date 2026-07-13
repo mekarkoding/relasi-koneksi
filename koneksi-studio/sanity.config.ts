@@ -1,6 +1,6 @@
-import { defineConfig } from 'sanity'
-import { structureTool } from 'sanity/structure'
-import { schemaTypes } from './schemas'
+import {defineConfig} from 'sanity'
+import {structureTool} from 'sanity/structure'
+import {schemaTypes} from './schemas'
 
 /**
  * KONEKSI — the content studio for the RELASI village tourism website.
@@ -15,6 +15,26 @@ export default defineConfig({
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'your-project-id',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',
+
+  // Single-account CMS — hide collaboration features that don't apply
+  releases: {
+    enabled: false,
+  },
+  tasks: {
+    enabled: false,
+  },
+  document: {
+    comments: {
+      enabled: false,
+    },
+  },
+
+  // Only Structure is installed; hide the tool switcher but keep the navbar
+  studio: {
+    components: {
+      toolMenu: () => null,
+    },
+  },
 
   plugins: [
     structureTool({
