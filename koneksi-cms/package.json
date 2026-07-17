@@ -1,0 +1,26 @@
+{
+  "name": "koneksi-cms",
+  "private": true,
+  "version": "1.0.0",
+  "description": "KONEKSI - Content Management Studio for RELASI (KKN Mekar Banjar)",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "migrate:article-blocks": "sanity migration run migrate-article-blocks --no-dry-run --no-confirm",
+    "migrate:article-to-berita": "sanity exec scripts/migrate-article-to-berita.ts --with-user-token"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "sanity": "^6.0.0",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,87 +1,59 @@
----
-description: STRICT RULE - Sanity schemas limited to article and category only
-globs: "**/sanity/**/*.ts"
+﻿---
+description: STRICT RULE - Sanity schemas limited to the 6 v2.0 document types + kategori
+globs: "**/koneksi-cms/**/*.ts"
 alwaysApply: false
 ---
 
-# STRICT RULE: Sanity CMS Scope
+# STRICT RULE: Sanity CMS Scope (PRD v2.0)
 
-**Exactly TWO Sanity document types exist. Nothing else.**
-
-Do NOT create additional Sanity document types without human approval.
+**Exactly SIX villager document types exist, plus the supporting `category`.**
+Do NOT add more document types without human approval.
 
 ## Allowed Document Types
 
-### 1. Article Document
+| `_type` | Studio label | Body | Notes |
+|---------|--------------|------|-------|
+| `artikel_berita` | Berita | `blocks[]` (bilingual) | Only type with a `category` reference |
+| `artikel_sejarah` | Sejarah | `blocks[]` (bilingual) | No category; fixed frontend label |
+| `artikel_partnership` | Partnership | `blocks[]` (bilingual) | No category; fixed frontend label |
+| `artikel_liputan` | Liputan | none | `externalUrl` + `sourceName`; NO detail page |
+| `wisata` | Wisata | `description_id/en` (Portable Text) | Bilingual REQUIRED; native Sanity Draft/Publish; `gallery` ≤ 10 |
+| `desa` | Desa | `description_id/en` (Portable Text) | Fixed `villageName` (gobleg/munduk/gesing/umejero); `dataFields[]`; `gallery` |
+| `category` | Kategori | — | Referenced only by `artikel_berita` |
 
-```typescript
-// schemas/article.ts
-import { defineField, defineType } from 'sanity'
+The three body-bearing article types share one factory:
+`koneksi-cms/schemas/shared/createArticleType.ts` (bilingual `blocks[]` via
+the `articleBlock` object + custom Studio components). Reuse it — do not
+duplicate the fields.
 
-export default defineType({
-  name: 'article',
-  title: 'Artikel',
-  type: 'document',
-  fields: [
-    defineField({ name: 'title_id', title: 'Judul (ID)', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'title_en', title: 'Title (EN)', type: 'string' }),
-    defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title_id' }, validation: (r) => r.required() }),
-    defineField({ 
-      name: 'coverImage', 
-      title: 'Cover Image', 
-      type: 'image',
-      options: { hotspot: true },
-      fields: [{ name: 'alt', type: 'string', title: 'Alt Text' }],
-      validation: (r) => r.required()
-    }),
-    defineField({ name: 'category', title: 'Kategori', type: 'reference', to: [{ type: 'category' }], validation: (r) => r.required() }),
-    defineField({ name: 'excerpt_id', title: 'Ringkasan (ID)', type: 'text', rows: 3, validation: (r) => r.required().max(200) }),
-    defineField({ name: 'excerpt_en', title: 'Excerpt (EN)', type: 'text', rows: 3, validation: (r) => r.max(200) }),
-    defineField({ name: 'body_id', title: 'Isi (ID)', type: 'portableText', validation: (r) => r.required() }),
-    defineField({ name: 'body_en', title: 'Body (EN)', type: 'portableText' }),
-    defineField({ name: 'publishedAt', title: 'Tanggal Publikasi', type: 'datetime', initialValue: () => new Date().toISOString() }),
-    defineField({ name: 'authorName', title: 'Nama Penulis', type: 'string', validation: (r) => r.required() }),
-  ],
-})
-```
+## Supporting (non-document) types
 
-### 2. Category Document
-
-```typescript
-// schemas/category.ts
-import { defineField, defineType } from 'sanity'
-
-export default defineType({
-  name: 'category',
-  title: 'Kategori',
-  type: 'document',
-  fields: [
-    defineField({ name: 'title_id', title: 'Nama (ID)', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'title_en', title: 'Name (EN)', type: 'string', validation: (r) => r.required() }),
-    defineField({ name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title_id' }, validation: (r) => r.required() }),
-  ],
-})
-```
+`portableText` (array), `youtube` (object), `articleBlock` (object) — these are
+NOT documents. Register everything in `koneksi-cms/schemas/index.ts` and wire
+the desk in `koneksi-cms/sanity.config.ts` (Artikel → Berita / Sejarah /
+Partnership / Liputan; Kategori nested under Berita only; then Wisata, Desa).
 
 ## Villager Permission Boundary
 
 | Action | Allowed |
 |--------|---------|
-| Create/edit/publish `article` | ✅ Yes |
-| Select existing `category` | ✅ Yes |
-| Create new `category` | ✅ Yes (keep simple) |
-| Edit homestays | ❌ NO (hardcoded) |
-| Edit attractions | ❌ NO (hardcoded) |
-| Edit booklet | ❌ NO (hardcoded) |
-| Edit downloads | ❌ NO (hardcoded) |
-| Edit site settings | ❌ NO (doesn't exist) |
-| Edit page structure | ❌ NO (code only) |
+| Create/edit/publish the 4 article types | ✅ Yes |
+| Edit wisata (Sanity Publish) | ✅ Yes |
+| Edit the 4 desa documents | ✅ Yes (edit content) |
+| Select/create `category` (kategori) | ✅ Yes |
+| Create/delete extra desa or change `villageName` | ❌ NO (4 fixed) |
+| Edit booklet / gallery / maps / downloads | ❌ NO (hardcoded) |
+| Edit site settings / navigation / footer | ❌ NO (code only) |
 
 ## What Does NOT Go in Sanity
 
-These are **hardcoded in the repository** as TypeScript data files:
+Hardcoded TypeScript data files instead (see `data-architecture` rule):
+`data/booklet.ts`, `data/gallery.ts`, `data/maps.ts`, `data/downloads.ts`.
+The Instagram feed comes from the Graph API, not Sanity.
 
-- `data/homestays.ts` - Homestay listings
-- `data/attractions.ts` - Tourist attractions
-- `data/booklet.ts` - Flora & fauna booklet pages
-- `data/downloads.ts` - After-movie URL + guidebook metadata
+## Migrations
+
+Changing a document `_type` is not a patch operation. The legacy
+`article → artikel_berita` conversion is a `sanity exec` script:
+`koneksi-cms/scripts/migrate-article-to-berita.ts`
+(`npm run migrate:article-to-berita`). Run once by the team.

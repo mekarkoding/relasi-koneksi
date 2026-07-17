@@ -1,0 +1,165 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "wisata": "Wisata",
+    "artikel": "Artikel",
+    "desa": "Desa",
+    "media": "Media",
+    "tentang": "Tentang",
+    "sejarah": "Sejarah",
+    "berita": "Berita",
+    "partnership": "Partnership",
+    "liputan": "Liputan",
+    "gobleg": "Gobleg",
+    "munduk": "Munduk",
+    "gesing": "Gesing",
+    "umejero": "Umejero",
+    "galeri": "Galeri",
+    "buklet": "Buklet",
+    "peta": "Peta",
+    "adatDalemTamblingan": "Adat Dalem Tamblingan",
+    "kknMekarBanjar": "KKN Mekar Banjar",
+    "openMenu": "Buka menu",
+    "closeMenu": "Tutup menu"
+  },
+  "common": {
+    "readMore": "Baca Selengkapnya",
+    "viewAll": "Lihat Semua",
+    "download": "Unduh",
+    "back": "Kembali",
+    "loading": "Memuat...",
+    "playVideo": "Putar video",
+    "prevPhoto": "Foto sebelumnya",
+    "nextPhoto": "Foto berikutnya"
+  },
+  "home": {
+    "heroTitle": "Selamat Datang di Kawasan Adat Dalem Tamblingan",
+    "heroSubtitle": "Jelajahi keindahan alam, budaya, dan keramahan empat desa kami",
+    "heroCta": "Jelajahi Wisata",
+    "scrollHint": "Gulir untuk melewati gerbang",
+    "wisataTitle": "Destinasi Wisata",
+    "wisataSubtitle": "Tempat-tempat menarik yang wajib dikunjungi",
+    "wisataEmpty": "Destinasi wisata akan segera hadir.",
+    "wisataCta": "Lihat Semua Wisata",
+    "desaTitle": "Empat Desa",
+    "desaSubtitle": "Kenali desa-desa di kawasan Adat Dalem Tamblingan",
+    "afterMovieTitle": "After-Movie KKN Mekar Banjar",
+    "afterMovieSubtitle": "Saksikan perjalanan program kami"
+  },
+  "instagram": {
+    "title": "Ikuti Keseharian Kami",
+    "subtitle": "Momen terbaru dari kawasan Adat Dalem Tamblingan",
+    "follow": "Ikuti di Instagram",
+    "fallback": "Ikuti kami di Instagram untuk melihat kabar terbaru"
+  },
+  "wisata": {
+    "title": "Wisata",
+    "subtitle": "Jelajahi destinasi alam dan budaya di kawasan kami",
+    "empty": "Belum ada destinasi wisata. Nantikan pembaruan dari kami!",
+    "galleryTitle": "Galeri Foto"
+  },
+  "articles": {
+    "empty": "Belum ada artikel. Nantikan tulisan dari warga desa!",
+    "allCategories": "Semua Kategori",
+    "publishedOn": "Dipublikasikan pada",
+    "by": "oleh",
+    "indonesianOnly": "Artikel ini hanya tersedia dalam Bahasa Indonesia.",
+    "source": "Sumber",
+    "readArticle": "Baca Artikel",
+    "types": {
+      "berita": {
+        "title": "Berita",
+        "subtitle": "Kabar dan peristiwa terkini dari desa",
+        "label": "Berita"
+      },
+      "sejarah": {
+        "title": "Sejarah",
+        "subtitle": "Cerita dan sejarah kawasan Adat Dalem Tamblingan",
+        "label": "Sejarah"
+      },
+      "partnership": {
+        "title": "Partnership",
+        "subtitle": "Kerja sama dan kolaborasi bersama mitra",
+        "label": "Partnership"
+      },
+      "liputan": {
+        "title": "Liputan",
+        "subtitle": "Liputan media eksternal tentang desa kami",
+        "label": "Liputan"
+      }
+    }
+  },
+  "desa": {
+    "dataTitle": "Data Desa",
+    "galleryTitle": "Galeri Foto",
+    "otherVillages": "Desa Lainnya",
+    "empty": "Konten desa akan segera hadir.",
+    "villages": {
+      "gobleg": "Gobleg",
+      "munduk": "Munduk",
+      "gesing": "Gesing",
+      "umejero": "Umejero"
+    }
+  },
+  "media": {
+    "galeri": {
+      "title": "Galeri",
+      "subtitle": "After-movie dan dokumentasi foto",
+      "afterMovieTitle": "After-Movie",
+      "afterMovieSubtitle": "Saksikan perjalanan program KKN Mekar Banjar",
+      "photosTitle": "Foto",
+      "photosSubtitle": "Ketuk foto untuk memperbesar, geser kiri-kanan untuk melihat lainnya",
+      "closeLightbox": "Tutup",
+      "prevPhoto": "Foto sebelumnya",
+      "nextPhoto": "Foto berikutnya"
+    },
+    "buklet": {
+      "title": "Buklet",
+      "subtitle": "Koleksi buklet digital kawasan Adat Dalem Tamblingan",
+      "guidebookTitle": "Buku Panduan Desa",
+      "downloadGuidebook": "Unduh Buku Panduan",
+      "collectionTitle": "Buklet Lainnya",
+      "openBook": "Buka buklet",
+      "downloadPdf": "Unduh versi PDF",
+      "instruction": "Geser atau ketuk untuk membalik halaman",
+      "page": "Halaman"
+    },
+    "peta": {
+      "title": "Peta",
+      "subtitle": "Peta kawasan dan destinasi wisata",
+      "viewPdf": "Lihat PDF",
+      "viewImage": "Lihat Gambar",
+      "empty": "Peta akan segera tersedia."
+    }
+  },
+  "about": {
+    "adat": {
+      "title": "Adat Dalem Tamblingan",
+      "subtitle": "Profil kawasan dan masyarakat adat",
+      "body1": "Kawasan Adat Dalem Tamblingan meliputi empat desa - Gobleg, Munduk, Gesing, dan Umejero - yang dipersatukan oleh sejarah, adat, dan hubungan spiritual dengan Danau Tamblingan.",
+      "body2": "Masyarakat adat menjaga tradisi, ritual, dan kearifan lokal yang diwariskan turun-temurun, sekaligus merawat kelestarian alam di sekitarnya."
+    },
+    "kkn": {
+      "title": "KKN Mekar Banjar",
+      "subtitle": "Program pengabdian masyarakat",
+      "body1": "Website ini dikembangkan oleh tim KKN Mekar Banjar sebagai bagian dari program pengabdian masyarakat untuk mempromosikan potensi wisata dan budaya kawasan Adat Dalem Tamblingan.",
+      "body2": "Kami berkolaborasi dengan warga dan pemangku adat untuk mendokumentasikan cerita, destinasi, dan kehidupan desa agar lebih dikenal luas.",
+      "contactTitle": "Kontak",
+      "addressLabel": "Alamat",
+      "viewMap": "Lihat Lokasi di Peta",
+      "mapTitle": "Peta lokasi kawasan Adat Dalem Tamblingan"
+    }
+  },
+  "footer": {
+    "address": "Kawasan Adat Dalem Tamblingan, Kabupaten Buleleng, Bali",
+    "followUs": "Ikuti Kami",
+    "supportedBy": "Didukung oleh",
+    "credit": "Dikembangkan oleh Mekar Koding (Tim IT Mekar Banjar)",
+    "rights": "Hak cipta dilindungi."
+  },
+  "notFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "description": "Maaf, halaman yang Anda cari tidak tersedia.",
+    "backHome": "Kembali ke Beranda"
+  }
+}

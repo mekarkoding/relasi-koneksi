@@ -25,10 +25,19 @@ yarn-debug.log*
 yarn-error.log*
 
 # Sanity
-koneksi-studio/dist/
+koneksi-cms/dist/
+.sanity/
 
 # Vercel
 .vercel/
 
 # TypeScript
 *.tsbuildinfo
+
+# Local draft assets (not for the repo)
+Dummy Artikel/
+Dummy Desa/
+Dummy Wisata/
+CMS_Content_Draft_ADT.pdf
+PRD_RELASI_KONEKSI_Ver 1.pdf
+PRD_RELASI_KONEKSI_Ver_2.docx

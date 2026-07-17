@@ -1,0 +1,17 @@
+/**
+ * Studio chrome tweaks for villager writing UX:
+ * - Article-block dialogs use nearly the full viewport
+ * - Portable Text editors get a taller writing surface
+ */
+[data-ui='DialogCard'] {
+  width: min(96vw, 100%) !important;
+  max-width: 96vw !important;
+  height: min(94vh, 100%) !important;
+  max-height: 94vh !important;
+}
+
+[data-ui='DialogCard'] [data-testid='pt-editor'] ,
+[data-ui='DialogCard'] [data-testid='portable-text-input'] ,
+[data-ui='DialogCard'] .pt-editable {
+  min-height: 50vh !important;
+}

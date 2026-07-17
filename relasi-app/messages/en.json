@@ -1,0 +1,165 @@
+{
+  "nav": {
+    "home": "Home",
+    "wisata": "Attractions",
+    "artikel": "Articles",
+    "desa": "Villages",
+    "media": "Media",
+    "tentang": "About",
+    "sejarah": "History",
+    "berita": "News",
+    "partnership": "Partnership",
+    "liputan": "In the News",
+    "gobleg": "Gobleg",
+    "munduk": "Munduk",
+    "gesing": "Gesing",
+    "umejero": "Umejero",
+    "galeri": "Gallery",
+    "buklet": "Booklets",
+    "peta": "Maps",
+    "adatDalemTamblingan": "Adat Dalem Tamblingan",
+    "kknMekarBanjar": "KKN Mekar Banjar",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "common": {
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "download": "Download",
+    "back": "Back",
+    "loading": "Loading...",
+    "playVideo": "Play video",
+    "prevPhoto": "Previous photo",
+    "nextPhoto": "Next photo"
+  },
+  "home": {
+    "heroTitle": "Welcome to the Adat Dalem Tamblingan Region",
+    "heroSubtitle": "Explore the natural beauty, culture, and hospitality of our four villages",
+    "heroCta": "Explore Attractions",
+    "scrollHint": "Scroll to pass through the gate",
+    "wisataTitle": "Attractions",
+    "wisataSubtitle": "Must-visit places around the region",
+    "wisataEmpty": "Attractions are coming soon.",
+    "wisataCta": "View All Attractions",
+    "desaTitle": "The Four Villages",
+    "desaSubtitle": "Get to know the villages of the Adat Dalem Tamblingan region",
+    "afterMovieTitle": "KKN Mekar Banjar After-Movie",
+    "afterMovieSubtitle": "Watch the journey of our program"
+  },
+  "instagram": {
+    "title": "Follow Our Journey",
+    "subtitle": "The latest moments from the Adat Dalem Tamblingan region",
+    "follow": "Follow on Instagram",
+    "fallback": "Follow us on Instagram to see our latest updates"
+  },
+  "wisata": {
+    "title": "Attractions",
+    "subtitle": "Explore natural and cultural destinations in our region",
+    "empty": "No attractions yet. Stay tuned for updates!",
+    "galleryTitle": "Photo Gallery"
+  },
+  "articles": {
+    "empty": "No articles yet. Stay tuned for stories from the villagers!",
+    "allCategories": "All Categories",
+    "publishedOn": "Published on",
+    "by": "by",
+    "indonesianOnly": "This article is available in Indonesian only.",
+    "source": "Source",
+    "readArticle": "Read Article",
+    "types": {
+      "berita": {
+        "title": "News",
+        "subtitle": "The latest news and events from the villages",
+        "label": "News"
+      },
+      "sejarah": {
+        "title": "History",
+        "subtitle": "Stories and history of the Adat Dalem Tamblingan region",
+        "label": "History"
+      },
+      "partnership": {
+        "title": "Partnership",
+        "subtitle": "Collaborations and partnerships with our partners",
+        "label": "Partnership"
+      },
+      "liputan": {
+        "title": "In the News",
+        "subtitle": "External media coverage about our villages",
+        "label": "In the News"
+      }
+    }
+  },
+  "desa": {
+    "dataTitle": "Village Data",
+    "galleryTitle": "Photo Gallery",
+    "otherVillages": "Other Villages",
+    "empty": "Village content is coming soon.",
+    "villages": {
+      "gobleg": "Gobleg",
+      "munduk": "Munduk",
+      "gesing": "Gesing",
+      "umejero": "Umejero"
+    }
+  },
+  "media": {
+    "galeri": {
+      "title": "Gallery",
+      "subtitle": "After-movie and photo documentation",
+      "afterMovieTitle": "After-Movie",
+      "afterMovieSubtitle": "Watch the journey of the KKN Mekar Banjar program",
+      "photosTitle": "Photos",
+      "photosSubtitle": "Tap a photo to zoom, swipe left-right to browse",
+      "closeLightbox": "Close",
+      "prevPhoto": "Previous photo",
+      "nextPhoto": "Next photo"
+    },
+    "buklet": {
+      "title": "Booklets",
+      "subtitle": "Digital booklet collection of the Adat Dalem Tamblingan region",
+      "guidebookTitle": "Village Guidebook",
+      "downloadGuidebook": "Download Guidebook",
+      "collectionTitle": "More Booklets",
+      "openBook": "Open booklet",
+      "downloadPdf": "Download PDF version",
+      "instruction": "Swipe or tap to turn the pages",
+      "page": "Page"
+    },
+    "peta": {
+      "title": "Maps",
+      "subtitle": "Area maps and tourism destinations",
+      "viewPdf": "View PDF",
+      "viewImage": "View Image",
+      "empty": "Maps will be available soon."
+    }
+  },
+  "about": {
+    "adat": {
+      "title": "Adat Dalem Tamblingan",
+      "subtitle": "Profile of the region and its indigenous community",
+      "body1": "The Adat Dalem Tamblingan region comprises four villages - Gobleg, Munduk, Gesing, and Umejero - united by shared history, custom, and a spiritual bond with Lake Tamblingan.",
+      "body2": "The indigenous community preserves traditions, rituals, and local wisdom passed down through generations, while caring for the surrounding nature."
+    },
+    "kkn": {
+      "title": "KKN Mekar Banjar",
+      "subtitle": "Community service program",
+      "body1": "This website was developed by the KKN Mekar Banjar team as part of a community service program to promote the tourism and cultural potential of the Adat Dalem Tamblingan region.",
+      "body2": "We collaborate with residents and customary leaders to document the stories, destinations, and village life so they can reach a wider audience.",
+      "contactTitle": "Contact",
+      "addressLabel": "Address",
+      "viewMap": "View Location on Map",
+      "mapTitle": "Location map of the Adat Dalem Tamblingan region"
+    }
+  },
+  "footer": {
+    "address": "Adat Dalem Tamblingan Region, Buleleng Regency, Bali",
+    "followUs": "Follow Us",
+    "supportedBy": "Supported by",
+    "credit": "Developed by Mekar Koding (IT Members of Mekar Banjar)",
+    "rights": "All rights reserved."
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "Sorry, the page you are looking for is not available.",
+    "backHome": "Back to Home"
+  }
+}

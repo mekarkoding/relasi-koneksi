@@ -1,84 +1,31 @@
 ---
-description: Content split between Sanity (articles/categories) and hardcoded data files
+description: Content split between Sanity (articles/wisata/desa) and hardcoded data files
 globs: "**/data/**/*.ts"
 alwaysApply: false
 ---
 
-# Data Architecture: Sanity vs Hardcoded
+# Data Architecture: Sanity vs Hardcoded (PRD v2.0)
 
 ## Content Split Rule
 
 | Content | Source | Reason |
 |---------|--------|--------|
-| Articles | Sanity | Villagers publish via WYSIWYG |
-| Categories | Sanity | Referenced by articles |
-| Homestays | Hardcoded | Villagers cannot edit |
-| Attractions | Hardcoded | Villagers cannot edit |
-| Booklet | Hardcoded | Villagers cannot edit |
-| Downloads | Hardcoded | Villagers cannot edit |
+| Articles (`artikel_berita`/`sejarah`/`partnership`/`liputan`) | Sanity | Villagers publish via WYSIWYG |
+| Categories (`kategori`) | Sanity | Referenced by `artikel_berita` only |
+| Wisata | Sanity | Villagers manage attractions |
+| Desa (4 fixed) | Sanity | Villagers edit village content |
+| Booklet | Hardcoded (`data/booklet.ts`) | Villagers cannot edit |
+| Gallery photos | Hardcoded (`data/gallery.ts`) | Villagers cannot edit |
+| Maps | Hardcoded (`data/maps.ts`) | Villagers cannot edit |
+| Downloads (after-movie + guidebook) | Hardcoded (`data/downloads.ts`) | Villagers cannot edit |
+| Instagram feed | Instagram Graph API (server-side, ISR) | Read-only external source |
 
-## Required TypeScript Interfaces
+> v2.0 moved **Wisata** and **Desa** into Sanity. **Homestays** and the old
+> hardcoded `data/attractions.ts` were removed entirely.
 
-### Homestay
+## Required TypeScript Interfaces (hardcoded)
 
-```typescript
-// data/homestays.ts
-import { StaticImageData } from 'next/image'
-
-export interface Homestay {
-  id: string
-  name_id: string
-  name_en: string
-  description_id: string
-  description_en: string
-  photos: StaticImageData[]  // Static imports for next/image optimization
-  priceRange: string         // e.g., "Rp 200.000 - 350.000 / malam"
-  facilities: string[]       // e.g., ["WiFi", "AC", "Breakfast"]
-  whatsappNumber: string     // e.g., "6281234567890"
-}
-
-// Example entry
-import photo1 from '@/public/images/homestays/villa-sunrise-1.jpg'
-import photo2 from '@/public/images/homestays/villa-sunrise-2.jpg'
-
-export const homestays: Homestay[] = [
-  {
-    id: 'villa-sunrise',
-    name_id: 'Villa Sunrise',
-    name_en: 'Villa Sunrise',
-    description_id: 'Penginapan nyaman dengan pemandangan matahari terbit',
-    description_en: 'Comfortable lodging with sunrise view',
-    photos: [photo1, photo2],
-    priceRange: 'Rp 250.000 - 400.000 / malam',
-    facilities: ['WiFi', 'AC', 'Sarapan', 'Parkir'],
-    whatsappNumber: '6281234567890',
-  },
-]
-```
-
-### Attraction
-
-```typescript
-// data/attractions.ts
-import { StaticImageData } from 'next/image'
-
-export interface Attraction {
-  id: string
-  slug: string
-  name_id: string
-  name_en: string
-  description_id: string
-  description_en: string
-  photos: StaticImageData[]
-  mapLink: string  // Google Maps URL
-}
-
-export const attractions: Attraction[] = [
-  // entries...
-]
-```
-
-### Booklet Page
+### Booklet
 
 ```typescript
 // data/booklet.ts
@@ -87,16 +34,58 @@ import { StaticImageData } from 'next/image'
 export interface BookletPage {
   id: string
   photo: StaticImageData
-  commonName_id: string
-  commonName_en: string
-  scientificName: string
+  title_id: string
+  title_en: string
+  caption_id?: string
+  caption_en?: string
   description_id: string
   description_en: string
 }
 
-export const bookletPages: BookletPage[] = [
-  // entries...
-]
+export interface Booklet {
+  id: string
+  slug: string
+  title_id: string
+  title_en: string
+  description_id: string
+  description_en: string
+  cover: StaticImageData
+  pdfPath: string        // under public/, e.g. "/files/booklets/flora-fauna.pdf"
+  pages: BookletPage[]
+}
+```
+
+### Gallery photos
+
+```typescript
+// data/gallery.ts
+import { StaticImageData } from 'next/image'
+
+export interface GalleryPhoto {
+  id: string
+  image: StaticImageData
+  alt_id: string
+  alt_en: string
+}
+```
+
+### Maps
+
+```typescript
+// data/maps.ts
+import { StaticImageData } from 'next/image'
+
+export interface MapEntry {
+  id: string
+  title_id: string
+  title_en: string
+  description_id: string
+  description_en: string
+  fileType: 'image' | 'pdf'
+  image?: StaticImageData   // static-import image maps (build-time optimization)
+  filePath: string          // under public/, used by the view/download button
+  cover?: StaticImageData    // optional PDF preview thumbnail
+}
 ```
 
 ### Downloads
@@ -107,31 +96,27 @@ import { StaticImageData } from 'next/image'
 
 export interface Downloads {
   afterMovieYoutubeUrl: string
-  guidebookPdfPath: string        // Path in public folder
-  guidebookCover: StaticImageData // Static import
-}
-
-export const downloads: Downloads = {
-  afterMovieYoutubeUrl: 'https://www.youtube.com/watch?v=...',
-  guidebookPdfPath: '/files/guidebook.pdf',
-  guidebookCover: guidebookCoverImage,
+  guidebookTitle_id: string
+  guidebookTitle_en: string
+  guidebookDescription_id: string
+  guidebookDescription_en: string
+  guidebookPdfPath: string        // under public/, e.g. "/files/guidebook.pdf"
+  guidebookCover: StaticImageData
 }
 ```
 
 ## Why Hardcoded?
 
-1. **Villager scope**: Villagers should ONLY manage articles via KONEKSI Studio
-2. **Controlled updates**: Changes to homestays, attractions, etc. require code review
-3. **Type safety**: TypeScript interfaces catch malformed entries
-4. **Build-time optimization**: Static imports enable next/image optimization
-5. **No CMS complexity**: Keeps Sanity Studio simple for non-technical users
+1. **Villager scope**: Villagers manage only the 6 Sanity document types via KONEKSI.
+2. **Controlled updates**: Changes to booklet/gallery/maps/downloads require code review.
+3. **Type safety**: TypeScript interfaces catch malformed entries.
+4. **Build-time optimization**: Static image imports enable next/image optimization.
 
 ## Do NOT Create Sanity Schemas For
 
-- ❌ Homestays
-- ❌ Attractions  
 - ❌ Booklet pages
-- ❌ Downloads
-- ❌ Site settings
-- ❌ Navigation
-- ❌ Footer content
+- ❌ Gallery photos
+- ❌ Maps
+- ❌ Downloads (after-movie / guidebook)
+- ❌ Instagram feed (Graph API, not CMS)
+- ❌ Site settings / Navigation / Footer content

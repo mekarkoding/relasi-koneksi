@@ -5,7 +5,7 @@ alwaysApply: true
 
 # RELASI + KONEKSI Project Core Rules
 
-This project follows the **PRD (mekarprd.pdf)** as the single source of truth. Do not invent features, pages, fields, or libraries not specified in the PRD.
+This project follows the **PRD v2.0 (`PRD_RELASI_KONEKSI_Ver 2.docx`)** as the single source of truth. Do not invent features, pages, fields, or libraries not specified in the PRD.
 
 ## Binding Constraints
 
@@ -22,8 +22,10 @@ This project follows the **PRD (mekarprd.pdf)** as the single source of truth. D
 | CMS | Sanity (branded "KONEKSI") | Free tier. Sanity Studio for villagers |
 | i18n | next-intl | Subpath routing `/id` and `/en` only |
 | Rich text | @portabletext/react | Official Portable Text renderer |
-| Video | YouTube embeds only | Lazy-loaded (lite-youtube-embed pattern or next/dynamic) |
-| Flip-book | react-pageflip | For flora & fauna booklet |
+| Video | YouTube embeds only | Lazy-loaded facade (`LazyYouTubeEmbed`) |
+| Flip-book | react-pageflip | For the Media booklets |
+| Animation | framer-motion | Entrance/reveal only; keep bundles small |
+| Social feed | Instagram Graph API | Server-side + ISR; env token; graceful fallback |
 | Hosting | Vercel (free/hobby tier) | Auto-deploy from main branch |
 
 ## Rendering Strategy
@@ -43,10 +45,17 @@ messages/              # Translation JSON (id.json, en.json)
 public/                # Static assets
 ```
 
+## Content Model (PRD v2.0)
+
+- **Sanity (KONEKSI):** 4 article types (`artikel_berita/sejarah/partnership/liputan`), `wisata`, `desa`, plus `category`.
+- **Hardcoded data files:** booklet, gallery photos, maps, downloads (after-movie + guidebook).
+- **Instagram Graph API:** the Beranda feed (server-side, ISR, graceful fallback).
+- See the `allowed-routes`, `data-architecture`, and `sanity-schemas` rules for specifics.
+
 ## Non-Goals (Out of Scope for MVP)
 
-- No internal booking/payment/reservation system
+- No homestay / booking / payment / reservation system
 - No user accounts, login, comments, or membership
-- No villager CMS access beyond articles
+- No villager CMS access beyond the 6 approved document types
 - No self-hosted video (YouTube embeds only)
 - No native mobile app
