@@ -6,10 +6,10 @@ node_modules/
 dist/
 out/
 
-# Environment files (contain secrets)
-.env
-.env.local
-.env.*.local
+# Environment files (contain secrets) — allow committed placeholder examples only
+.env*
+!.env.example
+!.env*.example
 
 # IDE
 .vscode/
@@ -26,6 +26,8 @@ yarn-error.log*
 
 # Sanity
 koneksi-cms/dist/
+koneksi-cms/scripts/catur-desa-assets/
+koneksi-cms/scripts/catur-desa-extract/
 .sanity/
 
 # Vercel

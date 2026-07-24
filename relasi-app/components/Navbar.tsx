@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LanguageSwitcher } from "./LanguageSwitcher";
+import { BrandLogo } from "./BrandLogo";
 import { useEntranceScroll } from "@/components/home/EntranceScrollProvider";
 import {
   ENTRANCE_REVEAL_END,
@@ -219,13 +220,7 @@ export function Navbar() {
       initial={false}
     >
       <nav className="mx-auto flex h-20 max-w-6xl items-center justify-between gap-6 px-6 sm:px-8">
-        <Link
-          href="/"
-          className="shrink-0 font-extrabold tracking-tight text-forest transition-colors duration-300 hover:text-tamblingan"
-          onClick={closeMobile}
-        >
-          RELASI<span className="text-tamblingan">.</span>
-        </Link>
+        <BrandLogo onClick={closeMobile} className="shrink-0" />
 
         <ul className="hidden items-center gap-8 lg:flex">
           {NAV_ITEMS.map((item) =>

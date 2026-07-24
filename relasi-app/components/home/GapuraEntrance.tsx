@@ -42,6 +42,7 @@ export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props)
   const trackRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const entrance = useEntranceScroll();
+  const bindScrollProgress = entrance?.bindScrollProgress;
   const skipEntrance = useSyncExternalStore(
     subscribeNoop,
     hasCompletedEntrance,
@@ -57,14 +58,17 @@ export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props)
   });
 
   useEffect(() => {
+    if (!bindScrollProgress) return;
+
     if (showCompleted) {
       completedProgress.set(1);
-      entrance?.bindScrollProgress(completedProgress);
-      return () => entrance?.bindScrollProgress(null);
+      bindScrollProgress(completedProgress);
+    } else {
+      bindScrollProgress(scrollYProgress);
     }
-    entrance?.bindScrollProgress(scrollYProgress);
-    return () => entrance?.bindScrollProgress(null);
-  }, [entrance, scrollYProgress, showCompleted, completedProgress]);
+
+    return () => bindScrollProgress(null);
+  }, [bindScrollProgress, scrollYProgress, showCompleted, completedProgress]);
 
   useMotionValueEvent(scrollYProgress, "change", (value) => {
     if (showCompleted) return;

@@ -86,10 +86,10 @@ export default async function ArticleTypeListingPage({ params, searchParams }: P
       <SectionHeading title={title} subtitle={subtitle} />
 
       {type === "berita" && categories.length > 0 && (
-        <div className="mb-8 flex flex-wrap gap-2">
+        <div className="mb-8 flex w-full flex-wrap gap-3">
           <Link
             href="/articles/berita"
-            className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-in-out ${
+            className={`min-w-[8rem] flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-medium transition-all duration-300 ease-in-out ${
               !category
                 ? "bg-tamblingan text-white"
                 : "bg-mist-dark text-forest/70 hover:bg-marigold/25"
@@ -101,7 +101,7 @@ export default async function ArticleTypeListingPage({ params, searchParams }: P
             <Link
               key={c._id}
               href={`/articles/berita?category=${c.slug}`}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300 ease-in-out ${
+              className={`min-w-[8rem] flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-medium transition-all duration-300 ease-in-out ${
                 category === c.slug
                   ? "bg-tamblingan text-white"
                   : "bg-mist-dark text-forest/70 hover:bg-marigold/25"

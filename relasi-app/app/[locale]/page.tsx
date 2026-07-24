@@ -12,6 +12,8 @@ import { InstagramFeed } from "@/components/InstagramFeed";
 import { SectionHeading } from "@/components/SectionHeading";
 import { LazyYouTubeEmbed } from "@/components/LazyYouTubeEmbed";
 import { GapuraEntrance } from "@/components/home/GapuraEntrance";
+import { FeaturedWisataCarousel } from "@/components/home/FeaturedWisataCarousel";
+import { FeaturedDesaCarousel } from "@/components/home/FeaturedDesaCarousel";
 import { Reveal } from "@/components/Reveal";
 import { extractYouTubeId } from "@/lib/youtube";
 import { localeAlternates } from "@/lib/seo";
@@ -27,7 +29,7 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "home" });
   return {
     title: {
-      absolute: "RELASI",
+      absolute: "Tamblingan",
     },
     description: t("heroSubtitle"),
     alternates: localeAlternates(""),
@@ -57,17 +59,24 @@ async function FeaturedWisataSection({
           <SectionHeading title={title} subtitle={subtitle} />
         </Reveal>
         {featured.length > 0 ? (
-          <div className="grid gap-10 md:grid-cols-3 md:gap-8">
-            {featured.map((wisata, i) => (
-              <Reveal
-                key={wisata._id}
-                delay={0.12 + i * 0.12}
-                className={SUBAK_OFFSETS[i % 3]}
-              >
-                <WisataCard wisata={wisata} arch />
-              </Reveal>
-            ))}
-          </div>
+          <>
+            {/* Mobile: horizontal snap carousel with idle auto-advance */}
+            <Reveal>
+              <FeaturedWisataCarousel items={featured} />
+            </Reveal>
+            {/* Desktop: staggered subak grid */}
+            <div className="hidden gap-10 md:grid md:grid-cols-3 md:gap-8">
+              {featured.map((wisata, i) => (
+                <Reveal
+                  key={wisata._id}
+                  delay={0.12 + i * 0.12}
+                  className={SUBAK_OFFSETS[i % 3]}
+                >
+                  <WisataCard wisata={wisata} arch />
+                </Reveal>
+              ))}
+            </div>
+          </>
         ) : (
           <Reveal>
             <p className="text-forest/60">{emptyLabel}</p>
@@ -108,7 +117,12 @@ async function EmpatDesaSection({
         <Reveal>
           <SectionHeading title={title} subtitle={subtitle} />
         </Reveal>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+        {/* Mobile: single-slide carousel with village-name indicator */}
+        <Reveal>
+          <FeaturedDesaCarousel items={ordered} />
+        </Reveal>
+        {/* Desktop: 4-column grid */}
+        <div className="hidden gap-6 md:grid md:grid-cols-4">
           {ordered.map((desa, i) => (
             <Reveal key={desa._id} delay={0.1 + i * 0.1}>
               <DesaCard desa={desa} />
@@ -169,7 +183,7 @@ export default async function HomePage({
       />
 
       {/* Instagram feed streams so the Graph API never blocks the gapura paint */}
-      <section className="relative z-20 -mt-16 rounded-t-[4rem] bg-mist pb-24 pt-20 md:-mt-24">
+      <section className="relative z-20 -mt-16 rounded-t-[4rem] bg-mist pb-40 pt-20 md:-mt-24 md:pb-48">
         <div className="mx-auto max-w-6xl px-4">
           <Reveal>
             <SectionHeading title={tInstagram("title")} subtitle={tInstagram("subtitle")} />

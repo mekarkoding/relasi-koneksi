@@ -1,5 +1,13 @@
+import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { instagramProfileUrl } from "@/lib/instagram";
+import { BrandLogo } from "./BrandLogo";
+import { sponsors } from "@/data/sponsors";
+
+const SOCIAL_LINKS = [
+  { label: "Instagram", href: "https://www.instagram.com/mekarbanjar/" },
+  { label: "YouTube", href: "https://www.youtube.com/@mekarbanjarugm" },
+  { label: "TikTok", href: "https://www.tiktok.com/@mekar.banjar" },
+] as const;
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -8,55 +16,46 @@ export function Footer() {
     <footer className="border-t-2 border-tamblingan bg-white text-forest">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <p className="text-lg font-extrabold">
-            RELASI<span className="text-tamblingan">.</span>
-          </p>
+          <BrandLogo className="text-lg" />
           <p className="mt-3 text-sm text-forest/70">{t("address")}</p>
         </div>
 
         <div>
           <p className="font-semibold text-forest">{t("followUs")}</p>
           <ul className="mt-3 space-y-2 text-sm">
-            <li>
-              <a
-                href={instagramProfileUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-forest/70 transition-colors duration-300 hover:text-tamblingan"
-              >
-                Instagram
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-forest/70 transition-colors duration-300 hover:text-tamblingan"
-              >
-                YouTube
-              </a>
-            </li>
+            {SOCIAL_LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-forest/70 transition-colors duration-300 hover:text-tamblingan"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
         <div>
           <p className="font-semibold text-forest">{t("supportedBy")}</p>
-          {/* Sponsor logo placeholder (PRD 4.7) — swap in real logos when available */}
-          <div className="mt-3 flex flex-wrap gap-3">
-            <div
-              className="flex h-14 w-24 items-center justify-center rounded-lg border border-dashed border-mist-dark text-[10px] uppercase tracking-wide text-forest/40"
-              aria-hidden
-            >
-              Logo
-            </div>
-            <div
-              className="flex h-14 w-24 items-center justify-center rounded-lg border border-dashed border-mist-dark text-[10px] uppercase tracking-wide text-forest/40"
-              aria-hidden
-            >
-              Logo
-            </div>
-          </div>
+          <ul className="mt-3 grid max-w-[14rem] grid-cols-2 gap-3">
+            {sponsors.map((sponsor) => (
+              <li
+                key={sponsor.id}
+                className="relative flex aspect-[3/2] items-center justify-center"
+              >
+                <Image
+                  src={sponsor.logo}
+                  alt={sponsor.name}
+                  fill
+                  sizes="112px"
+                  className="object-contain object-center"
+                />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 

@@ -21,11 +21,11 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "RELASI",
-    template: "%s · RELASI",
+    default: "Tamblingan",
+    template: "%s · Tamblingan",
   },
   description:
-    "Website resmi desa wisata Mekar Banjar: wisata, homestay, artikel, buklet, dan galeri.",
+    "Website resmi kawasan Adat Dalem Tamblingan: wisata, artikel, buklet, dan galeri.",
 };
 
 export function generateStaticParams() {

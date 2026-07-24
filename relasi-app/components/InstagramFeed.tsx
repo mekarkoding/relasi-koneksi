@@ -5,11 +5,13 @@ import {
   instagramHandle,
   instagramProfileUrl,
 } from "@/lib/instagram";
+import { InstagramFeedCarousel } from "@/components/home/InstagramFeedCarousel";
 
 /**
  * Instagram feed section body (PRD 4.8). Server-rendered; on missing/expired
  * token it degrades to a static "follow us" message + button - never blank.
  * The section wrapper + heading are provided by the home page.
+ * Mobile uses a single-slide carousel; md+ keeps the grid.
  */
 export async function InstagramFeed() {
   const t = await getTranslations("instagram");
@@ -35,14 +37,15 @@ export async function InstagramFeed() {
           {t("fallback")}
           {handleLabel ? ` ${handleLabel}` : ""}
         </p>
-        <div className="mt-5">{followButton}</div>
+        <div className="mt-5 mb-4">{followButton}</div>
       </div>
     );
   }
 
   return (
     <div>
-      <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:gap-3 lg:grid-cols-5">
+      <InstagramFeedCarousel posts={posts} />
+      <div className="hidden grid-cols-3 gap-2 sm:grid-cols-4 md:grid md:gap-3 lg:grid-cols-5">
         {posts.map((post) => (
           <a
             key={post.id}
@@ -62,7 +65,7 @@ export async function InstagramFeed() {
           </a>
         ))}
       </div>
-      <div className="mt-6 text-center">{followButton}</div>
+      <div className="mt-8 mb-4 text-center">{followButton}</div>
     </div>
   );
 }

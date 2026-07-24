@@ -43,8 +43,8 @@
     "wisataCta": "Lihat Semua Wisata",
     "desaTitle": "Empat Desa",
     "desaSubtitle": "Kenali desa-desa di kawasan Adat Dalem Tamblingan",
-    "afterMovieTitle": "After-Movie KKN Mekar Banjar",
-    "afterMovieSubtitle": "Saksikan perjalanan program kami"
+    "afterMovieTitle": "Video Profil Kawasan Tamblingan",
+    "afterMovieSubtitle": "Kenali kawasan Adat Dalem Tamblingan lebih dekat"
   },
   "instagram": {
     "title": "Ikuti Keseharian Kami",
@@ -105,8 +105,8 @@
     "galeri": {
       "title": "Galeri",
       "subtitle": "After-movie dan dokumentasi foto",
-      "afterMovieTitle": "After-Movie",
-      "afterMovieSubtitle": "Saksikan perjalanan program KKN Mekar Banjar",
+      "afterMovieTitle": "Video Profil Kawasan Tamblingan",
+      "afterMovieSubtitle": "Kenali kawasan Adat Dalem Tamblingan lebih dekat",
       "photosTitle": "Foto",
       "photosSubtitle": "Ketuk foto untuk memperbesar, geser kiri-kanan untuk melihat lainnya",
       "closeLightbox": "Tutup",
@@ -135,9 +135,20 @@
   "about": {
     "adat": {
       "title": "Adat Dalem Tamblingan",
-      "subtitle": "Profil kawasan dan masyarakat adat",
-      "body1": "Kawasan Adat Dalem Tamblingan meliputi empat desa - Gobleg, Munduk, Gesing, dan Umejero - yang dipersatukan oleh sejarah, adat, dan hubungan spiritual dengan Danau Tamblingan.",
-      "body2": "Masyarakat adat menjaga tradisi, ritual, dan kearifan lokal yang diwariskan turun-temurun, sekaligus merawat kelestarian alam di sekitarnya."
+      "subtitle": "Catur Desa di sekitar Danau Tamblingan, Buleleng",
+      "villagesLabel": "Gobleg · Munduk · Gesing · Umejero",
+      "body1": "Masyarakat Adat Dalem Tamblingan adalah komunitas tradisional yang mendiami wilayah Catur Desa — Gobleg, Munduk, Gesing, dan Umejero — di sekitar Danau Tamblingan, Kabupaten Buleleng, Bali. Mereka memiliki akar sejarah dari peradaban kuno Tamblingan dan dikenal teguh memegang Piagem Gama Tirta, sistem nilai leluhur yang menekankan pentingnya air suci (tirta) sebagai sumber kehidupan dan keseimbangan semesta.",
+      "body2": "Danau Tamblingan dipandang sebagai kawasan suci yang dijaga melalui sistem alas kekeran (hutan larangan), mencerminkan harmoni antara manusia dan alam. Kehidupan masyarakat diatur oleh lembaga adat dan tokoh spiritual yang melestarikan tradisi serta menjalankan ritual di pura-pura peninggalan leluhur.",
+      "caturTitle": "Empat desa, satu ikatan sakral",
+      "caturBody": "Gobleg, Munduk, Gesing, dan Umejero membentuk Catur Desa — kesatuan wilayah adat yang menjaga keseimbangan alam dan spiritualitas Tamblingan. Meski secara administrasi pemerintahan masing-masing desa berdiri sendiri, dalam konteks adat keempatnya tetap terikat sebagai satu kawasan Adat Dalem Tamblingan.",
+      "valuesTitle": "Menjaga air, hutan, dan warisan leluhur",
+      "valuesBody": "Inti kehidupan Adat Dalem Tamblingan terletak pada pemuliaan air dan penjagaan Alas Mertajati, hutan keramat yang membentang di kawasan danau. Melalui lembaga adat, ritual, dan kearifan lokal yang diwariskan turun-temurun, masyarakat terus merawat danau, hutan, dan tempat suci agar tetap menjadi sumber kehidupan sekaligus pusat spiritual bagi generasi berikutnya.",
+      "mapAlt": "Peta wilayah Adat Dalem Tamblingan di Bali",
+      "mapCaption": "Wilayah Adat Dalem Tamblingan di Kabupaten Buleleng, Bali",
+      "videosTitle": "Cerita dari Tamblingan",
+      "videosSubtitle": "Ketika alam, leluhur, dan manusia bersatu",
+      "videoLegendTitle": "The Legend of Tamblingan",
+      "videoLegendDesc": "Sebuah kisah tentang persatuan alam, leluhur, dan manusia."
     },
     "kkn": {
       "title": "KKN Mekar Banjar",
@@ -152,7 +163,7 @@
   },
   "footer": {
     "address": "Kawasan Adat Dalem Tamblingan, Kabupaten Buleleng, Bali",
-    "followUs": "Ikuti Kami",
+    "followUs": "Ikuti KKN-PPM UGM Mekar Banjar",
     "supportedBy": "Didukung oleh",
     "credit": "Dikembangkan oleh Mekar Koding (Tim IT Mekar Banjar)",
     "rights": "Hak cipta dilindungi."

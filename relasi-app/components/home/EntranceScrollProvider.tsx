@@ -5,6 +5,7 @@ import {
   useCallback,
   useContext,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -18,14 +19,18 @@ type EntranceScrollContextValue = {
 
 const EntranceScrollContext = createContext<EntranceScrollContextValue | null>(null);
 
-const idleProgress = () => motionValue(0);
-
 export function EntranceScrollProvider({ children }: { children: ReactNode }) {
+  // Stable idle value — never recreate on unbind (that caused a re-render loop).
+  const idleProgress = useRef(motionValue(0)).current;
   const [progress, setProgress] = useState<MotionValue<number>>(idleProgress);
 
-  const bindScrollProgress = useCallback((source: MotionValue<number> | null) => {
-    setProgress(source ?? idleProgress());
-  }, []);
+  const bindScrollProgress = useCallback(
+    (source: MotionValue<number> | null) => {
+      const next = source ?? idleProgress;
+      setProgress((current) => (current === next ? current : next));
+    },
+    [idleProgress],
+  );
 
   const value = useMemo(
     () => ({ progress, bindScrollProgress }),

@@ -43,8 +43,8 @@
     "wisataCta": "View All Attractions",
     "desaTitle": "The Four Villages",
     "desaSubtitle": "Get to know the villages of the Adat Dalem Tamblingan region",
-    "afterMovieTitle": "KKN Mekar Banjar After-Movie",
-    "afterMovieSubtitle": "Watch the journey of our program"
+    "afterMovieTitle": "Tamblingan Region Profile Video",
+    "afterMovieSubtitle": "Get to know the Adat Dalem Tamblingan region"
   },
   "instagram": {
     "title": "Follow Our Journey",
@@ -105,8 +105,8 @@
     "galeri": {
       "title": "Gallery",
       "subtitle": "After-movie and photo documentation",
-      "afterMovieTitle": "After-Movie",
-      "afterMovieSubtitle": "Watch the journey of the KKN Mekar Banjar program",
+      "afterMovieTitle": "Tamblingan Region Profile Video",
+      "afterMovieSubtitle": "Get to know the Adat Dalem Tamblingan region",
       "photosTitle": "Photos",
       "photosSubtitle": "Tap a photo to zoom, swipe left-right to browse",
       "closeLightbox": "Close",
@@ -135,9 +135,20 @@
   "about": {
     "adat": {
       "title": "Adat Dalem Tamblingan",
-      "subtitle": "Profile of the region and its indigenous community",
-      "body1": "The Adat Dalem Tamblingan region comprises four villages - Gobleg, Munduk, Gesing, and Umejero - united by shared history, custom, and a spiritual bond with Lake Tamblingan.",
-      "body2": "The indigenous community preserves traditions, rituals, and local wisdom passed down through generations, while caring for the surrounding nature."
+      "subtitle": "The Catur Desa around Lake Tamblingan, Buleleng",
+      "villagesLabel": "Gobleg · Munduk · Gesing · Umejero",
+      "body1": "The Adat Dalem Tamblingan community is a traditional indigenous society living across the Catur Desa — Gobleg, Munduk, Gesing, and Umejero — around Lake Tamblingan in Buleleng Regency, Bali. Rooted in the ancient Tamblingan civilization, they uphold Piagem Gama Tirta, an ancestral value system that honors sacred water (tirta) as the source of life and cosmic balance.",
+      "body2": "Lake Tamblingan is regarded as a sacred landscape protected through the alas kekeran system (forbidden/protected forest), reflecting harmony between people and nature. Daily life is guided by customary institutions and spiritual leaders who preserve tradition and lead rituals at ancestral temples.",
+      "caturTitle": "Four villages, one sacred bond",
+      "caturBody": "Gobleg, Munduk, Gesing, and Umejero form the Catur Desa — a shared customary territory that safeguards Tamblingan’s ecological and spiritual balance. Although each village stands as its own administrative unit today, in adat (customary) terms the four remain one Adat Dalem Tamblingan region.",
+      "valuesTitle": "Guardians of water, forest, and ancestral heritage",
+      "valuesBody": "At the heart of Adat Dalem Tamblingan life is the reverence for water and the stewardship of Alas Mertajati, the sacred forest surrounding the lake. Through customary institutions, ritual practice, and local wisdom passed down through generations, the community continues to care for the lake, forest, and sacred sites — keeping them as both a source of life and a spiritual center for generations to come.",
+      "mapAlt": "Map of the Adat Dalem Tamblingan region in Bali",
+      "mapCaption": "The Adat Dalem Tamblingan region in Buleleng Regency, Bali",
+      "videosTitle": "Stories from Tamblingan",
+      "videosSubtitle": "When nature, ancestors, and people become one",
+      "videoLegendTitle": "The Legend of Tamblingan",
+      "videoLegendDesc": "A story of unity between nature, ancestors, and people."
     },
     "kkn": {
       "title": "KKN Mekar Banjar",
@@ -152,7 +163,7 @@
   },
   "footer": {
     "address": "Adat Dalem Tamblingan Region, Buleleng Regency, Bali",
-    "followUs": "Follow Us",
+    "followUs": "Follow KKN-PPM UGM Mekar Banjar",
     "supportedBy": "Supported by",
     "credit": "Developed by Mekar Koding (IT Members of Mekar Banjar)",
     "rights": "All rights reserved."

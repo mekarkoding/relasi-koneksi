@@ -18,9 +18,11 @@ const components: PortableTextComponents = {
     h3: ({ children }) => (
       <h3 className="mt-8 mb-3 text-xl font-semibold text-forest">{children}</h3>
     ),
-    normal: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
+    normal: ({ children }) => (
+      <p className="mb-4 text-justify leading-relaxed">{children}</p>
+    ),
     blockquote: ({ children }) => (
-      <blockquote className="my-6 border-l-4 border-marigold pl-4 italic text-forest/80">
+      <blockquote className="my-6 border-l-4 border-marigold pl-4 text-justify italic text-forest/80">
         {children}
       </blockquote>
     ),
@@ -42,8 +44,12 @@ const components: PortableTextComponents = {
   },
 
   list: {
-    bullet: ({ children }) => <ul className="mb-4 list-disc space-y-2 pl-6">{children}</ul>,
-    number: ({ children }) => <ol className="mb-4 list-decimal space-y-2 pl-6">{children}</ol>,
+    bullet: ({ children }) => (
+      <ul className="mb-4 list-disc space-y-2 pl-6 text-justify">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="mb-4 list-decimal space-y-2 pl-6 text-justify">{children}</ol>
+    ),
   },
 
   types: {

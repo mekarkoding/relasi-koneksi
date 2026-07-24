@@ -11,7 +11,9 @@
     "build": "sanity build",
     "deploy": "sanity deploy",
     "migrate:article-blocks": "sanity migration run migrate-article-blocks --no-dry-run --no-confirm",
-    "migrate:article-to-berita": "sanity exec scripts/migrate-article-to-berita.ts --with-user-token"
+    "migrate:article-to-berita": "sanity exec scripts/migrate-article-to-berita.ts --with-user-token",
+    "migrate:catur-desa:extract": "node scripts/extract-catur-desa-articles.js",
+    "migrate:catur-desa:import": "sanity exec scripts/import-catur-desa-articles.ts --with-user-token"
   },
   "dependencies": {
     "react": "^19.0.0",
