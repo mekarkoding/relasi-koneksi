@@ -10,8 +10,11 @@ import type { InstagramPost } from "@/lib/instagram-types";
  * - Outbound Graph requests use `cache: "no-store"` so Next's fetch Data Cache
  *   never stores a URL that includes the access token. Hourly revalidation is
  *   handled by `unstable_cache` with a token-free key.
- * - Fails gracefully: any error / missing token returns [] so the section can
- *   render a static fallback instead of a broken/empty grid.
+ * - Fails gracefully: `getInstagramPosts` returns [] so the section can render a
+ *   static fallback instead of a broken/empty grid. The failure is caught
+ *   *outside* `unstable_cache` on purpose - a rejected callback is not written
+ *   to the cache, so the next request retries instead of serving an empty feed
+ *   for the full revalidate window.
  */
 
 export type { InstagramPost };
@@ -32,58 +35,66 @@ export const instagramProfileUrl = instagramHandle
   ? `https://www.instagram.com/${instagramHandle}/`
   : "https://www.instagram.com/";
 
+/** Meta returns the oldest supported version for unversioned paths; pin it. */
+const GRAPH_API_VERSION = "v23.0";
+
 async function fetchInstagramPosts(limit: number): Promise<InstagramPost[]> {
   const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
-  if (!accessToken) return [];
+  if (!accessToken) throw new Error("INSTAGRAM_ACCESS_TOKEN is not set");
 
-  try {
-    const fields = "id,caption,media_type,media_url,thumbnail_url,permalink";
-    // Prefer Bearer so the token is not part of the request URL (logs / proxies).
-    // Fall back to query param if the host rejects the header (Meta supports both).
-    const url = `https://graph.instagram.com/me/media?fields=${fields}&limit=${limit}`;
-    let res = await fetch(url, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-      cache: "no-store",
-    });
+  const fields = "id,caption,media_type,media_url,thumbnail_url,permalink";
+  // graph.instagram.com rejects `Authorization: Bearer` with OAuth code 190,
+  // so the token has to travel in the query string.
+  const res = await fetch(
+    `https://graph.instagram.com/${GRAPH_API_VERSION}/me/media` +
+      `?fields=${fields}&limit=${limit}&access_token=${accessToken}`,
+    { cache: "no-store" },
+  );
 
-    if (!res.ok) {
-      res = await fetch(`${url}&access_token=${accessToken}`, {
-        cache: "no-store",
-      });
-    }
-
-    if (!res.ok) return [];
-
-    const json: unknown = await res.json();
-    const data =
-      json && typeof json === "object" && Array.isArray((json as { data?: unknown }).data)
-        ? ((json as { data: GraphMediaItem[] }).data)
-        : [];
-
-    return data
-      .map((item) => ({
-        id: item.id,
-        caption: item.caption,
-        mediaUrl:
-          item.media_type === "VIDEO"
-            ? (item.thumbnail_url ?? item.media_url ?? "")
-            : (item.media_url ?? ""),
-        permalink: item.permalink ?? instagramProfileUrl,
-        mediaType: item.media_type ?? "IMAGE",
-      }))
-      .filter((post) => post.mediaUrl.length > 0);
-  } catch {
-    return [];
+  if (!res.ok) {
+    throw new Error(`Instagram Graph API returned ${res.status} ${res.statusText}`);
   }
+
+  const json: unknown = await res.json();
+  const data =
+    json && typeof json === "object" && Array.isArray((json as { data?: unknown }).data)
+      ? ((json as { data: GraphMediaItem[] }).data)
+      : [];
+
+  return data
+    .map((item) => ({
+      id: item.id,
+      caption: item.caption,
+      // Videos/reels expose the poster frame as thumbnail_url; media_url is an
+      // .mp4 there and would render as a broken <Image>.
+      mediaUrl:
+        item.media_type === "VIDEO"
+          ? (item.thumbnail_url ?? "")
+          : (item.media_url ?? item.thumbnail_url ?? ""),
+      permalink: item.permalink ?? instagramProfileUrl,
+      mediaType: item.media_type ?? "IMAGE",
+    }))
+    .filter((post) => post.mediaUrl.length > 0);
 }
 
 const getCachedInstagramPosts = unstable_cache(
   async (limit: number) => fetchInstagramPosts(limit),
-  ["instagram-posts"],
+  ["instagram-posts", GRAPH_API_VERSION],
   { revalidate: 3600 },
 );
 
 /** Hourly-cached Instagram posts for the Beranda feed (PRD 4.8). */
 export async function getInstagramPosts(limit = 8): Promise<InstagramPost[]> {
-  return getCachedInstagramPosts(limit);
+  try {
+    return await getCachedInstagramPosts(limit);
+  } catch (err) {
+    const reason = err instanceof Error ? err.message : String(err);
+    // Redact defensively: a network-layer error may echo the request URL.
+    const token = process.env.INSTAGRAM_ACCESS_TOKEN;
+    console.error(
+      "[instagram] feed unavailable, rendering follow-us fallback:",
+      token ? reason.split(token).join("<redacted>") : reason,
+    );
+    return [];
+  }
 }

@@ -4,6 +4,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { SectionHeading } from "@/components/SectionHeading";
 import { LazyYouTubeEmbed } from "@/components/LazyYouTubeEmbed";
+import { Reveal } from "@/components/Reveal";
 import { localeAlternates } from "@/lib/seo";
 
 /** Video ID from the old landing-page Culture slider (Website-Catur-Desa). */
@@ -34,27 +35,29 @@ export default async function AdatDalemTamblinganPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <SectionHeading title={t("title")} subtitle={t("subtitle")} />
-      <p className="animate-slide-up -mt-4 mb-8 text-sm font-medium tracking-wide text-tamblingan">
-        {t("villagesLabel")}
-      </p>
+      <Reveal>
+        <SectionHeading title={t("title")} subtitle={t("subtitle")} />
+        <p className="-mt-4 mb-8 text-sm font-medium tracking-wide text-tamblingan">
+          {t("villagesLabel")}
+        </p>
+      </Reveal>
 
-      <section className="animate-slide-up space-y-4 leading-relaxed text-forest/80">
+      <Reveal className="space-y-4 text-justify leading-relaxed text-forest/80" delay={0.08}>
         <p>{t("body1")}</p>
         <p>{t("body2")}</p>
-      </section>
+      </Reveal>
 
-      <section className="animate-slide-up mt-12 space-y-6">
+      <Reveal className="mt-12 space-y-6" delay={0.05}>
         <div>
           <h2 className="text-xl font-bold text-forest">{t("videosTitle")}</h2>
-          <p className="mt-1 text-sm text-forest/60">{t("videosSubtitle")}</p>
+          <p className="mt-1 text-justify text-sm text-forest/60">{t("videosSubtitle")}</p>
         </div>
 
         <div>
           <h3 className="text-base font-semibold text-forest">
             {t("videoLegendTitle")}
           </h3>
-          <p className="mt-1 text-sm text-forest/70">{t("videoLegendDesc")}</p>
+          <p className="mt-1 text-justify text-sm text-forest/70">{t("videoLegendDesc")}</p>
           <div className="relative mt-3 aspect-video overflow-hidden rounded-xl">
             <LazyYouTubeEmbed
               videoId={LEGEND_VIDEO_ID}
@@ -62,33 +65,35 @@ export default async function AdatDalemTamblinganPage({
             />
           </div>
         </div>
-      </section>
+      </Reveal>
 
-      <figure className="animate-slide-up mt-10">
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-sm sm:aspect-square">
-          <Image
-            src="/images/about/peta-tamblingan.png"
-            alt={t("mapAlt")}
-            fill
-            className="object-contain p-4"
-            sizes="(max-width: 768px) 100vw, 448px"
-            priority
-          />
-        </div>
-        <figcaption className="mt-3 text-center text-sm text-forest/60">
-          {t("mapCaption")}
-        </figcaption>
-      </figure>
+      <Reveal className="mt-10" delay={0.08} distance={48}>
+        <figure>
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-sm sm:aspect-square">
+            <Image
+              src="/images/about/peta-tamblingan.png"
+              alt={t("mapAlt")}
+              fill
+              className="object-contain p-4"
+              sizes="(max-width: 768px) 100vw, 448px"
+              priority
+            />
+          </div>
+          <figcaption className="mt-3 text-center text-sm text-forest/60">
+            {t("mapCaption")}
+          </figcaption>
+        </figure>
+      </Reveal>
 
-      <section className="animate-slide-up mt-12 space-y-4">
+      <Reveal className="mt-12 space-y-4" delay={0.05}>
         <h2 className="text-xl font-bold text-forest">{t("caturTitle")}</h2>
-        <p className="leading-relaxed text-forest/80">{t("caturBody")}</p>
-      </section>
+        <p className="text-justify leading-relaxed text-forest/80">{t("caturBody")}</p>
+      </Reveal>
 
-      <section className="animate-slide-up mt-10 space-y-4">
+      <Reveal className="mt-10 space-y-4" delay={0.08}>
         <h2 className="text-xl font-bold text-forest">{t("valuesTitle")}</h2>
-        <p className="leading-relaxed text-forest/80">{t("valuesBody")}</p>
-      </section>
+        <p className="text-justify leading-relaxed text-forest/80">{t("valuesBody")}</p>
+      </Reveal>
     </div>
   );
 }

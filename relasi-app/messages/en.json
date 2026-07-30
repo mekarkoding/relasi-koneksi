@@ -33,7 +33,7 @@
     "nextPhoto": "Next photo"
   },
   "home": {
-    "heroTitle": "Welcome to the Adat Dalem Tamblingan Region",
+    "heroTitle": "Welcome to Adat Dalem Tamblingan",
     "heroSubtitle": "Explore the natural beauty, culture, and hospitality of our four villages",
     "heroCta": "Explore Attractions",
     "scrollHint": "Scroll to pass through the gate",
@@ -43,12 +43,12 @@
     "wisataCta": "View All Attractions",
     "desaTitle": "The Four Villages",
     "desaSubtitle": "Get to know the villages of the Adat Dalem Tamblingan region",
-    "afterMovieTitle": "Tamblingan Region Profile Video",
-    "afterMovieSubtitle": "Get to know the Adat Dalem Tamblingan region"
+    "afterMovieTitle": "Adat Dalem Tamblingan Profile Video",
+    "afterMovieSubtitle": "Get to know Adat Dalem Tamblingan"
   },
   "instagram": {
     "title": "Follow Our Journey",
-    "subtitle": "The latest moments from the Adat Dalem Tamblingan region",
+    "subtitle": "The latest moments from Adat Dalem Tamblingan",
     "follow": "Follow on Instagram",
     "fallback": "Follow us on Instagram to see our latest updates"
   },
@@ -79,12 +79,12 @@
       },
       "partnership": {
         "title": "Partnership",
-        "subtitle": "Collaborations and partnerships with our partners",
+        "subtitle": "Collaborations and partnerships with various partners",
         "label": "Partnership"
       },
       "liputan": {
         "title": "In the News",
-        "subtitle": "External media coverage about our villages",
+        "subtitle": "Other media coverage about Adat Dalem Tamblingan",
         "label": "In the News"
       }
     }
@@ -105,8 +105,8 @@
     "galeri": {
       "title": "Gallery",
       "subtitle": "After-movie and photo documentation",
-      "afterMovieTitle": "Tamblingan Region Profile Video",
-      "afterMovieSubtitle": "Get to know the Adat Dalem Tamblingan region",
+      "afterMovieTitle": "Adat Dalem Tamblingan Profile Video",
+      "afterMovieSubtitle": "Get to know Adat Dalem Tamblingan",
       "photosTitle": "Photos",
       "photosSubtitle": "Tap a photo to zoom, swipe left-right to browse",
       "closeLightbox": "Close",
@@ -151,14 +151,65 @@
       "videoLegendDesc": "A story of unity between nature, ancestors, and people."
     },
     "kkn": {
-      "title": "KKN Mekar Banjar",
-      "subtitle": "Community service program",
-      "body1": "This website was developed by the KKN Mekar Banjar team as part of a community service program to promote the tourism and cultural potential of the Adat Dalem Tamblingan region.",
-      "body2": "We collaborate with residents and customary leaders to document the stories, destinations, and village life so they can reach a wider audience.",
-      "contactTitle": "Contact",
+      "title": "Mekar Banjar",
+      "subtitle": "UGM KKN-PPM Period II 2026 — Munduk & Gobleg",
+      "badge": "UGM KKN-PPM · Period II 2026",
+      "hook": "This is not a visit. We came to bridge Tamblingan’s living wisdom with knowledge villagers can still hold long after we leave.",
+      "why1": "In Banjar District — especially Munduk and Gobleg — rare strengths sit side by side: the headwaters and ecology of Lake Tamblingan, the customary forest of Alas Mertajati, and flagship crops like clove and coffee. The landscape is primed for sustainable growth, and just as vulnerable when modernization outruns local capacity to steward it.",
+      "why2": "Mekar Banjar 2026 stands in that gap. Land restoration, health services, waste systems, early weather warnings, creative economy, and youth education — all aimed at keeping Alas Mertajati and Lake Tamblingan as foundations of wellbeing without stripping away adat meaning.",
+      "theme": "Accelerating local community competence, optimizing environmental systems, and sustaining the customary ecosystem — through a multidisciplinary approach in Munduk and Gobleg.",
+      "themeNote": "The overarching theme that holds every program together.",
+      "pillarsTitle": "Three axes of the work",
+      "pillar1Title": "Accelerating competence",
+      "pillar1Body": "Strengthening villagers, youth, students, and local enterprises so inherited knowledge meets skills they can use immediately.",
+      "pillar2Title": "Optimizing the environment",
+      "pillar2Body": "Addressing landslide risk, waste, and readiness infrastructure so the villages stay resilient against weather and modern pressure.",
+      "pillar3Title": "Sustaining the adat ecosystem",
+      "pillar3Body": "Protecting sacred living space — water, forest, and legal clarity — so development never erases Tamblingan’s identity.",
+      "programsTitle": "Our Work Programs",
+      "programsSubtitle": "Each title is a working promise — cross-disciplinary by design, built to keep living in the villages after the KKN period ends.",
+      "progRelasiName": "RELASI-KONEKSI",
+      "progRelasiMeaning": "REVITALISASI LAMAN SISTEM INFORMASI - KOLABORASI NARASI, ENTRI, KONTEN PADA SISTEM INFORMASI",
+      "progRelasiBlurb": "This website you are browsing is the result of this work program — a digital face for the region that is faster, easier for villagers to manage, and ready to introduce Tamblingan’s tourism and culture to the world.",
+      "progRakitName": "RAKIT",
+      "progRakitMeaning": "Rakyat Aksi Plastik",
+      "progRakitBlurb": "From plastic banks to sorting literacy: a community movement that turns plastic piles into collective action.",
+      "progSaehName": "SAEH",
+      "progSaehMeaning": "Sentra Advokasi & Edukasi Hukum",
+      "progSaehBlurb": "Accompanying customary-law issues, civil registration, and lake protection so legal certainty stays in dialogue with adat values.",
+      "progSparkName": "SPARK",
+      "progSparkMeaning": "School Program for Awareness, Readiness & Knowledge",
+      "progSparkBlurb": "Interactive learning from elementary to senior high — tolerance, financial literacy, AI, and career exploration — so young people arrive more ready.",
+      "progGemparName": "GEMPAR UMKM",
+      "progGemparMeaning": "Gerakan Maju, Produktif & Resilien",
+      "progGemparBlurb": "Hands-on MSME mentoring: diagnosing bottlenecks, digital branding, and marketing that helps local products get found.",
+      "progGaraName": "GARA",
+      "progGaraMeaning": "Gerakan Anti Rabies",
+      "progGaraBlurb": "Community education and pet vaccination — protecting people by breaking transmission chains at village level.",
+      "progSigapName": "SIGAP",
+      "progSigapMeaning": "Sinergi Gizi Anak & Pangan Sehat",
+      "progSigapBlurb": "Balanced-nutrition education and local food use to help prevent stunting in Munduk and Gobleg.",
+      "progCakraName": "CAKRA FEST",
+      "progCakraMeaning": "Cahaya Karya Festival",
+      "progCakraBlurb": "A shared climax: contests, arts, and stage with villagers — celebrating Banjar culture while lifting local MSMEs.",
+      "clustersTitle": "One team, four kinds of knowledge",
+      "clustersSubtitle": "Village problems rarely stand alone. So we arrive as one multidisciplinary unit — not four silos working apart.",
+      "clusterSoshum": "Social sciences",
+      "clusterSoshumHint": "Law, management, accounting, and economics — for adat advocacy, literacy, and MSME competitiveness.",
+      "clusterSaintek": "Science & tech",
+      "clusterSaintekHint": "Engineering, biology, instrumentation, and computer science — for readiness infrastructure, waste systems, and the village’s digital face.",
+      "clusterMedika": "Medical",
+      "clusterMedikaHint": "Nursing and pharmacy — for health services, reproductive education, and field medical collaboration.",
+      "clusterAgro": "Agro",
+      "clusterAgroHint": "Plant protection, soil, food tech, and veterinary care — for clove health, nutrition, and a safer village against rabies.",
+      "teamTitle": "27 people behind this name",
+      "teamSubtitle": "Universitas Gadjah Mada students who chose Banjar as both a classroom and a place to serve. Full names and photos will follow — for now, this is the space we reserved for them.",
+      "memberPhotoAlt": "Photo of {name}",
+      "contactTitle": "Where we serve",
       "addressLabel": "Address",
+      "locus": "Focus area: Munduk and Gobleg Villages, Banjar District, Buleleng Regency, Bali — within the Adat Dalem Tamblingan region.",
       "viewMap": "View Location on Map",
-      "mapTitle": "Location map of the Adat Dalem Tamblingan region"
+      "mapTitle": "Map of Munduk and Gobleg, Banjar District"
     }
   },
   "footer": {

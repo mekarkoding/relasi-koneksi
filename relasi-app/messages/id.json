@@ -33,7 +33,7 @@
     "nextPhoto": "Foto berikutnya"
   },
   "home": {
-    "heroTitle": "Selamat Datang di Kawasan Adat Dalem Tamblingan",
+    "heroTitle": "Selamat Datang di Adat Dalem Tamblingan",
     "heroSubtitle": "Jelajahi keindahan alam, budaya, dan keramahan empat desa kami",
     "heroCta": "Jelajahi Wisata",
     "scrollHint": "Gulir untuk melewati gerbang",
@@ -43,12 +43,12 @@
     "wisataCta": "Lihat Semua Wisata",
     "desaTitle": "Empat Desa",
     "desaSubtitle": "Kenali desa-desa di kawasan Adat Dalem Tamblingan",
-    "afterMovieTitle": "Video Profil Kawasan Tamblingan",
-    "afterMovieSubtitle": "Kenali kawasan Adat Dalem Tamblingan lebih dekat"
+    "afterMovieTitle": "Video Profil Adat Dalem Tamblingan",
+    "afterMovieSubtitle": "Kenali Adat Dalem Tamblingan lebih dekat"
   },
   "instagram": {
     "title": "Ikuti Keseharian Kami",
-    "subtitle": "Momen terbaru dari kawasan Adat Dalem Tamblingan",
+    "subtitle": "Momen terbaru dari Adat Dalem Tamblingan",
     "follow": "Ikuti di Instagram",
     "fallback": "Ikuti kami di Instagram untuk melihat kabar terbaru"
   },
@@ -79,12 +79,12 @@
       },
       "partnership": {
         "title": "Partnership",
-        "subtitle": "Kerja sama dan kolaborasi bersama mitra",
+        "subtitle": "Kerja sama dan kolaborasi bersama berbagai mitra",
         "label": "Partnership"
       },
       "liputan": {
         "title": "Liputan",
-        "subtitle": "Liputan media eksternal tentang desa kami",
+        "subtitle": "Liputan media lain tentang Adat Dalem Tamblingan",
         "label": "Liputan"
       }
     }
@@ -105,8 +105,8 @@
     "galeri": {
       "title": "Galeri",
       "subtitle": "After-movie dan dokumentasi foto",
-      "afterMovieTitle": "Video Profil Kawasan Tamblingan",
-      "afterMovieSubtitle": "Kenali kawasan Adat Dalem Tamblingan lebih dekat",
+      "afterMovieTitle": "Video Profil Adat Dalem Tamblingan",
+      "afterMovieSubtitle": "Kenali Adat Dalem Tamblingan lebih dekat",
       "photosTitle": "Foto",
       "photosSubtitle": "Ketuk foto untuk memperbesar, geser kiri-kanan untuk melihat lainnya",
       "closeLightbox": "Tutup",
@@ -151,14 +151,65 @@
       "videoLegendDesc": "Sebuah kisah tentang persatuan alam, leluhur, dan manusia."
     },
     "kkn": {
-      "title": "KKN Mekar Banjar",
-      "subtitle": "Program pengabdian masyarakat",
-      "body1": "Website ini dikembangkan oleh tim KKN Mekar Banjar sebagai bagian dari program pengabdian masyarakat untuk mempromosikan potensi wisata dan budaya kawasan Adat Dalem Tamblingan.",
-      "body2": "Kami berkolaborasi dengan warga dan pemangku adat untuk mendokumentasikan cerita, destinasi, dan kehidupan desa agar lebih dikenal luas.",
-      "contactTitle": "Kontak",
+      "title": "Mekar Banjar",
+      "subtitle": "KKN-PPM UGM Periode II 2026 — Munduk & Gobleg",
+      "badge": "KKN-PPM UGM · Periode II 2026",
+      "hook": "Bukan sekadar mengunjungi desa. Kami datang untuk menjembatani kearifan adat Tamblingan dengan pengetahuan yang bisa dipegang warga lama setelah kami pulang.",
+      "why1": "Di Kecamatan Banjar — tepatnya Munduk dan Gobleg — tersimpan modal yang jarang ditemukan bersamaan: hulu air dan fungsi ekologis Danau Tamblingan, hutan adat Alas Mertajati, serta komoditas unggulan seperti cengkeh dan kopi. Kawasan ini strategis untuk pembangunan berkelanjutan, sekaligus rentan bila modernisasi datang lebih cepat dari kapasitas lokal untuk mengelolanya.",
+      "why2": "Mekar Banjar 2026 hadir di titik itu. Restorasi lahan, layanan kesehatan, pengelolaan sampah, peringatan dini cuaca, ekonomi kreatif, dan edukasi generasi muda — semua dijalankan agar konservasi Alas Mertajati dan Danau Tamblingan tetap menjadi fondasi kesejahteraan tanpa kehilangan makna adat.",
+      "theme": "Akselerasi kompetensi komunitas lokal, optimalisasi sistem lingkungan, dan keberlanjutan ekosistem adat — melalui pendekatan multidisipliner di Desa Munduk dan Gobleg.",
+      "themeNote": "Tema besar yang memayungi seluruh program kerja kami.",
+      "pillarsTitle": "Tiga poros gerakan",
+      "pillar1Title": "Akselerasi kompetensi",
+      "pillar1Body": "Memperkuat kapasitas warga, pemuda, pelajar, dan pelaku usaha agar pengetahuan lokal bertemu keterampilan baru yang langsung terpakai.",
+      "pillar2Title": "Optimalisasi lingkungan",
+      "pillar2Body": "Menata risiko longsor, sampah, dan infrastruktur siaga supaya desa lebih tangguh menghadapi cuaca dan tekanan modernisasi.",
+      "pillar3Title": "Keberlanjutan ekosistem adat",
+      "pillar3Body": "Menjaga ruang hidup adat — air, hutan, dan kepastian hukum — agar pembangunan tidak mengorbankan identitas Tamblingan.",
+      "programsTitle": "Program Kerja Kami",
+      "programsSubtitle": "Setiap nama adalah janji kerja — dirancang lintas bidang, ditujukan agar tetap hidup di desa setelah periode KKN berakhir.",
+      "progRelasiName": "RELASI-KONEKSI",
+      "progRelasiMeaning": "REVITALISASI LAMAN SISTEM INFORMASI - KOLABORASI NARASI, ENTRI, KONTEN PADA SISTEM INFORMASI",
+      "progRelasiBlurb": "Website yang sedang Anda jelajahi adalah hasil dari program ini — wajah digital kawasan yang lebih cepat, mudah dikelola warga, dan siap memperkenalkan wisata serta budaya Tamblingan ke dunia.",
+      "progRakitName": "RAKIT",
+      "progRakitMeaning": "Rakyat Aksi Plastik",
+      "progRakitBlurb": "Dari bank plastik hingga edukasi pilah sampah: gerakan warga yang mengubah tumpukan plastik menjadi aksi kolektif.",
+      "progSaehName": "SAEH",
+      "progSaehMeaning": "Sentra Advokasi & Edukasi Hukum",
+      "progSaehBlurb": "Mendampingi isu hukum adat, administrasi warga, dan perlindungan Danau Tamblingan agar kepastian hukum berdamai dengan nilai adat.",
+      "progSparkName": "SPARK",
+      "progSparkMeaning": "School Program for Awareness, Readiness & Knowledge",
+      "progSparkBlurb": "Kelas interaktif dari SD hingga SMA — toleransi, literasi keuangan, AI, hingga eksplorasi karier — supaya generasi muda lebih siap.",
+      "progGemparName": "GEMPAR UMKM",
+      "progGemparMeaning": "Gerakan Maju, Produktif & Resilien",
+      "progGemparBlurb": "Pendampingan UMKM: diagnosis masalah, branding digital, hingga pemasaran yang membuat produk lokal lebih mudah ditemukan.",
+      "progGaraName": "GARA",
+      "progGaraMeaning": "Gerakan Anti Rabies",
+      "progGaraBlurb": "Sosialisasi dan vaksinasi hewan peliharaan — melindungi warga dengan memutus rantai penularan sejak di tingkat desa.",
+      "progSigapName": "SIGAP",
+      "progSigapMeaning": "Sinergi Gizi Anak & Pangan Sehat",
+      "progSigapBlurb": "Edukasi gizi seimbang dan pemanfaatan pangan lokal untuk mencegah stunting di Munduk dan Gobleg.",
+      "progCakraName": "CAKRA FEST",
+      "progCakraMeaning": "Cahaya Karya Festival",
+      "progCakraBlurb": "Puncak kolaborasi: lomba, seni, dan panggung bersama warga — merayakan budaya Banjar sekaligus mengangkat UMKM desa.",
+      "clustersTitle": "Satu tim, empat napas ilmu",
+      "clustersSubtitle": "Masalah desa jarang berdiri sendiri. Karena itu kami datang sebagai satu unit multidisiplin — bukan empat silo yang bekerja terpisah.",
+      "clusterSoshum": "Soshum",
+      "clusterSoshumHint": "Hukum, manajemen, akuntansi, dan ekonomi — untuk advokasi adat, literasi, dan daya saing UMKM.",
+      "clusterSaintek": "Saintek",
+      "clusterSaintekHint": "Teknik, biologi, instrumentasi, dan komputer — untuk infrastruktur siaga, sampah, dan wajah digital desa.",
+      "clusterMedika": "Medika",
+      "clusterMedikaHint": "Keperawatan dan farmasi — untuk layanan kesehatan, edukasi reproduksi, dan kolaborasi medis di lapangan.",
+      "clusterAgro": "Agro",
+      "clusterAgroHint": "Proteksi tanaman, tanah, pangan, dan kesehatan hewan — untuk cengkeh, gizi, dan desa yang lebih aman dari rabies.",
+      "teamTitle": "27 orang di belakang nama ini",
+      "teamSubtitle": "Mahasiswa Universitas Gadjah Mada yang memilih Banjar sebagai medan belajar sekaligus medan mengabdi. Nama dan foto lengkap akan menyusul — untuk sekarang, ini adalah ruang yang kami siapkan untuk mereka.",
+      "memberPhotoAlt": "Foto {name}",
+      "contactTitle": "Di mana kami mengabdi",
       "addressLabel": "Alamat",
+      "locus": "Fokus wilayah: Desa Munduk dan Desa Gobleg, Kecamatan Banjar, Kabupaten Buleleng, Bali — di kawasan Adat Dalem Tamblingan.",
       "viewMap": "Lihat Lokasi di Peta",
-      "mapTitle": "Peta lokasi kawasan Adat Dalem Tamblingan"
+      "mapTitle": "Peta lokasi Munduk dan Gobleg, Kecamatan Banjar"
     }
   },
   "footer": {
