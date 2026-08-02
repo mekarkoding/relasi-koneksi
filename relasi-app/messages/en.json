@@ -111,7 +111,8 @@
       "photosSubtitle": "Tap a photo to zoom, swipe left-right to browse",
       "closeLightbox": "Close",
       "prevPhoto": "Previous photo",
-      "nextPhoto": "Next photo"
+      "nextPhoto": "Next photo",
+      "empty": "No photos yet. Stay tuned for documentation from the villagers!"
     },
     "buklet": {
       "title": "Booklets",

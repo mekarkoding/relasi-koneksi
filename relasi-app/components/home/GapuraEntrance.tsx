@@ -28,6 +28,8 @@ interface Props {
   subtitle: string;
   ctaLabel: string;
   scrollHint: string;
+  /** Sanity CDN URL for the hero mist background; falls back to local asset. */
+  heroBackgroundSrc?: string | null;
 }
 
 function subscribeNoop() {
@@ -38,7 +40,14 @@ function subscribeNoop() {
  * Zoom-through entrance: sticky viewport + scroll-linked transforms.
  * After the first complete pass (per tab session), home opens already revealed.
  */
-export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props) {
+export function GapuraEntrance({
+  title,
+  subtitle,
+  ctaLabel,
+  scrollHint,
+  heroBackgroundSrc,
+}: Props) {
+  const heroSrc = heroBackgroundSrc || heroMist;
   const trackRef = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const entrance = useEntranceScroll();
@@ -133,7 +142,7 @@ export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props)
       <section ref={trackRef} className="relative h-screen overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src={heroMist}
+            src={heroSrc}
             alt=""
             fill
             priority
@@ -162,7 +171,7 @@ export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props)
           className="absolute inset-0 will-change-transform"
         >
           <Image
-            src={heroMist}
+            src={heroSrc}
             alt=""
             fill
             priority

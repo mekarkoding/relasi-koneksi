@@ -14,8 +14,9 @@ alwaysApply: false
 | Categories (`kategori`) | Sanity | Referenced by `artikel_berita` only |
 | Wisata | Sanity | Villagers manage attractions |
 | Desa (4 fixed) | Sanity | Villagers edit village content |
+| Gallery photos (`galeri`) | Sanity | Villagers publish via KONEKSI (human-approved) |
+| Beranda backgrounds (`beranda` singleton) | Sanity | Hero / Instagram / Wisata / Desa / After-movie only — not article pages |
 | Booklet | Hardcoded (`data/booklet.ts`) | Villagers cannot edit |
-| Gallery photos | Hardcoded (`data/gallery.ts`) | Villagers cannot edit |
 | Maps | Hardcoded (`data/maps.ts`) | Villagers cannot edit |
 | Downloads (after-movie + guidebook) | Hardcoded (`data/downloads.ts`) | Villagers cannot edit |
 | Instagram feed | Instagram Graph API (server-side, ISR) | Read-only external source |
@@ -55,18 +56,6 @@ export interface Booklet {
 }
 ```
 
-### Gallery photos
-
-```typescript
-// data/gallery.ts
-import { StaticImageData } from 'next/image'
-
-export interface GalleryPhoto {
-  id: string
-  image: StaticImageData
-  alt_id: string
-  alt_en: string
-}
 ```
 
 ### Maps
@@ -107,16 +96,17 @@ export interface Downloads {
 
 ## Why Hardcoded?
 
-1. **Villager scope**: Villagers manage only the 6 Sanity document types via KONEKSI.
-2. **Controlled updates**: Changes to booklet/gallery/maps/downloads require code review.
+1. **Villager scope**: Villagers manage articles, wisata, desa, and galeri via KONEKSI.
+2. **Controlled updates**: Changes to booklet/maps/downloads require code review.
 3. **Type safety**: TypeScript interfaces catch malformed entries.
 4. **Build-time optimization**: Static image imports enable next/image optimization.
 
 ## Do NOT Create Sanity Schemas For
 
 - ❌ Booklet pages
-- ❌ Gallery photos
 - ❌ Maps
 - ❌ Downloads (after-movie / guidebook)
 - ❌ Instagram feed (Graph API, not CMS)
 - ❌ Site settings / Navigation / Footer content
+
+(`galeri` and `beranda` are allowed — human-approved.)

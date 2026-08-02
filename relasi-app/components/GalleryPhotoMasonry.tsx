@@ -3,12 +3,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
-import type { StaticImageData } from "next/image";
 
 export interface GalleryLightboxItem {
   id: string;
-  image: StaticImageData;
+  /** Sanity CDN (or other remote) URL — already sized by the page. */
+  src: string;
   alt: string;
+  width: number;
+  height: number;
 }
 
 interface Props {
@@ -121,11 +123,13 @@ export function GalleryPhotoMasonry({
               onClick={(event) => event.stopPropagation()}
             >
               <Image
-                src={active.image}
+                src={active.src}
                 alt={active.alt}
+                width={active.width}
+                height={active.height}
                 sizes="100vw"
+                unoptimized
                 className="h-auto max-h-[85dvh] w-auto max-w-full object-contain shadow-2xl"
-                placeholder="blur"
                 priority
               />
               <p className="mt-3 text-center text-sm text-white/80">
@@ -149,11 +153,13 @@ export function GalleryPhotoMasonry({
             aria-label={photo.alt}
           >
             <Image
-              src={photo.image}
+              src={photo.src}
               alt={photo.alt}
+              width={photo.width}
+              height={photo.height}
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              unoptimized
               className="h-auto w-full object-cover transition duration-500 ease-out group-hover:scale-[1.04] group-hover:brightness-110"
-              placeholder="blur"
             />
           </button>
         ))}

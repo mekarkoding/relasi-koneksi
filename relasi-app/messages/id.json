@@ -111,7 +111,8 @@
       "photosSubtitle": "Ketuk foto untuk memperbesar, geser kiri-kanan untuk melihat lainnya",
       "closeLightbox": "Tutup",
       "prevPhoto": "Foto sebelumnya",
-      "nextPhoto": "Foto berikutnya"
+      "nextPhoto": "Foto berikutnya",
+      "empty": "Belum ada foto. Nantikan dokumentasi dari warga desa!"
     },
     "buklet": {
       "title": "Buklet",

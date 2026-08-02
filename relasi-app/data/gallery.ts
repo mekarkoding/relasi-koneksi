@@ -11,9 +11,11 @@ import photo08 from "@/public/images/gallery/photo-08.png";
 import photo09 from "@/public/images/gallery/photo-09.png";
 
 /**
- * Gallery photos are hardcoded (villagers do not edit these via CMS).
- * Shown on the Media > Galeri page. Replace placeholders when real assets exist.
- * (The after-movie URL + guidebook live in data/downloads.ts.)
+ * @deprecated Gallery photos are CMS-managed via the Sanity `galeri` document
+ * type (KONEKSI → Galeri). The Media > Galeri page reads from Sanity, not here.
+ * These placeholders remain only so existing local image imports keep building;
+ * safe to delete once public/images/gallery placeholders are no longer needed
+ * (guidebook cover still uses photo-01 via data/downloads.ts).
  */
 export interface GalleryPhoto {
   id: string;

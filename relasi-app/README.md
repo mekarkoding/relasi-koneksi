@@ -32,7 +32,7 @@ other page works fully offline.
 | `components/` | UI components (navbar dropdowns, footer, cards, Portable Text renderer, lazy YouTube embed, flip-book, Instagram feed) |
 | `lib/sanity/` | Sanity client, GROQ queries, image CDN URL builder |
 | `lib/instagram.ts` | Instagram Graph API fetch (server-side, ISR, graceful fallback) |
-| `data/` | **Hardcoded content** — booklet, gallery photos, maps, downloads |
+| `data/` | **Hardcoded content** — booklet, maps, downloads |
 | `messages/` | UI translation strings (`id.json`, `en.json`) |
 | `public/images/` | Static photos (placeholder PNGs until real photos are added) |
 | `public/files/` | Booklet PDFs and the downloadable guidebook (replace before launch) |
@@ -40,23 +40,24 @@ other page works fully offline.
 ## How to edit hardcoded content
 
 Each file in `data/` exports a TypeScript interface, so malformed entries fail
-the build with a type error. (Wisata and Desa are NOT here — they live in Sanity.)
+the build with a type error. (Wisata, Desa, and Galeri photos live in Sanity.)
 
 1. **Booklets** — edit `data/booklet.ts`. Cover + flip-book pages + a PDF under
    `public/files/booklets/`.
-2. **Gallery photos** — edit `data/gallery.ts` (static-import from
-   `public/images/gallery/`).
-3. **Maps** — edit `data/maps.ts` (starts empty; add `public/files/maps/` assets).
-4. **Downloads** — edit `data/downloads.ts` (after-movie YouTube URL + guidebook)
+2. **Maps** — edit `data/maps.ts` (starts empty; add `public/files/maps/` assets).
+3. **Downloads** — edit `data/downloads.ts` (after-movie YouTube URL + guidebook)
    and replace `public/files/guidebook.pdf`.
+
+Gallery photos: publish in **KONEKSI → Galeri** (one document per photo).
 
 Commit and push to `main`; Vercel redeploys automatically.
 
 ## KONEKSI (Sanity Studio)
 
-The studio lives in `../koneksi-cms`. Villagers manage six document types —
-**Berita, Sejarah, Partnership, Liputan, Wisata, Desa** (plus **Kategori** for
-Berita) — nothing else exists in Sanity by design.
+The studio lives in `../koneksi-cms`. Villagers manage articles, wisata, desa,
+galeri, and **Latar Beranda** backgrounds (plus **Kategori** for Berita).
+Booklets, maps, and downloads stay in code. Article listing/detail pages keep
+their default solid backgrounds — only the home (Beranda) sections are CMS-styled.
 
 ```bash
 cd ../koneksi-cms
