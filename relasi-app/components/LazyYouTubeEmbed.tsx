@@ -7,13 +7,15 @@ import { useTranslations } from "next-intl";
 interface Props {
   videoId: string;
   title: string;
+  /** Called once when the visitor clicks play and the iframe loads. */
+  onPlay?: () => void;
 }
 
 /**
  * Lazy facade embed (PRD 4.2): renders a thumbnail + play button first;
  * the YouTube iframe player loads only after a click.
  */
-export function LazyYouTubeEmbed({ videoId, title }: Props) {
+export function LazyYouTubeEmbed({ videoId, title, onPlay }: Props) {
   const t = useTranslations("common");
   const [loaded, setLoaded] = useState(false);
 
@@ -32,7 +34,10 @@ export function LazyYouTubeEmbed({ videoId, title }: Props) {
   return (
     <button
       type="button"
-      onClick={() => setLoaded(true)}
+      onClick={() => {
+        setLoaded(true);
+        onPlay?.();
+      }}
       aria-label={`${t("playVideo")}: ${title}`}
       className="group relative block h-full w-full cursor-pointer overflow-hidden rounded-xl"
     >

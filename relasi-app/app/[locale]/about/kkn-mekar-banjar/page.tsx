@@ -44,10 +44,10 @@ export default async function KknMekarBanjarPage({
   ] as const;
 
   const clusters = [
-    { key: "soshum", label: t("clusterSoshum"), hint: t("clusterSoshumHint") },
     { key: "saintek", label: t("clusterSaintek"), hint: t("clusterSaintekHint") },
-    { key: "medika", label: t("clusterMedika"), hint: t("clusterMedikaHint") },
+    { key: "soshum", label: t("clusterSoshum"), hint: t("clusterSoshumHint") },
     { key: "agro", label: t("clusterAgro"), hint: t("clusterAgroHint") },
+    { key: "medika", label: t("clusterMedika"), hint: t("clusterMedikaHint") },
   ] as const;
 
   const programs = [

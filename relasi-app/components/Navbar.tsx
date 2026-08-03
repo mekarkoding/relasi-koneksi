@@ -189,7 +189,10 @@ export function Navbar() {
   const fallbackProgress = useMotionValue(1);
   const progress = entrance?.progress ?? fallbackProgress;
   const isHome = pathname === "/";
-  const animateEntrance = Boolean(isHome && !reduceMotion && entrance);
+  const skipEntrance = Boolean(entrance?.entranceSeen);
+  const animateEntrance = Boolean(
+    isHome && !reduceMotion && entrance && !skipEntrance,
+  );
 
   const navY = useTransform(
     progress,

@@ -10,6 +10,11 @@ interface Props {
   delay?: number;
   /** Slightly stronger rise for feature cards */
   distance?: number;
+  /**
+   * When false, stays hidden at the initial offset.
+   * Flip to true after a gate (e.g. home entrance) so whileInView can play for real.
+   */
+  enabled?: boolean;
 }
 
 /**
@@ -20,11 +25,24 @@ export function Reveal({
   className,
   delay = 0,
   distance = 36,
+  enabled = true,
 }: Props) {
   const reduceMotion = useReducedMotion();
 
   if (reduceMotion) {
     return <div className={className}>{children}</div>;
+  }
+
+  if (!enabled) {
+    return (
+      <div
+        className={className}
+        style={{ opacity: 0, transform: `translateY(${distance}px)` }}
+        aria-hidden
+      >
+        {children}
+      </div>
+    );
   }
 
   return (

@@ -1,10 +1,7 @@
 /**
- * Generates the placeholder assets for the "Ambient Mountain" home page:
- * - gapura.png: a candi-bentar (split gate) silhouette with a fully
- *   transparent center column, used for the zoom-through entrance.
- * - hero-mist.png: a moody blue-grey/forest gradient backdrop.
+ * Generates hero-mist.png — moody blue-grey/forest gradient for the landing reveal.
+ * Gapura art is real PNGs (gapura-left.png / gapura-right.png); do not regenerate those.
  *
- * Replace with real photography/artwork before launch.
  * Run: node scripts/generate-ambient-assets.mjs
  */
 import zlib from "node:zlib";
@@ -50,18 +47,19 @@ function makePngRgba(width, height, pixelAt) {
   const rows = [];
   for (let y = 0; y < height; y++) {
     const row = Buffer.alloc(1 + width * 4);
+    row[0] = 0; // filter none
     for (let x = 0; x < width; x++) {
-      const [r, g, b, a] = pixelAt(x, y);
-      const o = 1 + x * 4;
-      row[o] = r;
-      row[o + 1] = g;
-      row[o + 2] = b;
-      row[o + 3] = a;
+      const [r, g, b, a] = pixelAt(x, y, width, height);
+      const i = 1 + x * 4;
+      row[i] = r;
+      row[i + 1] = g;
+      row[i + 2] = b;
+      row[i + 3] = a;
     }
     rows.push(row);
   }
-  const idat = zlib.deflateSync(Buffer.concat(rows), { level: 9 });
 
+  const idat = zlib.deflateSync(Buffer.concat(rows), { level: 9 });
   return Buffer.concat([
     Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
     chunk("IHDR", ihdr),
@@ -82,44 +80,9 @@ function lerpColor(c1, c2, t) {
   ];
 }
 
-// ---- gapura.png: split gate, transparent middle ----
-const SIZE = 1600;
-const CX = SIZE / 2;
-const GAP_HALF = 250; // transparent column half-width
-// Stepped tiers of the candi bentar: [outerDx, topY, shade]
-const TIERS = [
-  [350, 120, 1.0],
-  [450, 260, 0.94],
-  [550, 400, 0.88],
-  [650, 540, 0.82],
-  [800, 680, 0.76],
-];
-const FOREST = [22, 40, 31]; // deep forest silhouette
-
-function gapuraPixel(x, y) {
-  const dx = Math.abs(x - CX);
-  if (dx < GAP_HALF) return [0, 0, 0, 0]; // transparent center
-  for (const [outer, top, shade] of TIERS) {
-    if (dx < outer) {
-      if (y >= top) {
-        return [
-          Math.round(FOREST[0] * shade),
-          Math.round(FOREST[1] * shade),
-          Math.round(FOREST[2] * shade),
-          255,
-        ];
-      }
-      return [0, 0, 0, 0];
-    }
-  }
-  // outside outermost tier: opaque base wall below the lowest tier top
-  return y >= TIERS[TIERS.length - 1][1] ? [...FOREST, 255] : [0, 0, 0, 0];
-}
-
-// ---- hero-mist.png: fog -> lake blue-grey -> deep forest ----
-const MIST_TOP = [143, 166, 179]; // fog
-const MIST_MID = [44, 74, 94]; // Danau Tamblingan blue-grey
-const MIST_BOTTOM = [30, 53, 47]; // deep forest green
+const MIST_TOP = [143, 166, 179];
+const MIST_MID = [44, 74, 94];
+const MIST_BOTTOM = [30, 53, 47];
 
 function heroPixel(x, y, width, height) {
   const t = y / height;
@@ -129,7 +92,6 @@ function heroPixel(x, y, width, height) {
   } else {
     rgb = lerpColor(MIST_MID, MIST_BOTTOM, (t - 0.45) / 0.55);
   }
-  // subtle horizontal mist bands
   const band = Math.sin((y / height) * Math.PI * 6 + x / 900) * 6;
   return [
     Math.min(255, Math.max(0, rgb[0] + band)),
@@ -139,18 +101,10 @@ function heroPixel(x, y, width, height) {
   ];
 }
 
-const outputs = [
-  ["images/gapura.png", () => makePngRgba(SIZE, SIZE, gapuraPixel)],
-  [
-    "images/hero-mist.png",
-    () => makePngRgba(1920, 1080, (x, y) => heroPixel(x, y, 1920, 1080)),
-  ],
-];
-
-for (const [rel, make] of outputs) {
-  const target = path.join(root, "public", rel);
-  fs.mkdirSync(path.dirname(target), { recursive: true });
-  fs.writeFileSync(target, make());
-  console.log("created", rel);
-}
-console.log("Done. Replace with real gapura artwork / photography before launch.");
+const target = path.join(root, "public", "images", "hero-mist.png");
+fs.mkdirSync(path.dirname(target), { recursive: true });
+fs.writeFileSync(
+  target,
+  makePngRgba(1920, 1080, (x, y) => heroPixel(x, y, 1920, 1080)),
+);
+console.log("created images/hero-mist.png");
