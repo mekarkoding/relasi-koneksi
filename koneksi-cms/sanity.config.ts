@@ -3,13 +3,13 @@ import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemas'
 import './styles/studio.css'
 
+const BERANDA_DOC_ID = 'beranda'
+
 /**
  * KONEKSI — the content studio for the RELASI village tourism website.
- * Villagers publish articles (4 types) and manage wisata + desa entries.
+ * Villagers publish articles and manage wisata, desa, galeri, and beranda backgrounds.
  *
- * STRICT RULE (PRD v2.0 Section 4.3 / 6): six villager document types exist
- * (artikel_berita, artikel_sejarah, artikel_partnership, artikel_liputan, wisata, desa)
- * plus the supporting `category`. Do not add more without human approval.
+ * `galeri` + `beranda` added with human approval.
  */
 export default defineConfig({
   name: 'koneksi',
@@ -90,11 +90,26 @@ export default defineConfig({
             S.listItem()
               .title('Desa')
               .child(S.documentTypeList('desa').title('Desa')),
+            S.listItem()
+              .title('Galeri')
+              .child(S.documentTypeList('galeri').title('Galeri')),
+            S.divider(),
+            S.listItem()
+              .title('Latar Beranda')
+              .id(BERANDA_DOC_ID)
+              .child(
+                S.document()
+                  .schemaType('beranda')
+                  .documentId(BERANDA_DOC_ID)
+                  .title('Latar Beranda'),
+              ),
           ]),
     }),
   ],
 
   schema: {
     types: schemaTypes,
+    // Singleton: hide "beranda" from the global Create menu
+    templates: (templates) => templates.filter((template) => template.schemaType !== 'beranda'),
   },
 })

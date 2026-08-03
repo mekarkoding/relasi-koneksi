@@ -3,8 +3,12 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { getFeaturedWisata, getAllDesa } from "@/lib/sanity/queries";
-import { VILLAGES } from "@/lib/sanity/types";
+import {
+  getBerandaBackgrounds,
+  getFeaturedWisata,
+  getAllDesa,
+} from "@/lib/sanity/queries";
+import { VILLAGES, type BerandaBackgrounds } from "@/lib/sanity/types";
 import { homeVideos } from "@/data/home-videos";
 import { WisataCard } from "@/components/WisataCard";
 import { DesaCard } from "@/components/DesaCard";
@@ -15,10 +19,13 @@ import { FeaturedWisataCarousel } from "@/components/home/FeaturedWisataCarousel
 import { FeaturedDesaCarousel } from "@/components/home/FeaturedDesaCarousel";
 import { HomeVideoCarousel } from "@/components/home/HomeVideoCarousel";
 import { HomeReveal } from "@/components/home/HomeReveal";
+import { SectionBackgroundImage } from "@/components/home/SectionBackgroundImage";
 import { localeAlternates } from "@/lib/seo";
 import gapuraLeft from "@/public/images/gapura-left.png";
 import gapuraRight from "@/public/images/gapura-right.png";
 import heroTamblingan1 from "@/public/images/hero/tamblingan-1.jpg";
+
+export const revalidate = 60;
 
 export async function generateMetadata({
   params,
@@ -44,27 +51,28 @@ async function FeaturedWisataSection({
   subtitle,
   emptyLabel,
   ctaLabel,
+  background,
 }: {
   title: string;
   subtitle: string;
   emptyLabel: string;
   ctaLabel: string;
+  background: BerandaBackgrounds["wisataBackground"];
 }) {
   const featured = await getFeaturedWisata(3);
 
   return (
-    <section className="relative z-30 -mt-24 rounded-t-[4rem] bg-mist-dark pb-28 pt-20 md:pb-48">
-      <div className="mx-auto max-w-6xl px-4">
+    <section className="relative z-30 -mt-24 overflow-hidden rounded-t-[4rem] bg-mist-dark pb-28 pt-20 md:pb-48">
+      <SectionBackgroundImage image={background} />
+      <div className="relative mx-auto max-w-6xl px-4">
         <HomeReveal>
           <SectionHeading title={title} subtitle={subtitle} />
         </HomeReveal>
         {featured.length > 0 ? (
           <>
-            {/* Mobile: horizontal snap carousel with idle auto-advance */}
             <HomeReveal>
               <FeaturedWisataCarousel items={featured} />
             </HomeReveal>
-            {/* Desktop: staggered subak grid */}
             <div className="hidden gap-10 md:grid md:grid-cols-3 md:gap-8">
               {featured.map((wisata, i) => (
                 <HomeReveal
@@ -100,9 +108,11 @@ async function FeaturedWisataSection({
 async function EmpatDesaSection({
   title,
   subtitle,
+  background,
 }: {
   title: string;
   subtitle: string;
+  background: BerandaBackgrounds["desaBackground"];
 }) {
   const allDesa = await getAllDesa();
   const ordered = VILLAGES.map((v) =>
@@ -112,16 +122,15 @@ async function EmpatDesaSection({
   if (ordered.length === 0) return null;
 
   return (
-    <section className="relative z-40 -mt-24 rounded-t-[4rem] bg-[#d9e3e9] pb-40 pt-20 md:pb-56">
-      <div className="mx-auto max-w-6xl px-4">
+    <section className="relative z-40 -mt-24 overflow-hidden rounded-t-[4rem] bg-[#d9e3e9] pb-40 pt-20 md:pb-56">
+      <SectionBackgroundImage image={background} />
+      <div className="relative mx-auto max-w-6xl px-4">
         <HomeReveal>
           <SectionHeading title={title} subtitle={subtitle} />
         </HomeReveal>
-        {/* Mobile: single-slide carousel with village-name indicator */}
         <HomeReveal>
           <FeaturedDesaCarousel items={ordered} />
         </HomeReveal>
-        {/* Desktop: 4-column grid */}
         <div className="hidden gap-6 md:grid md:grid-cols-4">
           {ordered.map((desa, i) => (
             <HomeReveal key={desa._id} delay={0.1 + i * 0.1}>
@@ -170,6 +179,7 @@ export default async function HomePage({
   const hasHomeVideos = homeVideos.some((video) =>
     Boolean(video.youtubeUrl.trim()),
   );
+  const backgrounds = (await getBerandaBackgrounds()) ?? {};
 
   return (
     <>
@@ -186,8 +196,9 @@ export default async function HomePage({
       />
 
       {/* Instagram feed streams so the Graph API never blocks the gapura paint */}
-      <section className="relative z-20 -mt-16 rounded-t-[4rem] bg-mist pb-40 pt-20 md:-mt-24 md:pb-48">
-        <div className="mx-auto max-w-6xl px-4">
+      <section className="relative z-20 -mt-16 overflow-hidden rounded-t-[4rem] bg-mist pb-40 pt-20 md:-mt-24 md:pb-48">
+        <SectionBackgroundImage image={backgrounds.instagramBackground} />
+        <div className="relative mx-auto max-w-6xl px-4">
           <HomeReveal>
             <SectionHeading title={tInstagram("title")} subtitle={tInstagram("subtitle")} />
           </HomeReveal>
@@ -199,25 +210,29 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* Destinasi Wisata (3 featured from Sanity) */}
       <Suspense fallback={<SectionSkeleton variant="wisata" />}>
         <FeaturedWisataSection
           title={t("wisataTitle")}
           subtitle={t("wisataSubtitle")}
           emptyLabel={t("wisataEmpty")}
           ctaLabel={t("wisataCta")}
+          background={backgrounds.wisataBackground}
         />
       </Suspense>
 
-      {/* Empat Desa */}
       <Suspense fallback={<SectionSkeleton variant="desa" />}>
-        <EmpatDesaSection title={t("desaTitle")} subtitle={t("desaSubtitle")} />
+        <EmpatDesaSection
+          title={t("desaTitle")}
+          subtitle={t("desaSubtitle")}
+          background={backgrounds.desaBackground}
+        />
       </Suspense>
 
       {/* Video carousel — Adat profile + KKN films */}
       {hasHomeVideos && (
-        <section className="relative z-50 -mt-24 rounded-t-[4rem] bg-tamblingan py-20 text-mist">
-          <div className="mx-auto max-w-4xl px-4">
+        <section className="relative z-50 -mt-24 overflow-hidden rounded-t-[4rem] bg-tamblingan py-20 text-mist">
+          <SectionBackgroundImage image={backgrounds.afterMovieBackground} darken />
+          <div className="relative mx-auto max-w-4xl px-4">
             <HomeReveal>
               <div className="text-center">
                 <h2 className="text-2xl font-extrabold sm:text-3xl">

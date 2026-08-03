@@ -23,7 +23,8 @@ Built per **PRD v2.0**: Next.js App Router + TypeScript, Tailwind CSS, next-intl
 | Wisata (attractions) | Sanity | ✅ |
 | Desa (4 fixed villages) | Sanity | ✅ (content only) |
 | Booklets | `relasi-app/data/booklet.ts` | ❌ (code) |
-| Gallery photos | `relasi-app/data/gallery.ts` | ❌ (code) |
+| Gallery photos | Sanity (`galeri`) | ✅ |
+| Beranda backgrounds | Sanity (`beranda` singleton) | ✅ |
 | Maps | `relasi-app/data/maps.ts` | ❌ (code) |
 | After-movie + guidebook | `relasi-app/data/downloads.ts` | ❌ (code) |
 | Instagram feed | Instagram Graph API (read-only) | ❌ |
@@ -72,25 +73,30 @@ Vercel redeploys automatically.
 
 1. **Booklets** — `data/booklet.ts`. Cover + flip-book pages + a PDF under
    `public/files/booklets/`.
-2. **Gallery photos** — `data/gallery.ts`. Static-import each image from
-   `public/images/gallery/`.
-3. **Maps** — `data/maps.ts`. Add `public/files/maps/` assets, static-import
+2. **Maps** — `data/maps.ts`. Add `public/files/maps/` assets, static-import
    image maps, then add entries (`fileType: 'image' | 'pdf'`). Starts empty.
-4. **After-movie + guidebook** — `data/downloads.ts`. Set the YouTube URL and
+3. **After-movie + guidebook** — `data/downloads.ts`. Set the YouTube URL and
    replace `public/files/guidebook.pdf`.
+
+Gallery photos are published in **KONEKSI → Galeri** (one document per photo),
+not in code.
 
 ## KONEKSI (Sanity) admin
 
-Villagers manage six document types: **Berita, Sejarah, Partnership, Liputan,
-Wisata, Desa** (plus **Kategori** for Berita). Everything else is code.
+Villagers manage: **Berita, Sejarah, Partnership, Liputan, Wisata, Desa, Galeri**,
+plus **Latar Beranda** (singleton backgrounds) and **Kategori** for Berita.
+Booklets, maps, and downloads remain code.
 
 - **Desa** must be seeded once as four documents (Gobleg, Munduk, Gesing,
   Umejero); do not create extras or change a `villageName`.
-- **Wisata** only appears on the site after **Publish** in Sanity Studio (native draft/publish — same as articles).
+- **Wisata** and **Galeri** only appear on the site after **Publish** in Sanity
+  Studio (native draft/publish — same as articles).
+- **Latar Beranda** is a single document (Hero / Instagram / Wisata / Desa /
+  After-movie backgrounds). Article pages are not included — leave them as-is.
 - **Inviting editors:** [sanity.io/manage](https://sanity.io/manage) → project →
   Members → invite with the **Editor** role. Keep the shared KKN email as Admin.
-- **Publish latency:** article/wisata/desa pages revalidate every 60s (ISR). For
-  instant updates, add a Sanity webhook → Vercel deploy hook.
+- **Publish latency:** CMS pages revalidate every 60s (ISR). For instant
+  updates, add a Sanity webhook → Vercel deploy hook.
 
 ### Legacy article migration
 

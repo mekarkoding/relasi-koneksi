@@ -4,9 +4,11 @@ import type {
   Article,
   ArticlePreview,
   ArticleType,
+  BerandaBackgrounds,
   Category,
   Desa,
   DesaPreview,
+  GaleriPhoto,
   LiputanArticle,
   Wisata,
   WisataPreview,
@@ -209,6 +211,45 @@ export async function getDesaByVillage(village: string): Promise<Desa | null> {
       gallery
     }`,
     { village },
+    null,
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Galeri (Media → Galeri photos)                                     */
+/* ------------------------------------------------------------------ */
+
+export async function getGalleryPhotos(): Promise<GaleriPhoto[]> {
+  return sanityFetch<GaleriPhoto[]>(
+    groq`*[_type == "galeri" && defined(image.asset)]
+      | order(publishedAt desc){
+        _id,
+        image,
+        alt_id,
+        alt_en,
+        publishedAt,
+        "width": image.asset->metadata.dimensions.width,
+        "height": image.asset->metadata.dimensions.height
+      }`,
+    {},
+    [],
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Beranda backgrounds (singleton)                                    */
+/* ------------------------------------------------------------------ */
+
+export async function getBerandaBackgrounds(): Promise<BerandaBackgrounds | null> {
+  return sanityFetch<BerandaBackgrounds | null>(
+    groq`*[_type == "beranda" && _id == "beranda"][0]{
+      heroBackground,
+      instagramBackground,
+      wisataBackground,
+      desaBackground,
+      afterMovieBackground
+    }`,
+    {},
     null,
   );
 }

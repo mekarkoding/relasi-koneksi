@@ -122,6 +122,27 @@ export interface Desa {
 /** Listing/card shape for desa (used by home "Empat Desa" + cross-links). */
 export type DesaPreview = Pick<Desa, "_id" | "villageName" | "mainImage">;
 
+/** Single gallery photo (Media → Galeri), CMS-managed. */
+export interface GaleriPhoto {
+  _id: string;
+  image: SanityImageWithAlt & SanityImageSource;
+  alt_id: string;
+  alt_en?: string;
+  publishedAt: string;
+  /** Pixel size from Sanity asset metadata (for next/image). */
+  width: number;
+  height: number;
+}
+
+/** Home (Beranda) section background images — singleton `beranda` document. */
+export interface BerandaBackgrounds {
+  heroBackground?: (SanityImageWithAlt & SanityImageSource) | null;
+  instagramBackground?: (SanityImageWithAlt & SanityImageSource) | null;
+  wisataBackground?: (SanityImageWithAlt & SanityImageSource) | null;
+  desaBackground?: (SanityImageWithAlt & SanityImageSource) | null;
+  afterMovieBackground?: (SanityImageWithAlt & SanityImageSource) | null;
+}
+
 /**
  * Pick the locale-appropriate Portable Text body for wisata/desa, where both
  * languages are always required (no Indonesian-only fallback).

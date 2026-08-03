@@ -1,13 +1,14 @@
 ﻿---
-description: STRICT RULE - Sanity schemas limited to the 6 v2.0 document types + kategori
+description: STRICT RULE - Sanity schemas limited to approved document types + kategori
 globs: "**/koneksi-cms/**/*.ts"
 alwaysApply: false
 ---
 
-# STRICT RULE: Sanity CMS Scope (PRD v2.0)
+# STRICT RULE: Sanity CMS Scope (PRD v2.0 + approved extensions)
 
-**Exactly SIX villager document types exist, plus the supporting `category`.**
+**Exactly these villager document types exist, plus the supporting `category`.**
 Do NOT add more document types without human approval.
+(`galeri` and `beranda` were added with human approval.)
 
 ## Allowed Document Types
 
@@ -19,6 +20,8 @@ Do NOT add more document types without human approval.
 | `artikel_liputan` | Liputan | none | `externalUrl` + `sourceName`; NO detail page |
 | `wisata` | Wisata | `description_id/en` (Portable Text) | Bilingual REQUIRED; native Sanity Draft/Publish; `gallery` ≤ 10 |
 | `desa` | Desa | `description_id/en` (Portable Text) | Fixed `villageName` (gobleg/munduk/gesing/umejero); `dataFields[]`; `gallery` |
+| `galeri` | Galeri | none | One document per photo; `image` + bilingual `alt_*`; Media → Galeri |
+| `beranda` | Latar Beranda | none | **Singleton** (`_id: beranda`). Home section backgrounds only — not article pages |
 | `category` | Kategori | — | Referenced only by `artikel_berita` |
 
 The three body-bearing article types share one factory:
@@ -31,7 +34,8 @@ duplicate the fields.
 `portableText` (array), `youtube` (object), `articleBlock` (object) — these are
 NOT documents. Register everything in `koneksi-cms/schemas/index.ts` and wire
 the desk in `koneksi-cms/sanity.config.ts` (Artikel → Berita / Sejarah /
-Partnership / Liputan; Kategori nested under Berita only; then Wisata, Desa).
+Partnership / Liputan; Kategori nested under Berita only; then Wisata, Desa,
+Galeri, Latar Beranda singleton).
 
 ## Villager Permission Boundary
 
@@ -40,15 +44,18 @@ Partnership / Liputan; Kategori nested under Berita only; then Wisata, Desa).
 | Create/edit/publish the 4 article types | ✅ Yes |
 | Edit wisata (Sanity Publish) | ✅ Yes |
 | Edit the 4 desa documents | ✅ Yes (edit content) |
+| Create/edit/publish galeri photos | ✅ Yes |
+| Edit Latar Beranda backgrounds | ✅ Yes (singleton) |
 | Select/create `category` (kategori) | ✅ Yes |
 | Create/delete extra desa or change `villageName` | ❌ NO (4 fixed) |
-| Edit booklet / gallery / maps / downloads | ❌ NO (hardcoded) |
+| Edit booklet / maps / downloads | ❌ NO (hardcoded) |
 | Edit site settings / navigation / footer | ❌ NO (code only) |
+| Change article-page backgrounds via CMS | ❌ NO (only Beranda) |
 
 ## What Does NOT Go in Sanity
 
 Hardcoded TypeScript data files instead (see `data-architecture` rule):
-`data/booklet.ts`, `data/gallery.ts`, `data/maps.ts`, `data/downloads.ts`.
+`data/booklet.ts`, `data/maps.ts`, `data/downloads.ts`.
 The Instagram feed comes from the Graph API, not Sanity.
 
 ## Migrations

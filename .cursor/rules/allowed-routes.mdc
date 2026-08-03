@@ -10,11 +10,11 @@ alwaysApply: false
 
 | # | Nav (ID / EN) | Type | Route | Content Source |
 |---|---------------|------|-------|----------------|
-| 1 | Beranda / Home | link | `/{locale}` | Sanity (featured wisata + desa) + Instagram feed + hardcoded after-movie |
+| 1 | Beranda / Home | link | `/{locale}` | Sanity (featured wisata + desa + beranda BGs) + Instagram + hardcoded after-movie URL |
 | 2 | Wisata / Attractions | link | `/{locale}/wisata` (+ `/[slug]`) | Sanity (`wisata`) |
 | 3 | Artikel / Articles | dropdown | `/{locale}/articles/[type]` | Sanity (`artikel_*`) |
 | 4 | Desa / Villages | dropdown | `/{locale}/desa/[village]` | Sanity (`desa`) |
-| 5 | Media | dropdown | `/{locale}/media/{galeri,buklet,peta}` | Hardcoded data files |
+| 5 | Media | dropdown | `/{locale}/media/{galeri,buklet,peta}` | Galeri = Sanity (`galeri`); buklet/peta = hardcoded |
 | 6 | Tentang / About | dropdown | `/{locale}/about/{adat-dalem-tamblingan,kkn-mekar-banjar}` | messages JSON |
 
 ### Article types (`[type]`)
