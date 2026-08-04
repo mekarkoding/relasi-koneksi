@@ -26,26 +26,33 @@ function FlipBookSkeleton() {
 function PageCard({ page }: { page: BookletPage }) {
   const locale = useLocale() as Locale;
   const caption = pickLocale(locale, page.caption_id ?? "", page.caption_en);
+  const hasPhoto = Boolean(page.photo);
 
   return (
     <div className="flex h-full flex-col overflow-hidden rounded-xl border border-mist-dark bg-white">
-      <div className="relative h-1/2 shrink-0">
-        <Image
-          src={page.photo}
-          alt={pickLocale(locale, page.title_id, page.title_en)}
-          fill
-          sizes="(max-width: 640px) 90vw, 400px"
-          className="object-cover"
-        />
-      </div>
-      <div className="flex flex-1 flex-col p-4">
-        <h3 className="text-lg font-bold text-forest">
+      {hasPhoto && page.photo ? (
+        <div className="relative h-1/2 shrink-0">
+          <Image
+            src={page.photo}
+            alt={pickLocale(locale, page.title_id, page.title_en)}
+            fill
+            sizes="(max-width: 640px) 90vw, 400px"
+            className="object-cover"
+          />
+        </div>
+      ) : null}
+      <div
+        className={`flex flex-1 flex-col p-4 ${hasPhoto ? "" : "justify-start overflow-y-auto pt-6"}`}
+      >
+        <h3 className={`font-bold text-forest ${hasPhoto ? "text-lg" : "text-xl"}`}>
           {pickLocale(locale, page.title_id, page.title_en)}
         </h3>
         {caption ? (
           <p className="text-sm italic text-forest/60">{caption}</p>
         ) : null}
-        <p className="mt-2 text-sm leading-relaxed text-forest/80">
+        <p
+          className={`mt-2 leading-relaxed text-forest/80 whitespace-pre-line ${hasPhoto ? "text-sm" : "text-sm sm:text-[0.9rem]"}`}
+        >
           {pickLocale(locale, page.description_id, page.description_en)}
         </p>
       </div>
