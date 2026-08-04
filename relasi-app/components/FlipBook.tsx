@@ -51,7 +51,7 @@ function PageCard({ page }: { page: BookletPage }) {
           <p className="text-sm italic text-forest/60">{caption}</p>
         ) : null}
         <p
-          className={`mt-2 leading-relaxed text-forest/80 whitespace-pre-line ${hasPhoto ? "text-sm" : "text-sm sm:text-[0.9rem]"}`}
+          className={`mt-2 text-justify leading-relaxed text-forest/80 whitespace-pre-line ${hasPhoto ? "text-sm" : "text-sm sm:text-[0.9rem]"}`}
         >
           {pickLocale(locale, page.description_id, page.description_en)}
         </p>
