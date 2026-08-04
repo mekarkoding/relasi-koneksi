@@ -1,15 +1,20 @@
+import {DocumentTextIcon} from '@sanity/icons'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 import {defineField, defineType} from 'sanity'
 import {AutoSlugInput} from '../components/AutoSlugInput'
 
 /**
  * External coverage. A Liputan card links straight to an external article
  * (externalUrl) - there is NO internal detail page and NO body/rich text.
+ * Drag-and-drop order in Studio (`orderRank`) drives the website listing order.
  */
 export default defineType({
   name: 'artikel_liputan',
   title: 'Liputan',
   type: 'document',
+  icon: DocumentTextIcon,
   fields: [
+    orderRankField({type: 'artikel_liputan'}),
     defineField({
       name: 'title_id',
       title: 'Judul (Bahasa Indonesia)',
@@ -85,6 +90,7 @@ export default defineType({
     }),
   ],
   orderings: [
+    orderRankOrdering,
     {
       title: 'Terbaru',
       name: 'publishedAtDesc',

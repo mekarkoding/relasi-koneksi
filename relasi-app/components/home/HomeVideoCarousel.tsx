@@ -13,41 +13,71 @@ const SWIPE_THRESHOLD = 48;
 
 interface Slide {
   id: string;
-  videoId: string;
+  /** Null when the YouTube URL is not ready yet — show a placeholder. */
+  videoId: string | null;
   title: string;
   description: string;
 }
 
 interface Props {
   videos: HomeVideo[];
+  /** Override carousel region label (defaults to home.videosTitle). */
+  ariaLabel?: string;
+  /** Override empty-slide label (defaults to home.videoComingSoon). */
+  comingSoonLabel?: string;
 }
 
 function toSlides(videos: HomeVideo[], locale: Locale): Slide[] {
-  return videos.flatMap((video) => {
-    const videoId = extractYouTubeId(video.youtubeUrl);
-    if (!videoId) return [];
-    return [
-      {
-        id: video.id,
-        videoId,
-        title: locale === "en" ? video.title_en : video.title_id,
-        description:
-          locale === "en" ? video.description_en : video.description_id,
-      },
-    ];
-  });
+  return videos.map((video) => ({
+    id: video.id,
+    videoId: extractYouTubeId(video.youtubeUrl) || null,
+    title: locale === "en" ? video.title_en : video.title_id,
+    description:
+      locale === "en" ? video.description_en : video.description_id,
+  }));
+}
+
+function VideoSlidePlaceholder({ label }: { label: string }) {
+  return (
+    <div
+      className="relative flex h-full w-full items-center justify-center bg-mist-dark/80"
+      aria-hidden
+    >
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.2),transparent_55%),linear-gradient(160deg,#3d5a4a_0%,#2a4035_45%,#1a2a22_100%)]" />
+      <div className="relative flex flex-col items-center gap-2 px-4 text-center">
+        <svg
+          className="h-12 w-12 text-mist/40"
+          viewBox="0 0 68 48"
+          fill="currentColor"
+          aria-hidden
+        >
+          <path d="M66.52,7.74c-0.78-2.93-2.49-5.41-5.42-6.19C55.79,.13,34,0,34,0S12.21,.13,6.9,1.55 C3.97,2.33,2.27,4.81,1.48,7.74C0.06,13.05,0,24,0,24s0.06,10.95,1.48,16.26c.78,2.93,2.49,5.41,5.42,6.19 C12.21,47.87,34,48,34,48s21.79-0.13,27.1-1.55c2.93-.78,4.64-3.26,5.42-6.19C67.94,34.95,68,24,68,24S67.94,13.05,66.52,7.74z" />
+          <path d="M 45,24 27,14 27,34" fill="white" fillOpacity="0.55" />
+        </svg>
+        <span className="rounded-lg bg-mist/10 px-3 py-1.5 text-xs font-medium tracking-wide text-mist/60">
+          {label}
+        </span>
+      </div>
+    </div>
+  );
 }
 
 /**
  * Home landing YouTube carousel — one embed at a time, manual + idle advance.
  * Auto-advance pauses while a facade is opened (iframe playing).
  */
-export function HomeVideoCarousel({ videos }: Props) {
+export function HomeVideoCarousel({
+  videos,
+  ariaLabel,
+  comingSoonLabel,
+}: Props) {
   const locale = useLocale() as Locale;
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
   const reduceMotion = useReducedMotion();
   const slides = toSlides(videos, locale);
+  const regionLabel = ariaLabel ?? t("videosTitle");
+  const placeholderLabel = comingSoonLabel ?? t("videoComingSoon");
 
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pointerStartX = useRef<number | null>(null);
@@ -110,7 +140,7 @@ export function HomeVideoCarousel({ videos }: Props) {
   const offset = reduceMotion ? 0 : 56;
 
   return (
-    <div role="region" aria-roledescription="carousel" aria-label={t("videosTitle")}>
+    <div role="region" aria-roledescription="carousel" aria-label={regionLabel}>
       <div className="relative mx-auto max-w-3xl">
         <div
           className="overflow-hidden touch-pan-y select-none"
@@ -155,15 +185,19 @@ export function HomeVideoCarousel({ videos }: Props) {
               transition={{ duration: reduceMotion ? 0.2 : 0.35, ease: "easeOut" }}
             >
               <div className="relative aspect-video overflow-hidden rounded-xl">
-                <LazyYouTubeEmbed
-                  key={current.id}
-                  videoId={current.videoId}
-                  title={current.title}
-                  onPlay={() => {
-                    clearIdleTimer();
-                    setIsCurrentPlaying(true);
-                  }}
-                />
+                {current.videoId ? (
+                  <LazyYouTubeEmbed
+                    key={current.id}
+                    videoId={current.videoId}
+                    title={current.title}
+                    onPlay={() => {
+                      clearIdleTimer();
+                      setIsCurrentPlaying(true);
+                    }}
+                  />
+                ) : (
+                  <VideoSlidePlaceholder label={placeholderLabel} />
+                )}
               </div>
               <div className="mt-5 text-center">
                 <h3 className="text-lg font-bold text-mist sm:text-xl">

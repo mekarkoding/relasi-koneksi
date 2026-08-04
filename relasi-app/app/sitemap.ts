@@ -15,13 +15,15 @@ import { siteUrl } from "@/lib/seo";
 const STATIC_PATHS = [
   "",
   "/wisata",
+  "/articles/all",
   ...ARTICLE_TYPES.map((type) => `/articles/${type}`),
   ...VILLAGES.map((village) => `/desa/${village}`),
   "/media/galeri",
   "/media/buklet",
   "/media/peta",
   "/about/adat-dalem-tamblingan",
-  "/about/kkn-mekar-banjar",
+  "/about/kkn-mekar-banjar-2026",
+  "/about/kkn-mekar-banjar-2025",
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -1,6 +1,5 @@
 import {defineField, defineType} from 'sanity'
 import {ArticleBlockItem} from '../../components/ArticleBlockItem'
-import {ArticleBlockInput} from '../../components/ArticleBlockInput'
 import {createBlockLocaleField} from '../../components/BlockLocaleField'
 
 function hasPortableTextContent(value: unknown): boolean {
@@ -10,7 +9,7 @@ function hasPortableTextContent(value: unknown): boolean {
 /**
  * One content section: Indonesian + English portable text pair.
  * Custom `label` appears in the Isi Artikel list; editor field titles stay "Block N (…)".
- * Opens in a near-fullscreen dialog with visible minimize / back controls.
+ * Opens in a near-fullscreen dialog (modal width 5 on the parent array).
  */
 export default defineType({
   name: 'articleBlock',
@@ -18,7 +17,6 @@ export default defineType({
   type: 'object',
   components: {
     item: ArticleBlockItem,
-    input: ArticleBlockInput,
   },
   fields: [
     defineField({

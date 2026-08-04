@@ -79,7 +79,9 @@ async function fetchInstagramPosts(limit: number): Promise<InstagramPost[]> {
 
 const getCachedInstagramPosts = unstable_cache(
   async (limit: number) => fetchInstagramPosts(limit),
-  ["instagram-posts", GRAPH_API_VERSION],
+  // Include the public handle so switching Instagram accounts invalidates
+  // a previous cached feed (empty or from the old account).
+  ["instagram-posts", GRAPH_API_VERSION, instagramHandle || "unset"],
   { revalidate: 3600 },
 );
 

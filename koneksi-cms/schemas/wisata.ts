@@ -1,3 +1,5 @@
+import {EarthGlobeIcon} from '@sanity/icons'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {AutoSlugInput} from '../components/AutoSlugInput'
 
@@ -5,12 +7,15 @@ import {AutoSlugInput} from '../components/AutoSlugInput'
  * Wisata (attraction). CMS-managed in v2.0 (moved from hardcoded data).
  * Bilingual is REQUIRED on both name and description - no Indonesian-only fallback.
  * Visibility uses Sanity's native Draft / Publish — no custom status field.
+ * Drag-and-drop order in Studio (`orderRank`) drives the website listing order.
  */
 export default defineType({
   name: 'wisata',
   title: 'Wisata',
   type: 'document',
+  icon: EarthGlobeIcon,
   fields: [
+    orderRankField({type: 'wisata'}),
     defineField({
       name: 'name_id',
       title: 'Nama (Bahasa Indonesia)',
@@ -100,6 +105,7 @@ export default defineType({
     }),
   ],
   orderings: [
+    orderRankOrdering,
     {
       title: 'Terbaru',
       name: 'publishedAtDesc',

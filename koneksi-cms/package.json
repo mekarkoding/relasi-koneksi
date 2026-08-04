@@ -12,16 +12,21 @@
     "deploy": "sanity deploy",
     "migrate:article-blocks": "sanity migration run migrate-article-blocks --no-dry-run --no-confirm",
     "migrate:article-to-berita": "sanity exec scripts/migrate-article-to-berita.ts --with-user-token",
+    "migrate:seed-order-ranks": "sanity exec scripts/seed-order-ranks.ts --with-user-token",
+    "migrate:seed-galeri-party": "sanity exec scripts/seed-galeri-party.ts --with-user-token",
     "migrate:catur-desa:extract": "node scripts/extract-catur-desa-articles.js",
     "migrate:catur-desa:import": "sanity exec scripts/import-catur-desa-articles.ts --with-user-token"
   },
   "dependencies": {
+    "@sanity/orderable-document-list": "^2.0.18",
+    "lexorank": "^1.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "sanity": "^6.0.0",
     "styled-components": "^6.1.15"
   },
   "devDependencies": {
+    "@types/node": "^26.1.2",
     "@types/react": "^19.0.0",
     "typescript": "^5.6.3"
   }

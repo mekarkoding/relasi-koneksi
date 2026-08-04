@@ -1,6 +1,7 @@
+import {DocumentTextIcon} from '@sanity/icons'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {AutoSlugInput} from '../../components/AutoSlugInput'
-import {ArticleDocumentInput} from '../../components/ArticleDocumentInput'
 import {LanguageModeToggle} from '../../components/LanguageModeToggle'
 
 function newBlockKey() {
@@ -21,6 +22,9 @@ export interface ArticleTypeOptions {
  *
  * They differ only in the presence of the `category` reference (Berita only);
  * everything else is identical, so we build them from one factory to avoid drift.
+ *
+ * Drag-and-drop order in Studio (`orderRank`) drives the website listing order.
+ * New documents append to the bottom (creation order).
  */
 export function createArticleType({
   name,
@@ -32,11 +36,10 @@ export function createArticleType({
     name,
     title,
     type: 'document',
+    icon: DocumentTextIcon,
     ...(description ? {description} : {}),
-    components: {
-      input: ArticleDocumentInput,
-    },
     fields: [
+      orderRankField({type: name}),
       defineField({
         name: 'title_id',
         title: 'Judul (Bahasa Indonesia)',
@@ -137,6 +140,7 @@ export function createArticleType({
       }),
     ],
     orderings: [
+      orderRankOrdering,
       {
         title: 'Terbaru',
         name: 'publishedAtDesc',

@@ -1,4 +1,4 @@
-﻿---
+---
 description: STRICT RULE - Sanity schemas limited to approved document types + kategori
 globs: "**/koneksi-cms/**/*.ts"
 alwaysApply: false
@@ -8,7 +8,7 @@ alwaysApply: false
 
 **Exactly these villager document types exist, plus the supporting `category`.**
 Do NOT add more document types without human approval.
-(`galeri` and `beranda` were added with human approval.)
+(`galeri` and `galeri_video` were added with human approval.)
 
 ## Allowed Document Types
 
@@ -20,8 +20,8 @@ Do NOT add more document types without human approval.
 | `artikel_liputan` | Liputan | none | `externalUrl` + `sourceName`; NO detail page |
 | `wisata` | Wisata | `description_id/en` (Portable Text) | Bilingual REQUIRED; native Sanity Draft/Publish; `gallery` ≤ 10 |
 | `desa` | Desa | `description_id/en` (Portable Text) | Fixed `villageName` (gobleg/munduk/gesing/umejero); `dataFields[]`; `gallery` |
-| `galeri` | Galeri | none | One document per photo; `image` + bilingual `alt_*`; Media → Galeri |
-| `beranda` | Latar Beranda | none | **Singleton** (`_id: beranda`). Home section backgrounds only — not article pages |
+| `galeri` | Foto Galeri | none | One doc per photo; `party` (`adat`\|`kkn`) + `image` + bilingual `alt_*`; ordered by `publishedAt` |
+| `galeri_video` | Video Galeri | none | One doc per YouTube video; `party` + bilingual title/description + `youtubeUrl` (YouTube only); ordered by `publishedAt` |
 | `category` | Kategori | — | Referenced only by `artikel_berita` |
 
 The three body-bearing article types share one factory:
@@ -35,7 +35,7 @@ duplicate the fields.
 NOT documents. Register everything in `koneksi-cms/schemas/index.ts` and wire
 the desk in `koneksi-cms/sanity.config.ts` (Artikel → Berita / Sejarah /
 Partnership / Liputan; Kategori nested under Berita only; then Wisata, Desa,
-Galeri, Latar Beranda singleton).
+Galeri → Adat / KKN → Foto / Video).
 
 ## Villager Permission Boundary
 
@@ -44,18 +44,18 @@ Galeri, Latar Beranda singleton).
 | Create/edit/publish the 4 article types | ✅ Yes |
 | Edit wisata (Sanity Publish) | ✅ Yes |
 | Edit the 4 desa documents | ✅ Yes (edit content) |
-| Create/edit/publish galeri photos | ✅ Yes |
-| Edit Latar Beranda backgrounds | ✅ Yes (singleton) |
+| Create/edit/publish galeri photos + videos | ✅ Yes |
 | Select/create `category` (kategori) | ✅ Yes |
 | Create/delete extra desa or change `villageName` | ❌ NO (4 fixed) |
 | Edit booklet / maps / downloads | ❌ NO (hardcoded) |
 | Edit site settings / navigation / footer | ❌ NO (code only) |
-| Change article-page backgrounds via CMS | ❌ NO (only Beranda) |
+| Change Beranda / article-page backgrounds via CMS | ❌ NO (code / static assets) |
+| Upload self-hosted video (non-YouTube) | ❌ NO (YouTube embeds only) |
 
 ## What Does NOT Go in Sanity
 
 Hardcoded TypeScript data files instead (see `data-architecture` rule):
-`data/booklet.ts`, `data/maps.ts`, `data/downloads.ts`.
+`data/booklet.ts`, `data/maps.ts`, `data/downloads.ts`, `data/home-videos.ts`.
 The Instagram feed comes from the Graph API, not Sanity.
 
 ## Migrations
@@ -64,3 +64,6 @@ Changing a document `_type` is not a patch operation. The legacy
 `article → artikel_berita` conversion is a `sanity exec` script:
 `koneksi-cms/scripts/migrate-article-to-berita.ts`
 (`npm run migrate:article-to-berita`). Run once by the team.
+
+Existing galeri photos without `party` are backfilled with `party: "adat"` via
+`koneksi-cms/scripts/seed-galeri-party.ts` (`npm run migrate:seed-galeri-party`).

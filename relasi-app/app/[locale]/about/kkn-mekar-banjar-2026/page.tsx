@@ -23,11 +23,11 @@ export async function generateMetadata({
   return {
     title: t("title"),
     description: t("subtitle"),
-    alternates: localeAlternates("/about/kkn-mekar-banjar"),
+    alternates: localeAlternates("/about/kkn-mekar-banjar-2026"),
   };
 }
 
-export default async function KknMekarBanjarPage({
+export default async function KknMekarBanjar2026Page({
   params,
 }: {
   params: Promise<{ locale: Locale }>;

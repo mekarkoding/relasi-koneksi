@@ -1,3 +1,4 @@
+import {HomeIcon} from '@sanity/icons'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 const VILLAGES = [
@@ -16,6 +17,7 @@ export default defineType({
   name: 'desa',
   title: 'Desa',
   type: 'document',
+  icon: HomeIcon,
   fields: [
     defineField({
       name: 'villageName',

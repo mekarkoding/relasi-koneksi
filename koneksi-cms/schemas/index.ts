@@ -5,17 +5,17 @@ import artikelLiputan from './artikelLiputan'
 import wisata from './wisata'
 import desa from './desa'
 import galeri from './galeri'
-import beranda from './beranda'
+import galeriVideo from './galeriVideo'
 import category from './category'
 import portableText from './portableText'
 import youtube from './objects/youtube'
 import articleBlock from './objects/articleBlock'
 
 /**
- * Villager document types: artikel_*, wisata, desa, galeri, beranda (singleton)
+ * Villager document types: artikel_*, wisata, desa, galeri, galeri_video
  * plus supporting `category` (Berita only).
  * portableText, youtube, and articleBlock are object/array types, not documents.
- * `galeri` + `beranda` added with human approval.
+ * `galeri` / `galeri_video` added with human approval.
  */
 export const schemaTypes = [
   artikelBerita,
@@ -25,7 +25,7 @@ export const schemaTypes = [
   wisata,
   desa,
   galeri,
-  beranda,
+  galeriVideo,
   category,
   portableText,
   youtube,

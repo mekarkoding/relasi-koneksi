@@ -1,15 +1,18 @@
+import {ImagesIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
+import {galeriPartyField} from './shared/galeriParty'
 
 /**
  * Galeri foto (Media → Galeri). One document per photo.
- * Approved extension beyond the original PRD six document types —
- * villagers publish photos the same way they publish wisata images.
+ * Grouped by `party`: Adat Dalem Tamblingan or KKN Mekar Banjar.
  */
 export default defineType({
   name: 'galeri',
-  title: 'Galeri',
+  title: 'Foto Galeri',
   type: 'document',
+  icon: ImagesIcon,
   fields: [
+    galeriPartyField(),
     defineField({
       name: 'image',
       title: 'Foto',
@@ -54,15 +57,22 @@ export default defineType({
     },
   ],
   preview: {
-    select: {title: 'alt_id', media: 'image', publishedAt: 'publishedAt'},
-    prepare({title, media, publishedAt}) {
+    select: {
+      title: 'alt_id',
+      media: 'image',
+      publishedAt: 'publishedAt',
+      party: 'party',
+    },
+    prepare({title, media, publishedAt, party}) {
       const date =
         typeof publishedAt === 'string'
           ? new Date(publishedAt).toLocaleDateString('id-ID')
           : ''
+      const partyLabel =
+        party === 'kkn' ? 'KKN' : party === 'adat' ? 'Adat' : 'Tanpa kelompok'
       return {
         title: title || 'Foto tanpa deskripsi',
-        subtitle: date,
+        subtitle: [partyLabel, date].filter(Boolean).join(' · '),
         media,
       }
     },

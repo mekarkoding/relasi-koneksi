@@ -3,12 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import {
-  getBerandaBackgrounds,
-  getFeaturedWisata,
-  getAllDesa,
-} from "@/lib/sanity/queries";
-import { VILLAGES, type BerandaBackgrounds } from "@/lib/sanity/types";
+import { getFeaturedWisata, getAllDesa } from "@/lib/sanity/queries";
+import { VILLAGES } from "@/lib/sanity/types";
 import { homeVideos } from "@/data/home-videos";
 import { WisataCard } from "@/components/WisataCard";
 import { DesaCard } from "@/components/DesaCard";
@@ -19,7 +15,6 @@ import { FeaturedWisataCarousel } from "@/components/home/FeaturedWisataCarousel
 import { FeaturedDesaCarousel } from "@/components/home/FeaturedDesaCarousel";
 import { HomeVideoCarousel } from "@/components/home/HomeVideoCarousel";
 import { HomeReveal } from "@/components/home/HomeReveal";
-import { SectionBackgroundImage } from "@/components/home/SectionBackgroundImage";
 import { localeAlternates } from "@/lib/seo";
 import gapuraLeft from "@/public/images/gapura-left.png";
 import gapuraRight from "@/public/images/gapura-right.png";
@@ -51,19 +46,16 @@ async function FeaturedWisataSection({
   subtitle,
   emptyLabel,
   ctaLabel,
-  background,
 }: {
   title: string;
   subtitle: string;
   emptyLabel: string;
   ctaLabel: string;
-  background: BerandaBackgrounds["wisataBackground"];
 }) {
   const featured = await getFeaturedWisata(3);
 
   return (
-    <section className="relative z-30 -mt-24 overflow-hidden rounded-t-[4rem] bg-mist-dark pb-28 pt-20 md:pb-48">
-      <SectionBackgroundImage image={background} />
+    <section className="relative z-40 -mt-24 overflow-hidden rounded-t-[4rem] bg-mist-dark pb-28 pt-20 md:pb-48">
       <div className="relative mx-auto max-w-6xl px-4">
         <HomeReveal>
           <SectionHeading title={title} subtitle={subtitle} />
@@ -105,14 +97,45 @@ async function FeaturedWisataSection({
   );
 }
 
+function AboutAdatSection({ title, body }: { title: string; body: string }) {
+  return (
+    <section className="relative z-20 -mt-16 overflow-hidden rounded-t-[4rem] bg-mist pb-40 pt-20 md:-mt-24 md:pb-48">
+      <div className="relative mx-auto max-w-6xl px-4">
+        <HomeReveal>
+          <SectionHeading title={title} />
+        </HomeReveal>
+        <div className="grid items-start gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+          <HomeReveal delay={0.1}>
+            <p className="text-justify text-base leading-relaxed text-forest/80 sm:text-lg">
+              {body}
+            </p>
+          </HomeReveal>
+          <HomeReveal delay={0.18}>
+            {/* Replace this block with next/image when the final photo is ready */}
+            <div
+              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-mist-dark/80 ring-1 ring-forest/10"
+              aria-hidden
+            >
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.35),transparent_55%),linear-gradient(160deg,#c5d6e0_0%,#9eb6c4_45%,#6f8f9e_100%)]" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="rounded-lg bg-forest/10 px-3 py-1.5 text-xs font-medium tracking-wide text-forest/55">
+                  Photo placeholder
+                </span>
+              </div>
+            </div>
+          </HomeReveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 async function EmpatDesaSection({
   title,
   subtitle,
-  background,
 }: {
   title: string;
   subtitle: string;
-  background: BerandaBackgrounds["desaBackground"];
 }) {
   const allDesa = await getAllDesa();
   const ordered = VILLAGES.map((v) =>
@@ -122,8 +145,7 @@ async function EmpatDesaSection({
   if (ordered.length === 0) return null;
 
   return (
-    <section className="relative z-40 -mt-24 overflow-hidden rounded-t-[4rem] bg-[#d9e3e9] pb-40 pt-20 md:pb-56">
-      <SectionBackgroundImage image={background} />
+    <section className="relative z-30 -mt-24 overflow-hidden rounded-t-[4rem] bg-[#d9e3e9] pb-40 pt-20 md:pb-56">
       <div className="relative mx-auto max-w-6xl px-4">
         <HomeReveal>
           <SectionHeading title={title} subtitle={subtitle} />
@@ -179,7 +201,6 @@ export default async function HomePage({
   const hasHomeVideos = homeVideos.some((video) =>
     Boolean(video.youtubeUrl.trim()),
   );
-  const backgrounds = (await getBerandaBackgrounds()) ?? {};
 
   return (
     <>
@@ -195,9 +216,23 @@ export default async function HomePage({
         scrollHint={t("scrollHint")}
       />
 
+      <AboutAdatSection title={t("aboutTitle")} body={t("aboutBody")} />
+
+      <Suspense fallback={<SectionSkeleton variant="desa" />}>
+        <EmpatDesaSection title={t("desaTitle")} subtitle={t("desaSubtitle")} />
+      </Suspense>
+
+      <Suspense fallback={<SectionSkeleton variant="wisata" />}>
+        <FeaturedWisataSection
+          title={t("wisataTitle")}
+          subtitle={t("wisataSubtitle")}
+          emptyLabel={t("wisataEmpty")}
+          ctaLabel={t("wisataCta")}
+        />
+      </Suspense>
+
       {/* Instagram feed streams so the Graph API never blocks the gapura paint */}
-      <section className="relative z-20 -mt-16 overflow-hidden rounded-t-[4rem] bg-mist pb-40 pt-20 md:-mt-24 md:pb-48">
-        <SectionBackgroundImage image={backgrounds.instagramBackground} />
+      <section className="relative z-50 -mt-24 overflow-hidden rounded-t-[4rem] bg-mist pb-40 pt-20 md:pb-48">
         <div className="relative mx-auto max-w-6xl px-4">
           <HomeReveal>
             <SectionHeading title={tInstagram("title")} subtitle={tInstagram("subtitle")} />
@@ -210,28 +245,9 @@ export default async function HomePage({
         </div>
       </section>
 
-      <Suspense fallback={<SectionSkeleton variant="wisata" />}>
-        <FeaturedWisataSection
-          title={t("wisataTitle")}
-          subtitle={t("wisataSubtitle")}
-          emptyLabel={t("wisataEmpty")}
-          ctaLabel={t("wisataCta")}
-          background={backgrounds.wisataBackground}
-        />
-      </Suspense>
-
-      <Suspense fallback={<SectionSkeleton variant="desa" />}>
-        <EmpatDesaSection
-          title={t("desaTitle")}
-          subtitle={t("desaSubtitle")}
-          background={backgrounds.desaBackground}
-        />
-      </Suspense>
-
       {/* Video carousel — Adat profile + KKN films */}
       {hasHomeVideos && (
-        <section className="relative z-50 -mt-24 overflow-hidden rounded-t-[4rem] bg-tamblingan py-20 text-mist">
-          <SectionBackgroundImage image={backgrounds.afterMovieBackground} darken />
+        <section className="relative z-[60] -mt-24 overflow-hidden rounded-t-[4rem] bg-tamblingan py-20 text-mist">
           <div className="relative mx-auto max-w-4xl px-4">
             <HomeReveal>
               <div className="text-center">

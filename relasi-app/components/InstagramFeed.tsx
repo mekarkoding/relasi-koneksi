@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import {
   getInstagramPosts,
@@ -11,11 +10,11 @@ import { InstagramFeedCarousel } from "@/components/home/InstagramFeedCarousel";
  * Instagram feed section body (PRD 4.8). Server-rendered; on missing/expired
  * token it degrades to a static "follow us" message + button - never blank.
  * The section wrapper + heading are provided by the home page.
- * Mobile uses a single-slide carousel; md+ keeps the grid.
+ * Up to 10 posts in a strip carousel (5 visible on desktop).
  */
 export async function InstagramFeed() {
   const t = await getTranslations("instagram");
-  const posts = await getInstagramPosts(9);
+  const posts = await getInstagramPosts(10);
   const handleLabel = instagramHandle ? `@${instagramHandle}` : "";
 
   const followButton = (
@@ -45,26 +44,6 @@ export async function InstagramFeed() {
   return (
     <div>
       <InstagramFeedCarousel posts={posts} />
-      <div className="hidden grid-cols-3 gap-2 sm:grid-cols-4 md:grid md:gap-3 lg:grid-cols-5">
-        {posts.map((post) => (
-          <a
-            key={post.id}
-            href={post.permalink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative aspect-square overflow-hidden rounded-lg"
-          >
-            <Image
-              src={post.mediaUrl}
-              alt={post.caption?.slice(0, 120) || "Instagram post"}
-              fill
-              unoptimized
-              sizes="(max-width: 640px) 33vw, (max-width: 1024px) 25vw, 20vw"
-              className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
-            />
-          </a>
-        ))}
-      </div>
       <div className="mt-8 mb-4 text-center">{followButton}</div>
     </div>
   );

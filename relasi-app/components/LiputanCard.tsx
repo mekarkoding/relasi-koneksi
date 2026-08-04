@@ -37,6 +37,9 @@ export function LiputanCard({ article }: { article: LiputanArticle }) {
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
           />
+          <span className="absolute left-3 top-3 rounded-full bg-marigold px-3 py-1 text-xs font-semibold text-forest">
+            {t("types.liputan.label")}
+          </span>
         </div>
         <div className="flex flex-1 flex-col p-5">
           <p className="text-xs font-semibold uppercase tracking-wide text-tamblingan">

@@ -7,6 +7,7 @@ import { useRouter } from "@/i18n/navigation";
 const PREFETCH_ROUTES = [
   "/",
   "/wisata",
+  "/articles/all",
   "/articles/berita",
   "/desa/gobleg",
   "/media/galeri",

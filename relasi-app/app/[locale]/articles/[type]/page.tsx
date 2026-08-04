@@ -1,16 +1,22 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import {
+  parseArticlePage,
+  parseArticleSort,
+  sanitizeArticleSearchQuery,
+} from "@/lib/articles-listing";
 import {
   getArticlesByType,
   getAllCategories,
   getLiputan,
 } from "@/lib/sanity/queries";
 import { ARTICLE_TYPES, type ArticleType } from "@/lib/sanity/types";
-import { ArticleCard } from "@/components/ArticleCard";
-import { LiputanCard } from "@/components/LiputanCard";
+import {
+  ArticleListingSection,
+  type ArticleListingEntry,
+} from "@/components/ArticleListingSection";
 import { SectionHeading } from "@/components/SectionHeading";
 import { pickLocale } from "@/lib/locale-content";
 import { localeAlternates } from "@/lib/seo";
@@ -20,7 +26,12 @@ export const dynamicParams = false;
 
 interface Props {
   params: Promise<{ locale: Locale; type: string }>;
-  searchParams: Promise<{ category?: string }>;
+  searchParams: Promise<{
+    category?: string;
+    sort?: string;
+    q?: string;
+    page?: string;
+  }>;
 }
 
 export function generateStaticParams() {
@@ -49,84 +60,104 @@ export default async function ArticleTypeListingPage({ params, searchParams }: P
   if (!isArticleType(type)) notFound();
   setRequestLocale(locale);
 
+  const {
+    category,
+    sort: sortParam,
+    q: qParam,
+    page: pageParam,
+  } = await searchParams;
+  const sort = parseArticleSort(sortParam);
+  const q = sanitizeArticleSearchQuery(qParam);
+  const requestedPage = parseArticlePage(pageParam);
+
   const t = await getTranslations("articles");
   const title = t(`types.${type}.title`);
   const subtitle = t(`types.${type}.subtitle`);
+  const basePath = `/articles/${type}`;
 
-  /* Liputan: external-coverage cards, no category filter, no detail page. */
   if (type === "liputan") {
-    const liputan = await getLiputan();
+    const { items, total, page, totalPages } = await getLiputan({
+      sort,
+      q,
+      page: requestedPage,
+    });
+    const entries: ArticleListingEntry[] = items.map((article) => ({
+      kind: "liputan",
+      article,
+    }));
+
     return (
       <div className="mx-auto max-w-6xl px-4 py-12">
         <SectionHeading title={title} subtitle={subtitle} />
-        {liputan.length > 0 ? (
-          <div className="stagger grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {liputan.map((article) => (
-              <LiputanCard key={article._id} article={article} />
-            ))}
-          </div>
-        ) : (
-          <p className="py-12 text-center text-forest/60">{t("empty")}</p>
-        )}
+        <ArticleListingSection
+          entries={entries}
+          basePath={basePath}
+          sort={sort}
+          searchQuery={q}
+          page={page}
+          totalPages={totalPages}
+          total={total}
+        />
       </div>
     );
   }
 
-  /* Berita has a category filter; Sejarah/Partnership use a fixed label. */
-  const { category } = await searchParams;
-  const [articles, categories] =
+  const [result, categories] =
     type === "berita"
-      ? await Promise.all([getArticlesByType("berita", category), getAllCategories()])
-      : [await getArticlesByType(type), []];
+      ? await Promise.all([
+          getArticlesByType("berita", {
+            categorySlug: category,
+            sort,
+            q,
+            page: requestedPage,
+          }),
+          getAllCategories(),
+        ])
+      : [
+          await getArticlesByType(type, {
+            sort,
+            q,
+            page: requestedPage,
+          }),
+          [],
+        ];
 
+  const { items, total, page, totalPages } = result;
   const fixedLabel = type === "berita" ? undefined : t(`types.${type}.label`);
+
+  const beritaFilters =
+    type === "berita" && categories.length > 0
+      ? [
+          { value: "", label: t("allCategories") },
+          ...categories.map((c) => ({
+            value: c.slug,
+            label: pickLocale(locale, c.title_id, c.title_en),
+          })),
+        ]
+      : undefined;
+
+  const entries: ArticleListingEntry[] = items.map((article) => ({
+    kind: "internal",
+    article,
+    type,
+    fixedLabel,
+  }));
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-12">
       <SectionHeading title={title} subtitle={subtitle} />
-
-      {type === "berita" && categories.length > 0 && (
-        <div className="mb-8 flex w-full flex-wrap gap-3">
-          <Link
-            href="/articles/berita"
-            className={`min-w-[8rem] flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-medium transition-all duration-300 ease-in-out ${
-              !category
-                ? "bg-tamblingan text-white"
-                : "bg-mist-dark text-forest/70 hover:bg-marigold/25"
-            }`}
-          >
-            {t("allCategories")}
-          </Link>
-          {categories.map((c) => (
-            <Link
-              key={c._id}
-              href={`/articles/berita?category=${c.slug}`}
-              className={`min-w-[8rem] flex-1 rounded-xl px-4 py-2.5 text-center text-sm font-medium transition-all duration-300 ease-in-out ${
-                category === c.slug
-                  ? "bg-tamblingan text-white"
-                  : "bg-mist-dark text-forest/70 hover:bg-marigold/25"
-              }`}
-            >
-              {pickLocale(locale, c.title_id, c.title_en)}
-            </Link>
-          ))}
-        </div>
-      )}
-
-      {articles.length > 0 ? (
-        <div className="stagger grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {articles.map((article) => (
-            <ArticleCard
-              key={article._id}
-              article={article}
-              type={type}
-              fixedLabel={fixedLabel}
-            />
-          ))}
-        </div>
-      ) : (
-        <p className="py-12 text-center text-forest/60">{t("empty")}</p>
-      )}
+      <ArticleListingSection
+        entries={entries}
+        basePath={basePath}
+        sort={sort}
+        searchQuery={q}
+        page={page}
+        totalPages={totalPages}
+        total={total}
+        filterParam={beritaFilters ? "category" : undefined}
+        filterValue={category ?? ""}
+        filters={beritaFilters}
+      />
     </div>
   );
 }

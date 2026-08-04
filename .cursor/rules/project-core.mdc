@@ -47,8 +47,8 @@ public/                # Static assets
 
 ## Content Model (PRD v2.0)
 
-- **Sanity (KONEKSI):** 4 article types (`artikel_berita/sejarah/partnership/liputan`), `wisata`, `desa`, plus `category`.
-- **Hardcoded data files:** booklet, gallery photos, maps, downloads (after-movie + guidebook).
+- **Sanity (KONEKSI):** 4 article types (`artikel_berita/sejarah/partnership/liputan`), `wisata`, `desa`, `galeri` + `galeri_video` (party adat/kkn), plus `category`.
+- **Hardcoded data files:** booklet, maps, downloads (after-movie + guidebook), home videos.
 - **Instagram Graph API:** the Beranda feed (server-side, ISR, graceful fallback).
 - See the `allowed-routes`, `data-architecture`, and `sanity-schemas` rules for specifics.
 

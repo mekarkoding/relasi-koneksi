@@ -38,6 +38,7 @@ const NAV_ITEMS: NavItem[] = [
     key: "artikel",
     match: "/articles",
     children: [
+      { key: "semuaArtikel", href: "/articles/all" },
       { key: "sejarah", href: "/articles/sejarah" },
       { key: "berita", href: "/articles/berita" },
       { key: "partnership", href: "/articles/partnership" },
@@ -68,7 +69,8 @@ const NAV_ITEMS: NavItem[] = [
     match: "/about",
     children: [
       { key: "adatDalemTamblingan", href: "/about/adat-dalem-tamblingan" },
-      { key: "kknMekarBanjar", href: "/about/kkn-mekar-banjar" },
+      { key: "kknMekarBanjar2026", href: "/about/kkn-mekar-banjar-2026" },
+      { key: "kknMekarBanjar2025", href: "/about/kkn-mekar-banjar-2025" },
     ],
   },
 ];

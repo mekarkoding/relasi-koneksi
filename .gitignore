@@ -43,3 +43,9 @@ Dummy Wisata/
 CMS_Content_Draft_ADT.pdf
 PRD_RELASI_KONEKSI_Ver 1.pdf
 PRD_RELASI_KONEKSI_Ver_2.docx
+.vercel
+
+# Raw source photos (optimized copies already live under relasi-app/public/)
+members-pictures/
+Tamblingan *.jpeg
+Tamblingan *.jpg

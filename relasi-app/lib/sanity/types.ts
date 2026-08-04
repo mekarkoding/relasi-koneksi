@@ -72,6 +72,25 @@ export interface LiputanArticle {
   publishedAt: string;
 }
 
+/** Internal article on the Semua Artikel mixed listing. */
+export type AllArticlesInternalItem = ArticlePreview & {
+  articleType: ArticleDetailType;
+};
+
+/** Liputan item on the Semua Artikel mixed listing. */
+export type AllArticlesLiputanItem = LiputanArticle & {
+  articleType: "liputan";
+};
+
+/** Mixed listing item for `/articles/all`. */
+export type AllArticlesItem = AllArticlesInternalItem | AllArticlesLiputanItem;
+
+export function isLiputanListingItem(
+  item: AllArticlesItem,
+): item is AllArticlesLiputanItem {
+  return item.articleType === "liputan";
+}
+
 /** Wisata (attraction), CMS-managed in v2.0 (PRD 6.6). Bilingual required. */
 export interface Wisata {
   _id: string;
@@ -123,8 +142,11 @@ export interface Desa {
 export type DesaPreview = Pick<Desa, "_id" | "villageName" | "mainImage">;
 
 /** Single gallery photo (Media → Galeri), CMS-managed. */
+export type GaleriParty = "adat" | "kkn";
+
 export interface GaleriPhoto {
   _id: string;
+  party: GaleriParty;
   image: SanityImageWithAlt & SanityImageSource;
   alt_id: string;
   alt_en?: string;
@@ -134,13 +156,16 @@ export interface GaleriPhoto {
   height: number;
 }
 
-/** Home (Beranda) section background images — singleton `beranda` document. */
-export interface BerandaBackgrounds {
-  heroBackground?: (SanityImageWithAlt & SanityImageSource) | null;
-  instagramBackground?: (SanityImageWithAlt & SanityImageSource) | null;
-  wisataBackground?: (SanityImageWithAlt & SanityImageSource) | null;
-  desaBackground?: (SanityImageWithAlt & SanityImageSource) | null;
-  afterMovieBackground?: (SanityImageWithAlt & SanityImageSource) | null;
+/** Single gallery YouTube video (Media → Galeri), CMS-managed. */
+export interface GaleriVideo {
+  _id: string;
+  party: GaleriParty;
+  title_id: string;
+  title_en?: string;
+  description_id: string;
+  description_en?: string;
+  youtubeUrl: string;
+  publishedAt: string;
 }
 
 /**

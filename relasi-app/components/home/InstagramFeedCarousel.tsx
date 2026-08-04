@@ -1,30 +1,46 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Image from "next/image";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import type { InstagramPost } from "@/lib/instagram-types";
+import { InstagramPostCard } from "@/components/home/InstagramPostCard";
 
 const AUTO_ADVANCE_MS = 5000;
 const SWIPE_THRESHOLD = 48;
+const GAP_PX = 12;
+/** Prefer 5 visible; scale down on smaller screens so cards stay readable. */
+const VISIBLE_BY_BREAKPOINT = [
+  { min: 1024, count: 5 },
+  { min: 768, count: 3 },
+  { min: 640, count: 2 },
+  { min: 0, count: 1 },
+] as const;
 
 interface Props {
   posts: InstagramPost[];
 }
 
+function visibleCountForWidth(width: number): number {
+  for (const bp of VISIBLE_BY_BREAKPOINT) {
+    if (width >= bp.min) return bp.count;
+  }
+  return 1;
+}
+
 /**
- * Mobile-only single-slide carousel for the Instagram feed.
- * One post at a time; after 5s idle the current fades left and the
- * next fades in from the right. Dot indicators match Destinasi Wisata.
+ * Instagram strip carousel: 5 posts visible on desktop, advances one card
+ * every 5s (next post enters from the right).
  */
 export function InstagramFeedCarousel({ posts }: Props) {
   const reduceMotion = useReducedMotion();
+  const viewportRef = useRef<HTMLDivElement>(null);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pointerStartX = useRef<number | null>(null);
   const didSwipe = useRef(false);
-  const [activeIndex, setActiveIndex] = useState(0);
-  /** 1 = advance (exit left / enter right), -1 = go back */
-  const [direction, setDirection] = useState(1);
+  const [visibleCount, setVisibleCount] = useState(5);
+  const [cardWidth, setCardWidth] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [instant, setInstant] = useState(false);
 
   const clearIdleTimer = useCallback(() => {
     if (idleTimerRef.current) {
@@ -33,48 +49,102 @@ export function InstagramFeedCarousel({ posts }: Props) {
     }
   }, []);
 
-  const goTo = useCallback(
-    (index: number, dir: 1 | -1) => {
-      if (posts.length < 2) return;
-      const next = ((index % posts.length) + posts.length) % posts.length;
-      setDirection(dir);
-      setActiveIndex(next);
+  const measure = useCallback(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    const width = el.clientWidth;
+    const count = visibleCountForWidth(width);
+    setVisibleCount(count);
+    setCardWidth((width - GAP_PX * (count - 1)) / count);
+  }, []);
+
+  useEffect(() => {
+    const el = viewportRef.current;
+    if (!el) return;
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [measure]);
+
+  useEffect(() => {
+    setIndex((current) => (posts.length === 0 ? 0 : current % posts.length));
+  }, [posts.length, visibleCount]);
+
+  const advance = useCallback(
+    (dir: 1 | -1) => {
+      if (posts.length <= 1) return;
+      if (dir < 0) {
+        if (index <= 0) {
+          setInstant(true);
+          setIndex(posts.length - 1);
+        } else {
+          setInstant(false);
+          setIndex(index - 1);
+        }
+        return;
+      }
+      setInstant(false);
+      setIndex((current) =>
+        current + 1 >= posts.length ? posts.length : current + 1,
+      );
     },
-    [posts.length],
+    [posts.length, index],
   );
-
-  const goNext = useCallback(() => {
-    goTo(activeIndex + 1, 1);
-  }, [activeIndex, goTo]);
-
-  const goPrev = useCallback(() => {
-    goTo(activeIndex - 1, -1);
-  }, [activeIndex, goTo]);
 
   const scheduleAutoAdvance = useCallback(() => {
     clearIdleTimer();
+    // Still auto-advance even if posts.length <= visibleCount so a short
+    // feed loops; skip only when there's nothing to move.
     if (posts.length < 2 || reduceMotion) return;
 
     idleTimerRef.current = setTimeout(() => {
-      setDirection(1);
-      setActiveIndex((current) => (current + 1) % posts.length);
+      setInstant(false);
+      setIndex((current) => (current + 1 >= posts.length ? posts.length : current + 1));
     }, AUTO_ADVANCE_MS);
   }, [clearIdleTimer, posts.length, reduceMotion]);
 
   useEffect(() => {
     scheduleAutoAdvance();
     return clearIdleTimer;
-  }, [activeIndex, scheduleAutoAdvance, clearIdleTimer]);
+  }, [index, scheduleAutoAdvance, clearIdleTimer]);
+
+  // Snap back after sliding onto the duplicated head (seamless loop).
+  useEffect(() => {
+    if (index < posts.length) return;
+    if (reduceMotion) {
+      setInstant(true);
+      setIndex(0);
+      return;
+    }
+    const t = setTimeout(() => {
+      setInstant(true);
+      setIndex(0);
+    }, 520);
+    return () => clearTimeout(t);
+  }, [index, posts.length, reduceMotion]);
+
+  useEffect(() => {
+    if (!instant) return;
+    const id = requestAnimationFrame(() => setInstant(false));
+    return () => cancelAnimationFrame(id);
+  }, [instant]);
 
   if (posts.length === 0) return null;
 
-  const current = posts[activeIndex];
-  const offset = reduceMotion ? 0 : 64;
+  const trackPosts =
+    posts.length > 1
+      ? [...posts, ...posts.slice(0, Math.max(visibleCount, 1))]
+      : posts;
+
+  const step = cardWidth > 0 ? cardWidth + GAP_PX : 0;
+  const x = reduceMotion || step === 0 ? 0 : -(index * step);
 
   return (
-    <div className="md:hidden" role="region" aria-roledescription="carousel">
+    <div role="region" aria-roledescription="carousel" aria-label="Instagram">
       <div
-        className="relative overflow-hidden touch-pan-y select-none"
+        ref={viewportRef}
+        className="relative overflow-hidden select-none"
         onPointerDown={(e) => {
           if (e.pointerType === "mouse" && e.button !== 0) return;
           pointerStartX.current = e.clientX;
@@ -91,8 +161,8 @@ export function InstagramFeedCarousel({ posts }: Props) {
 
           if (Math.abs(delta) >= SWIPE_THRESHOLD) {
             didSwipe.current = true;
-            if (delta < 0) goNext();
-            else goPrev();
+            if (delta < 0) advance(1);
+            else advance(-1);
           } else {
             scheduleAutoAdvance();
           }
@@ -107,60 +177,55 @@ export function InstagramFeedCarousel({ posts }: Props) {
           e.stopPropagation();
           didSwipe.current = false;
         }}
+        onMouseEnter={clearIdleTimer}
+        onMouseLeave={scheduleAutoAdvance}
       >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={current.id}
-            initial={
-              reduceMotion
-                ? { opacity: 0 }
-                : { opacity: 0, x: direction * offset }
-            }
-            animate={{ opacity: 1, x: 0 }}
-            exit={
-              reduceMotion
-                ? { opacity: 0 }
-                : { opacity: 0, x: direction * -offset }
-            }
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto w-full max-w-sm"
-          >
-            <a
-              href={current.permalink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative block aspect-square overflow-hidden rounded-2xl"
+        <motion.div
+          className="flex"
+          style={{ gap: GAP_PX }}
+          animate={{ x }}
+          transition={
+            instant || reduceMotion
+              ? { duration: 0 }
+              : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+          }
+        >
+          {trackPosts.map((post, i) => (
+            <div
+              key={`${post.id}-${i}`}
+              className="min-w-0 shrink-0"
+              style={{ width: cardWidth > 0 ? cardWidth : undefined, flexBasis: cardWidth > 0 ? cardWidth : `${100 / visibleCount}%` }}
             >
-              <Image
-                src={current.mediaUrl}
-                alt={current.caption?.slice(0, 120) || "Instagram post"}
-                fill
-                unoptimized
-                sizes="(max-width: 768px) 100vw, 24rem"
-                className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
+              <InstagramPostCard
+                post={post}
+                size={visibleCount <= 2 ? "carousel" : "grid"}
               />
-            </a>
-          </motion.div>
-        </AnimatePresence>
+            </div>
+          ))}
+        </motion.div>
       </div>
 
       {posts.length > 1 && (
         <div className="mt-5 flex flex-wrap justify-center gap-2">
-          {posts.map((post, i) => (
-            <button
-              key={post.id}
-              type="button"
-              aria-label={`Slide ${i + 1}`}
-              aria-current={i === activeIndex ? "true" : undefined}
-              onClick={() => {
-                if (i === activeIndex) return;
-                goTo(i, i > activeIndex ? 1 : -1);
-              }}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === activeIndex ? "w-5 bg-tamblingan" : "w-2 bg-forest/25"
-              }`}
-            />
-          ))}
+          {posts.map((post, i) => {
+            const active = i === index % posts.length;
+            return (
+              <button
+                key={post.id}
+                type="button"
+                aria-label={`Slide ${i + 1}`}
+                aria-current={active ? "true" : undefined}
+                onClick={() => {
+                  clearIdleTimer();
+                  setInstant(false);
+                  setIndex(i);
+                }}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  active ? "w-5 bg-tamblingan" : "w-2 bg-forest/25"
+                }`}
+              />
+            );
+          })}
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-﻿# RELASI — Village Tourism Website (KKN Mekar Banjar)
+# RELASI — Village Tourism Website (KKN Mekar Banjar)
 
 RELASI is the public tourism website for the villages served by the KKN Mekar
 Banjar community service program. Content publishing is handled by **KONEKSI**,
@@ -55,9 +55,8 @@ Commit and push to `main`; Vercel redeploys automatically.
 ## KONEKSI (Sanity Studio)
 
 The studio lives in `../koneksi-cms`. Villagers manage articles, wisata, desa,
-galeri, and **Latar Beranda** backgrounds (plus **Kategori** for Berita).
-Booklets, maps, and downloads stay in code. Article listing/detail pages keep
-their default solid backgrounds — only the home (Beranda) sections are CMS-styled.
+galeri, and **Kategori** for Berita.
+Booklets, maps, downloads, and Beranda visuals stay in code.
 
 ```bash
 cd ../koneksi-cms

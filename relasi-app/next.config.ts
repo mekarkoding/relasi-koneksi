@@ -26,6 +26,11 @@ const nextConfig: NextConfig = {
       { source: "/:locale/booklet", destination: "/:locale/media/buklet", permanent: true },
       { source: "/:locale/booklet/:slug", destination: "/:locale/media/buklet/:slug", permanent: true },
       { source: "/:locale/about", destination: "/:locale/about/adat-dalem-tamblingan", permanent: true },
+      {
+        source: "/:locale/about/kkn-mekar-banjar",
+        destination: "/:locale/about/kkn-mekar-banjar-2026",
+        permanent: true,
+      },
       { source: "/:locale/articles", destination: "/:locale/articles/berita", permanent: true },
     ];
   },

@@ -14,11 +14,12 @@ alwaysApply: false
 | Categories (`kategori`) | Sanity | Referenced by `artikel_berita` only |
 | Wisata | Sanity | Villagers manage attractions |
 | Desa (4 fixed) | Sanity | Villagers edit village content |
-| Gallery photos (`galeri`) | Sanity | Villagers publish via KONEKSI (human-approved) |
-| Beranda backgrounds (`beranda` singleton) | Sanity | Hero / Instagram / Wisata / Desa / After-movie only — not article pages |
+| Gallery photos (`galeri`) | Sanity | Villagers publish via KONEKSI; `party` = adat \| kkn |
+| Gallery videos (`galeri_video`) | Sanity | YouTube URLs only; same `party` split as photos |
 | Booklet | Hardcoded (`data/booklet.ts`) | Villagers cannot edit |
 | Maps | Hardcoded (`data/maps.ts`) | Villagers cannot edit |
 | Downloads (after-movie + guidebook) | Hardcoded (`data/downloads.ts`) | Villagers cannot edit |
+| Home-page videos | Hardcoded (`data/home-videos.ts`) | Not CMS-managed |
 | Instagram feed | Instagram Graph API (server-side, ISR) | Read-only external source |
 
 > v2.0 moved **Wisata** and **Desa** into Sanity. **Homestays** and the old
@@ -96,7 +97,7 @@ export interface Downloads {
 
 ## Why Hardcoded?
 
-1. **Villager scope**: Villagers manage articles, wisata, desa, and galeri via KONEKSI.
+1. **Villager scope**: Villagers manage articles, wisata, desa, galeri photos, and galeri videos via KONEKSI.
 2. **Controlled updates**: Changes to booklet/maps/downloads require code review.
 3. **Type safety**: TypeScript interfaces catch malformed entries.
 4. **Build-time optimization**: Static image imports enable next/image optimization.
@@ -108,5 +109,6 @@ export interface Downloads {
 - ❌ Downloads (after-movie / guidebook)
 - ❌ Instagram feed (Graph API, not CMS)
 - ❌ Site settings / Navigation / Footer content
+- ❌ Beranda section backgrounds (code / static assets only)
 
-(`galeri` and `beranda` are allowed — human-approved.)
+(`galeri` and `galeri_video` are allowed — human-approved.)

@@ -1,10 +1,10 @@
 /**
  * Home-page YouTube carousel (hardcoded — not CMS-managed).
- * KKN URLs below are temporary placeholders — swap for real Mekar Banjar links later.
+ * Leave youtubeUrl empty to show a placeholder slide until the video is ready.
  */
 export interface HomeVideo {
   id: string;
-  /** Full youtube.com or youtu.be URL; empty string hides the slide until filled */
+  /** Full youtube.com or youtu.be URL; empty string shows a placeholder slide */
   youtubeUrl: string;
   title_id: string;
   title_en: string;
@@ -22,23 +22,21 @@ export const homeVideos: HomeVideo[] = [
     description_en: "Get to know Adat Dalem Tamblingan",
   },
   {
-    id: "kkn-after-movie",
-    youtubeUrl: "https://www.youtube.com/watch?v=LXb3EKWsInQ",
-    title_id: "After Movie KKN Mekar Banjar",
-    title_en: "KKN Mekar Banjar After Movie",
+    id: "kkn-journey",
+    youtubeUrl: "https://youtu.be/yONBOAKm-HM",
+    title_id: "Video Perjalanan KKN-PPM UGM Mekar Banjar 2026",
+    title_en: "Video Perjalanan KKN-PPM UGM Mekar Banjar 2026",
     description_id:
-      "Cuplikan perjalanan KKN-PPM UGM Mekar Banjar bersama warga Munduk dan Gobleg",
+      "Dokumentasi perjalanan KKN-PPM UGM Mekar Banjar 2026 bersama warga Munduk dan Gobleg",
     description_en:
-      "A glimpse of the UGM KKN-PPM Mekar Banjar journey with the people of Munduk and Gobleg",
+      "Journey documentation of UGM KKN-PPM Mekar Banjar 2026 with the people of Munduk and Gobleg",
   },
   {
-    id: "kkn-programs",
-    youtubeUrl: "https://www.youtube.com/watch?v=aqz-KE-bpKQ",
-    title_id: "Program Kerja Mekar Banjar",
-    title_en: "Mekar Banjar Program Films",
-    description_id:
-      "Dokumentasi program lintas klaster — dari lapangan, kolaborasi, hingga kehidupan di desa",
-    description_en:
-      "Documentation of cross-cluster programs — from the field, collaboration, and village life",
+    id: "kkn-after-movie",
+    youtubeUrl: "",
+    title_id: "After Movie KKN Mekar Banjar",
+    title_en: "KKN Mekar Banjar After Movie",
+    description_id: "After movie sedang dalam proses pembuatan — nantikan segera",
+    description_en: "The after movie is still in production — coming soon",
   },
 ];

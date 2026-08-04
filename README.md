@@ -1,4 +1,4 @@
-﻿# RELASI + KONEKSI — Handover Guide
+# RELASI + KONEKSI — Handover Guide
 
 RELASI is the public tourism website for the **Adat Dalem Tamblingan** region
 (villages Gobleg, Munduk, Gesing, Umejero), built by the KKN Mekar Banjar team.
@@ -24,7 +24,6 @@ Built per **PRD v2.0**: Next.js App Router + TypeScript, Tailwind CSS, next-intl
 | Desa (4 fixed villages) | Sanity | ✅ (content only) |
 | Booklets | `relasi-app/data/booklet.ts` | ❌ (code) |
 | Gallery photos | Sanity (`galeri`) | ✅ |
-| Beranda backgrounds | Sanity (`beranda` singleton) | ✅ |
 | Maps | `relasi-app/data/maps.ts` | ❌ (code) |
 | After-movie + guidebook | `relasi-app/data/downloads.ts` | ❌ (code) |
 | Instagram feed | Instagram Graph API (read-only) | ❌ |
@@ -84,15 +83,13 @@ not in code.
 ## KONEKSI (Sanity) admin
 
 Villagers manage: **Berita, Sejarah, Partnership, Liputan, Wisata, Desa, Galeri**,
-plus **Latar Beranda** (singleton backgrounds) and **Kategori** for Berita.
-Booklets, maps, and downloads remain code.
+and **Kategori** for Berita.
+Booklets, maps, downloads, and Beranda visuals remain code.
 
 - **Desa** must be seeded once as four documents (Gobleg, Munduk, Gesing,
   Umejero); do not create extras or change a `villageName`.
 - **Wisata** and **Galeri** only appear on the site after **Publish** in Sanity
   Studio (native draft/publish — same as articles).
-- **Latar Beranda** is a single document (Hero / Instagram / Wisata / Desa /
-  After-movie backgrounds). Article pages are not included — leave them as-is.
 - **Inviting editors:** [sanity.io/manage](https://sanity.io/manage) → project →
   Members → invite with the **Editor** role. Keep the shared KKN email as Admin.
 - **Publish latency:** CMS pages revalidate every 60s (ISR). For instant

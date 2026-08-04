@@ -1,16 +1,66 @@
+import {
+  DocumentTextIcon,
+  DocumentsIcon,
+  EarthGlobeIcon,
+  HomeIcon,
+  ImagesIcon,
+  PlayIcon,
+  TagsIcon,
+} from '@sanity/icons'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import {defineConfig} from 'sanity'
-import {structureTool} from 'sanity/structure'
+import {structureTool, type StructureBuilder} from 'sanity/structure'
 import {schemaTypes} from './schemas'
 import './styles/studio.css'
 
-const BERANDA_DOC_ID = 'beranda'
-
 /**
  * KONEKSI — the content studio for the RELASI village tourism website.
- * Villagers publish articles and manage wisata, desa, galeri, and beranda backgrounds.
+ * Villagers publish articles and manage wisata, desa, and galeri.
  *
- * `galeri` + `beranda` added with human approval.
+ * `galeri` / `galeri_video` added with human approval.
+ * Wisata + article lists use drag-and-drop ordering (`orderRank`) so Studio
+ * top→bottom matches the website listing order.
  */
+
+type GaleriParty = 'adat' | 'kkn'
+
+function galeriPartyList(
+  S: StructureBuilder,
+  party: GaleriParty,
+  partyTitle: string,
+) {
+  return S.list()
+    .title(partyTitle)
+    .items([
+      S.listItem()
+        .title('Foto')
+        .icon(ImagesIcon)
+        .schemaType('galeri')
+        .child(
+          S.documentTypeList('galeri')
+            .title(`Foto — ${partyTitle}`)
+            .filter('_type == "galeri" && party == $party')
+            .params({party})
+            .initialValueTemplates([
+              S.initialValueTemplateItem(`galeri-${party}`),
+            ]),
+        ),
+      S.listItem()
+        .title('Video')
+        .icon(PlayIcon)
+        .schemaType('galeri_video')
+        .child(
+          S.documentTypeList('galeri_video')
+            .title(`Video — ${partyTitle}`)
+            .filter('_type == "galeri_video" && party == $party')
+            .params({party})
+            .initialValueTemplates([
+              S.initialValueTemplateItem(`galeri-video-${party}`),
+            ]),
+        ),
+    ])
+}
+
 export default defineConfig({
   name: 'koneksi',
   title: 'KONEKSI — Mekar Banjar',
@@ -40,29 +90,34 @@ export default defineConfig({
 
   plugins: [
     structureTool({
-      structure: (S) =>
+      structure: (S, context) =>
         S.list()
           .title('Konten')
           .items([
             S.listItem()
               .title('Artikel')
+              .icon(DocumentsIcon)
               .child(
                 S.list()
                   .title('Artikel')
                   .items([
                     S.listItem()
                       .title('Berita')
+                      .icon(DocumentTextIcon)
                       .child(
                         S.list()
                           .title('Berita')
                           .items([
-                            S.listItem()
-                              .title('Semua Berita')
-                              .child(
-                                S.documentTypeList('artikel_berita').title('Semua Berita'),
-                              ),
+                            orderableDocumentListDeskItem({
+                              type: 'artikel_berita',
+                              title: 'Semua Berita',
+                              icon: DocumentTextIcon,
+                              S,
+                              context,
+                            }),
                             S.listItem()
                               .title('Kategori')
+                              .icon(TagsIcon)
                               .child(
                                 S.documentTypeList('category').title(
                                   'Kategori (untuk Berita)',
@@ -70,38 +125,59 @@ export default defineConfig({
                               ),
                           ]),
                       ),
-                    S.listItem()
-                      .title('Sejarah')
-                      .child(S.documentTypeList('artikel_sejarah').title('Sejarah')),
-                    S.listItem()
-                      .title('Partnership')
-                      .child(
-                        S.documentTypeList('artikel_partnership').title('Partnership'),
-                      ),
-                    S.listItem()
-                      .title('Liputan')
-                      .child(S.documentTypeList('artikel_liputan').title('Liputan')),
+                    orderableDocumentListDeskItem({
+                      type: 'artikel_sejarah',
+                      title: 'Sejarah',
+                      icon: DocumentTextIcon,
+                      S,
+                      context,
+                    }),
+                    orderableDocumentListDeskItem({
+                      type: 'artikel_partnership',
+                      title: 'Partnership',
+                      icon: DocumentTextIcon,
+                      S,
+                      context,
+                    }),
+                    orderableDocumentListDeskItem({
+                      type: 'artikel_liputan',
+                      title: 'Liputan',
+                      icon: DocumentTextIcon,
+                      S,
+                      context,
+                    }),
                   ]),
               ),
             S.divider(),
-            S.listItem()
-              .title('Wisata')
-              .child(S.documentTypeList('wisata').title('Wisata')),
+            orderableDocumentListDeskItem({
+              type: 'wisata',
+              title: 'Wisata',
+              icon: EarthGlobeIcon,
+              S,
+              context,
+            }),
             S.listItem()
               .title('Desa')
+              .icon(HomeIcon)
               .child(S.documentTypeList('desa').title('Desa')),
             S.listItem()
               .title('Galeri')
-              .child(S.documentTypeList('galeri').title('Galeri')),
-            S.divider(),
-            S.listItem()
-              .title('Latar Beranda')
-              .id(BERANDA_DOC_ID)
+              .icon(ImagesIcon)
               .child(
-                S.document()
-                  .schemaType('beranda')
-                  .documentId(BERANDA_DOC_ID)
-                  .title('Latar Beranda'),
+                S.list()
+                  .title('Galeri')
+                  .items([
+                    S.listItem()
+                      .title('Adat Dalem Tamblingan')
+                      .icon(ImagesIcon)
+                      .child(
+                        galeriPartyList(S, 'adat', 'Adat Dalem Tamblingan'),
+                      ),
+                    S.listItem()
+                      .title('KKN Mekar Banjar')
+                      .icon(ImagesIcon)
+                      .child(galeriPartyList(S, 'kkn', 'KKN Mekar Banjar')),
+                  ]),
               ),
           ]),
     }),
@@ -109,7 +185,32 @@ export default defineConfig({
 
   schema: {
     types: schemaTypes,
-    // Singleton: hide "beranda" from the global Create menu
-    templates: (templates) => templates.filter((template) => template.schemaType !== 'beranda'),
+    templates: (prev) => [
+      ...prev,
+      {
+        id: 'galeri-adat',
+        title: 'Foto — Adat Dalem Tamblingan',
+        schemaType: 'galeri',
+        value: {party: 'adat'},
+      },
+      {
+        id: 'galeri-kkn',
+        title: 'Foto — KKN Mekar Banjar',
+        schemaType: 'galeri',
+        value: {party: 'kkn'},
+      },
+      {
+        id: 'galeri-video-adat',
+        title: 'Video — Adat Dalem Tamblingan',
+        schemaType: 'galeri_video',
+        value: {party: 'adat'},
+      },
+      {
+        id: 'galeri-video-kkn',
+        title: 'Video — KKN Mekar Banjar',
+        schemaType: 'galeri_video',
+        value: {party: 'kkn'},
+      },
+    ],
   },
 })

@@ -1,3 +1,4 @@
+import {TagsIcon} from '@sanity/icons'
 import {defineField, defineType} from 'sanity'
 import {AutoSlugInput} from '../components/AutoSlugInput'
 
@@ -5,6 +6,7 @@ export default defineType({
   name: 'category',
   title: 'Kategori',
   type: 'document',
+  icon: TagsIcon,
   description:
     'Hanya untuk Artikel Berita. Digunakan sebagai filter di halaman Berita. Bisa ditambah kapan saja.',
   fields: [
