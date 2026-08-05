@@ -41,6 +41,7 @@
     "scrollHint": "Scroll untuk melewati Gapura",
     "aboutTitle": "Tentang Masyarakat Adat Dalem Tamblingan",
     "aboutBody": "Masyarakat Adat Dalem Tamblingan adalah komunitas tradisional yang mendiami wilayah Desa Munduk, Gobleg, Gesing, dan Umejero di sekitar Danau Tamblingan, Buleleng. Keempat desa ini biasa disebut dengan \"Catur Desa\". Mereka memiliki akar sejarah dari peradaban kuno Tamblingan dan dikenal teguh memegang Piagem Gama Tirta, sistem nilai leluhur yang menekankan pentingnya air suci (tirta) sebagai sumber kehidupan dan keseimbangan semesta. Danau Tamblingan dipandang sebagai kawasan suci yang dijaga melalui sistem alas kekeran (hutan larangan), mencerminkan harmoni antara manusia dan alam. Kehidupan mereka diatur oleh lembaga adat dan tokoh spiritual yang melestarikan tradisi serta menjalankan ritual di pura-pura peninggalan leluhur.",
+    "aboutImageAlt": "Peta satelit Catur Desa — Gobleg, Munduk, Umejero, dan Gesing — di sekitar Danau Tamblingan",
     "wisataTitle": "Destinasi Wisata",
     "wisataSubtitle": "Tempat-tempat menarik yang wajib dikunjungi",
     "wisataEmpty": "Destinasi wisata akan segera hadir.",
@@ -124,6 +125,7 @@
     "galleryTitle": "Galeri Foto",
     "otherVillages": "Desa Lainnya",
     "empty": "Konten desa akan segera hadir.",
+    "mapAlt": "Peta satelit wilayah Desa {village}",
     "villages": {
       "gobleg": "Gobleg",
       "munduk": "Munduk",

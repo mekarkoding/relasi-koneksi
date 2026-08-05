@@ -20,7 +20,7 @@ export function WisataCard({ wisata, arch = false }: Props) {
 
   const name = pickLocale(locale, wisata.name_id, wisata.name_en);
   const excerpt = pickLocale(locale, wisata.excerpt_id, wisata.excerpt_en);
-  const imageUrl = urlForImage(wisata.mainImage).width(800).height(600).url();
+  const imageUrl = urlForImage(wisata.mainImage).width(800).height(600).quality(75).url();
   const alt = wisata.mainImage.alt || name;
 
   if (arch) {
@@ -32,7 +32,6 @@ export function WisataCard({ wisata, arch = false }: Props) {
               src={imageUrl}
               alt={alt}
               fill
-              unoptimized
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
             />
@@ -59,7 +58,6 @@ export function WisataCard({ wisata, arch = false }: Props) {
             src={imageUrl}
             alt={alt}
             fill
-            unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
           />

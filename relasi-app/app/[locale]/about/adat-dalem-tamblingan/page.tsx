@@ -71,12 +71,11 @@ export default async function AdatDalemTamblinganPage({
         <figure>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-sm sm:aspect-square">
             <Image
-              src="/images/about/peta-tamblingan.png"
+              src="/images/about/peta-tamblingan.webp"
               alt={t("mapAlt")}
               fill
               className="object-contain p-4"
               sizes="(max-width: 768px) 100vw, 448px"
-              priority
             />
           </div>
           <figcaption className="mt-3 text-center text-sm text-forest/60">

@@ -10,7 +10,7 @@ import { urlForImage } from "@/lib/sanity/image";
 export function DesaCard({ desa }: { desa: DesaPreview }) {
   const tVillages = useTranslations("desa.villages");
   const name = tVillages(desa.villageName);
-  const imageUrl = urlForImage(desa.mainImage).width(600).height(600).url();
+  const imageUrl = urlForImage(desa.mainImage).width(600).height(600).quality(75).url();
 
   return (
     <Link href={`/desa/${desa.villageName}`} className="group block">
@@ -19,7 +19,6 @@ export function DesaCard({ desa }: { desa: DesaPreview }) {
           src={imageUrl}
           alt={desa.mainImage.alt || name}
           fill
-          unoptimized
           sizes="(max-width: 640px) 50vw, 25vw"
           className="object-cover transition-all duration-500 ease-in-out group-hover:scale-105"
         />

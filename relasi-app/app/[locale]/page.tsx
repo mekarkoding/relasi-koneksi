@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
@@ -16,9 +17,9 @@ import { FeaturedDesaCarousel } from "@/components/home/FeaturedDesaCarousel";
 import { HomeVideoCarousel } from "@/components/home/HomeVideoCarousel";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { localeAlternates } from "@/lib/seo";
-import gapuraLeft from "@/public/images/gapura-left.png";
-import gapuraRight from "@/public/images/gapura-right.png";
-import heroTamblingan1 from "@/public/images/hero/tamblingan-1.jpg";
+import gapuraLeft from "@/public/images/gapura-left.webp";
+import gapuraRight from "@/public/images/gapura-right.webp";
+import caturDesaMap from "@/public/images/about/catur-desa.webp";
 
 export const revalidate = 60;
 
@@ -97,7 +98,15 @@ async function FeaturedWisataSection({
   );
 }
 
-function AboutAdatSection({ title, body }: { title: string; body: string }) {
+function AboutAdatSection({
+  title,
+  body,
+  imageAlt,
+}: {
+  title: string;
+  body: string;
+  imageAlt: string;
+}) {
   return (
     <section className="relative z-20 -mt-16 overflow-hidden rounded-t-[4rem] bg-mist pb-40 pt-20 md:-mt-24 md:pb-48">
       <div className="relative mx-auto max-w-6xl px-4">
@@ -111,17 +120,16 @@ function AboutAdatSection({ title, body }: { title: string; body: string }) {
             </p>
           </HomeReveal>
           <HomeReveal delay={0.18}>
-            {/* Replace this block with next/image when the final photo is ready */}
-            <div
-              className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-mist-dark/80 ring-1 ring-forest/10"
-              aria-hidden
-            >
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,255,255,0.35),transparent_55%),linear-gradient(160deg,#c5d6e0_0%,#9eb6c4_45%,#6f8f9e_100%)]" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="rounded-lg bg-forest/10 px-3 py-1.5 text-xs font-medium tracking-wide text-forest/55">
-                  Photo placeholder
-                </span>
-              </div>
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-mist-dark/80 ring-1 ring-forest/10">
+              <Image
+                src={caturDesaMap}
+                alt={imageAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={75}
+                placeholder="blur"
+              />
             </div>
           </HomeReveal>
         </div>
@@ -204,10 +212,10 @@ export default async function HomePage({
 
   return (
     <>
-      {/* Preload entrance art so the gapura paints before JS/hydration finishes */}
-      <link rel="preload" as="image" href={gapuraLeft.src} fetchPriority="high" />
-      <link rel="preload" as="image" href={gapuraRight.src} fetchPriority="high" />
-      <link rel="preload" as="image" href={heroTamblingan1.src} fetchPriority="high" />
+      {/* Preload only the gate LCP pair — Image priority also emits preloads;
+          these cover the paint before the client entrance hydrates. */}
+      <link rel="preload" as="image" href={gapuraLeft.src} type="image/webp" fetchPriority="high" />
+      <link rel="preload" as="image" href={gapuraRight.src} type="image/webp" fetchPriority="high" />
 
       <GapuraEntrance
         title={t("heroTitle")}
@@ -216,7 +224,11 @@ export default async function HomePage({
         scrollHint={t("scrollHint")}
       />
 
-      <AboutAdatSection title={t("aboutTitle")} body={t("aboutBody")} />
+      <AboutAdatSection
+        title={t("aboutTitle")}
+        body={t("aboutBody")}
+        imageAlt={t("aboutImageAlt")}
+      />
 
       <Suspense fallback={<SectionSkeleton variant="desa" />}>
         <EmpatDesaSection title={t("desaTitle")} subtitle={t("desaSubtitle")} />

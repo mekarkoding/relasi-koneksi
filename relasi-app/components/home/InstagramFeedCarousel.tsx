@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import type { InstagramPost } from "@/lib/instagram-types";
 import { InstagramPostCard } from "@/components/home/InstagramPostCard";
 
@@ -27,11 +28,40 @@ function visibleCountForWidth(width: number): number {
   return 1;
 }
 
+function ChevronLeft({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+      <path
+        d="M15 6l-6 6 6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function ChevronRight({ className }: { className?: string }) {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" className={className}>
+      <path
+        d="M9 6l6 6-6 6"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 /**
  * Instagram strip carousel: 5 posts visible on desktop, advances one card
  * every 5s (next post enters from the right).
  */
 export function InstagramFeedCarousel({ posts }: Props) {
+  const t = useTranslations("common");
   const reduceMotion = useReducedMotion();
   const viewportRef = useRef<HTMLDivElement>(null);
   const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -206,26 +236,50 @@ export function InstagramFeedCarousel({ posts }: Props) {
       </div>
 
       {posts.length > 1 && (
-        <div className="mt-5 flex flex-wrap justify-center gap-2">
-          {posts.map((post, i) => {
-            const active = i === index % posts.length;
-            return (
-              <button
-                key={post.id}
-                type="button"
-                aria-label={`Slide ${i + 1}`}
-                aria-current={active ? "true" : undefined}
-                onClick={() => {
-                  clearIdleTimer();
-                  setInstant(false);
-                  setIndex(i);
-                }}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  active ? "w-5 bg-tamblingan" : "w-2 bg-forest/25"
-                }`}
-              />
-            );
-          })}
+        <div className="mt-5 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={() => {
+              clearIdleTimer();
+              advance(-1);
+            }}
+            aria-label={t("prevPhoto")}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-forest/20 bg-white/90 text-forest shadow-sm transition hover:border-forest/40 hover:bg-mist"
+          >
+            <ChevronLeft />
+          </button>
+          <div className="flex flex-wrap justify-center gap-2">
+            {posts.map((post, i) => {
+              const active = i === index % posts.length;
+              return (
+                <button
+                  key={post.id}
+                  type="button"
+                  aria-label={`Slide ${i + 1}`}
+                  aria-current={active ? "true" : undefined}
+                  onClick={() => {
+                    clearIdleTimer();
+                    setInstant(false);
+                    setIndex(i);
+                  }}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    active ? "w-5 bg-tamblingan" : "w-2 bg-forest/25"
+                  }`}
+                />
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              clearIdleTimer();
+              advance(1);
+            }}
+            aria-label={t("nextPhoto")}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-forest/20 bg-white/90 text-forest shadow-sm transition hover:border-forest/40 hover:bg-mist"
+          >
+            <ChevronRight />
+          </button>
         </div>
       )}
     </div>

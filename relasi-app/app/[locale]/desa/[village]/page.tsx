@@ -12,6 +12,7 @@ import { DesaCard } from "@/components/DesaCard";
 import { BackButton } from "@/components/BackButton";
 import { pickLocale } from "@/lib/locale-content";
 import { localeAlternates } from "@/lib/seo";
+import { villageMaps } from "@/data/village-maps";
 
 export const revalidate = 60; // ISR (PRD 3.2)
 export const dynamicParams = false;
@@ -103,6 +104,19 @@ export default async function DesaPage({ params }: Props) {
       <div className="mt-8">
         <PortableTextRenderer value={description} />
       </div>
+
+      <figure className="mt-10">
+        <div className="relative aspect-[21/13] w-full overflow-hidden rounded-2xl bg-mist-dark/40 ring-1 ring-forest/10">
+          <Image
+            src={villageMaps[village]}
+            alt={t("mapAlt", { village: villageLabel })}
+            fill
+            className="object-cover"
+            sizes="(max-width: 896px) 100vw, 896px"
+            placeholder="blur"
+          />
+        </div>
+      </figure>
 
       {desa.dataFields && desa.dataFields.length > 0 && (
         <section className="mt-10">

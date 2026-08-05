@@ -41,6 +41,7 @@
     "scrollHint": "Scroll to pass through the Gapura",
     "aboutTitle": "About the Adat Dalem Tamblingan Community",
     "aboutBody": "The Adat Dalem Tamblingan community is a traditional people living in the villages of Munduk, Gobleg, Gesing, and Umejero around Lake Tamblingan, Buleleng. These four villages are known as \"Catur Desa\". They trace their roots to the ancient Tamblingan civilization and remain steadfast in Piagem Gama Tirta — ancestral values that hold sacred water (tirta) as the source of life and cosmic balance. Lake Tamblingan is regarded as a sacred landscape protected through the alas kekeran (forbidden forest) system, reflecting harmony between people and nature. Daily life is guided by customary institutions and spiritual leaders who preserve tradition and perform rituals at ancestral temples.",
+    "aboutImageAlt": "Satellite map of Catur Desa — Gobleg, Munduk, Umejero, and Gesing — around Lake Tamblingan",
     "wisataTitle": "Attractions",
     "wisataSubtitle": "Must-visit places around the region",
     "wisataEmpty": "Attractions are coming soon.",
@@ -124,6 +125,7 @@
     "galleryTitle": "Photo Gallery",
     "otherVillages": "Other Villages",
     "empty": "Village content is coming soon.",
+    "mapAlt": "Satellite map of {village} village",
     "villages": {
       "gobleg": "Gobleg",
       "munduk": "Munduk",

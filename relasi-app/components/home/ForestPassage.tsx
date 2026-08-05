@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, MotionValue, useTransform } from "framer-motion";
-import danauBg from "@/public/images/danau-tamblingan-2d.png";
+import danauBg from "@/public/images/danau-tamblingan-2d.webp";
 
 type LeafTone = "deep" | "moss" | "gold" | "lime";
 
@@ -171,9 +171,11 @@ export function ForestPassage({ progress }: { progress: MotionValue<number> }) {
         src={danauBg}
         alt=""
         fill
-        priority
-        unoptimized
+        // Behind the gapura on first paint — do not compete with gate LCP.
+        fetchPriority="low"
         sizes="100vw"
+        quality={75}
+        placeholder="blur"
         className="object-cover object-center select-none"
         draggable={false}
       />
