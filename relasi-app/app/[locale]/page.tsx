@@ -17,8 +17,9 @@ import { FeaturedDesaCarousel } from "@/components/home/FeaturedDesaCarousel";
 import { HomeVideoCarousel } from "@/components/home/HomeVideoCarousel";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { localeAlternates } from "@/lib/seo";
-import gapuraLeft from "@/public/images/gapura-left.webp";
-import gapuraRight from "@/public/images/gapura-right.webp";
+import gapuraLeft from "@/public/images/gapura-left.png";
+import gapuraRight from "@/public/images/gapura-right.png";
+import heroTamblingan1 from "@/public/images/hero/tamblingan-1.jpg";
 import caturDesaMap from "@/public/images/about/catur-desa.webp";
 
 export const revalidate = 60;
@@ -212,10 +213,10 @@ export default async function HomePage({
 
   return (
     <>
-      {/* Preload only the gate LCP pair — Image priority also emits preloads;
-          these cover the paint before the client entrance hydrates. */}
-      <link rel="preload" as="image" href={gapuraLeft.src} type="image/webp" fetchPriority="high" />
-      <link rel="preload" as="image" href={gapuraRight.src} type="image/webp" fetchPriority="high" />
+      {/* Preload entrance art so the gapura paints before JS/hydration finishes */}
+      <link rel="preload" as="image" href={gapuraLeft.src} fetchPriority="high" />
+      <link rel="preload" as="image" href={gapuraRight.src} fetchPriority="high" />
+      <link rel="preload" as="image" href={heroTamblingan1.src} fetchPriority="high" />
 
       <GapuraEntrance
         title={t("heroTitle")}

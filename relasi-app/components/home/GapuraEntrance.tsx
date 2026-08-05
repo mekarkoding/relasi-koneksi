@@ -2,16 +2,16 @@
 
 import { useEffect, useRef } from "react";
 import Image from "next/image";
-import dynamic from "next/dynamic";
 import {
   motion,
   useMotionValue,
   useScroll,
   useTransform,
 } from "framer-motion";
-import gapuraLeft from "@/public/images/gapura-left.webp";
-import gapuraRight from "@/public/images/gapura-right.webp";
+import gapuraLeft from "@/public/images/gapura-left.png";
+import gapuraRight from "@/public/images/gapura-right.png";
 import { useEntranceScroll } from "@/components/home/EntranceScrollProvider";
+import { ForestPassage } from "@/components/home/ForestPassage";
 import { HeroCta } from "@/components/home/HeroCta";
 import { HeroSlideshow } from "@/components/home/HeroSlideshow";
 import {
@@ -25,12 +25,6 @@ import {
   GATE_FADE_START,
   GATE_ZOOM_END,
 } from "@/lib/entrance-timing";
-
-const ForestPassage = dynamic(
-  () =>
-    import("@/components/home/ForestPassage").then((m) => m.ForestPassage),
-  { ssr: false },
-);
 
 interface Props {
   title: string;
@@ -108,9 +102,12 @@ export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props)
   const entranceReady = entrance?.entranceReady ?? false;
   const entranceSeen = entrance?.entranceSeen ?? false;
 
-  // Until sessionStorage hydrates, paint the gate (first-visit LCP) rather than
-  // a blank screen. Return visitors may flash the gate for one frame.
-  if (entranceReady && entranceSeen) {
+  // Avoid flashing the gate while sessionStorage is read on first paint.
+  if (!entranceReady) {
+    return <div className="relative z-10 h-screen bg-[#c5d6e0]" aria-hidden />;
+  }
+
+  if (entranceSeen) {
     return (
       <LandedHero title={title} subtitle={subtitle} ctaLabel={ctaLabel} />
     );
@@ -263,9 +260,8 @@ function GapuraEntranceJourney({
                 fill
                 priority
                 fetchPriority="high"
+                unoptimized
                 sizes="(max-width: 768px) 55vw, 40vw"
-                quality={80}
-                placeholder="blur"
                 className="object-contain object-bottom"
                 draggable={false}
               />
@@ -277,9 +273,8 @@ function GapuraEntranceJourney({
                 fill
                 priority
                 fetchPriority="high"
+                unoptimized
                 sizes="(max-width: 768px) 55vw, 40vw"
-                quality={80}
-                placeholder="blur"
                 className="object-contain object-bottom"
                 draggable={false}
               />
