@@ -5,6 +5,7 @@ const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
   images: {
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       // STRICT RULE 3.2: Sanity images served through the Sanity image CDN
       { protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" },

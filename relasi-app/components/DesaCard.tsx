@@ -10,7 +10,12 @@ import { urlForImage } from "@/lib/sanity/image";
 export function DesaCard({ desa }: { desa: DesaPreview }) {
   const tVillages = useTranslations("desa.villages");
   const name = tVillages(desa.villageName);
-  const imageUrl = urlForImage(desa.mainImage).width(600).height(600).quality(75).url();
+  const imageUrl = urlForImage(desa.mainImage)
+    .width(600)
+    .height(600)
+    .format("webp")
+    .quality(70)
+    .url();
 
   return (
     <Link href={`/desa/${desa.villageName}`} className="group block">

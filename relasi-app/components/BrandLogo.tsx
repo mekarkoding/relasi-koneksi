@@ -26,7 +26,6 @@ export function BrandLogo({ className = "", onClick }: Props) {
           width={160}
           height={80}
           className="absolute left-0 top-1/2 h-full w-auto max-w-none -translate-y-1/2 object-contain object-left invert"
-          priority
         />
       </span>
       <span>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 import { Link } from "@/i18n/navigation";
@@ -12,15 +13,35 @@ import { DesaCard } from "@/components/DesaCard";
 import { InstagramFeed } from "@/components/InstagramFeed";
 import { SectionHeading } from "@/components/SectionHeading";
 import { GapuraEntrance } from "@/components/home/GapuraEntrance";
-import { FeaturedWisataCarousel } from "@/components/home/FeaturedWisataCarousel";
-import { FeaturedDesaCarousel } from "@/components/home/FeaturedDesaCarousel";
-import { HomeVideoCarousel } from "@/components/home/HomeVideoCarousel";
 import { HomeReveal } from "@/components/home/HomeReveal";
 import { localeAlternates } from "@/lib/seo";
-import gapuraLeft from "@/public/images/gapura-left.png";
-import gapuraRight from "@/public/images/gapura-right.png";
-import heroTamblingan1 from "@/public/images/hero/tamblingan-1.jpg";
 import caturDesaMap from "@/public/images/about/catur-desa.webp";
+
+const FeaturedWisataCarousel = dynamic(
+  () =>
+    import("@/components/home/FeaturedWisataCarousel").then(
+      (m) => m.FeaturedWisataCarousel,
+    ),
+);
+
+const FeaturedDesaCarousel = dynamic(
+  () =>
+    import("@/components/home/FeaturedDesaCarousel").then(
+      (m) => m.FeaturedDesaCarousel,
+    ),
+);
+
+const HomeVideoCarousel = dynamic(
+  () =>
+    import("@/components/home/HomeVideoCarousel").then(
+      (m) => m.HomeVideoCarousel,
+    ),
+  {
+    loading: () => (
+      <div className="aspect-video animate-pulse rounded-2xl bg-mist/20" aria-hidden />
+    ),
+  },
+);
 
 export const revalidate = 60;
 
@@ -128,7 +149,7 @@ function AboutAdatSection({
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                quality={75}
+                quality={70}
                 placeholder="blur"
               />
             </div>
@@ -213,10 +234,7 @@ export default async function HomePage({
 
   return (
     <>
-      {/* Preload entrance art so the gapura paints before JS/hydration finishes */}
-      <link rel="preload" as="image" href={gapuraLeft.src} fetchPriority="high" />
-      <link rel="preload" as="image" href={gapuraRight.src} fetchPriority="high" />
-      <link rel="preload" as="image" href={heroTamblingan1.src} fetchPriority="high" />
+      {/* Gapura LCP: rely on next/image priority preloads (correct /_next/image URLs). */}
 
       <GapuraEntrance
         title={t("heroTitle")}

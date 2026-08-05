@@ -20,7 +20,12 @@ export function WisataCard({ wisata, arch = false }: Props) {
 
   const name = pickLocale(locale, wisata.name_id, wisata.name_en);
   const excerpt = pickLocale(locale, wisata.excerpt_id, wisata.excerpt_en);
-  const imageUrl = urlForImage(wisata.mainImage).width(800).height(600).quality(75).url();
+  const imageUrl = urlForImage(wisata.mainImage)
+    .width(800)
+    .height(600)
+    .format("webp")
+    .quality(70)
+    .url();
   const alt = wisata.mainImage.alt || name;
 
   if (arch) {

@@ -17,8 +17,9 @@ const FADE_MS = 1500;
 
 /**
  * Full-bleed hero background: cycles Tamblingan photos with a crossfade.
+ * Pass `priority` only when this slideshow is the visible LCP (post-entrance).
  */
-export function HeroSlideshow() {
+export function HeroSlideshow({ priority = false }: { priority?: boolean }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -60,9 +61,10 @@ export function HeroSlideshow() {
             src={src}
             alt=""
             fill
-            priority={i === 0}
-            fetchPriority={i === 0 ? "high" : "auto"}
+            priority={priority && i === 0}
+            fetchPriority={priority && i === 0 ? "high" : "auto"}
             sizes="100vw"
+            quality={75}
             className="object-cover"
             placeholder="blur"
           />

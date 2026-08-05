@@ -1,15 +1,16 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import {
   motion,
   useMotionValue,
+  useMotionValueEvent,
   useScroll,
   useTransform,
 } from "framer-motion";
-import gapuraLeft from "@/public/images/gapura-left.png";
-import gapuraRight from "@/public/images/gapura-right.png";
+import gapuraLeft from "@/public/images/gapura-left.webp";
+import gapuraRight from "@/public/images/gapura-right.webp";
 import { useEntranceScroll } from "@/components/home/EntranceScrollProvider";
 import { ForestPassage } from "@/components/home/ForestPassage";
 import { HeroCta } from "@/components/home/HeroCta";
@@ -79,7 +80,7 @@ function LandedHero({
   return (
     <section className="relative z-10 h-screen overflow-hidden bg-[#c5d6e0]">
       <div className="absolute inset-0">
-        <HeroSlideshow />
+        <HeroSlideshow priority />
         <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-tamblingan/20 to-mist/30" />
       </div>
       <div className="absolute inset-0 flex items-center justify-center">
@@ -102,12 +103,9 @@ export function GapuraEntrance({ title, subtitle, ctaLabel, scrollHint }: Props)
   const entranceReady = entrance?.entranceReady ?? false;
   const entranceSeen = entrance?.entranceSeen ?? false;
 
-  // Avoid flashing the gate while sessionStorage is read on first paint.
-  if (!entranceReady) {
-    return <div className="relative z-10 h-screen bg-[#c5d6e0]" aria-hidden />;
-  }
-
-  if (entranceSeen) {
+  // Paint the gate immediately for LCP. After sessionStorage hydrates, return
+  // visitors switch to LandedHero (may flash the gate for one frame).
+  if (entranceReady && entranceSeen) {
     return (
       <LandedHero title={title} subtitle={subtitle} ctaLabel={ctaLabel} />
     );
@@ -133,10 +131,25 @@ function GapuraEntranceJourney({
   const entrance = useEntranceScroll();
   const bindScrollProgress = entrance?.bindScrollProgress;
   const markEntranceSeen = entrance?.markEntranceSeen;
+  const [showHeroMedia, setShowHeroMedia] = useState(false);
+  const [showForest, setShowForest] = useState(false);
 
   const { scrollYProgress } = useScroll({
     target: trackRef,
     offset: ["start start", "end end"],
+  });
+
+  // Let the gapura LCP paint first, then mount the forest layer.
+  useEffect(() => {
+    const id = window.setTimeout(() => setShowForest(true), 120);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  // Mount hero photos only as the forest fades out — keeps LCP on the gapura.
+  useMotionValueEvent(scrollYProgress, "change", (value) => {
+    if (!showHeroMedia && value >= ENTRANCE_REVEAL_START - 0.08) {
+      setShowHeroMedia(true);
+    }
   });
 
   useEffect(() => {
@@ -245,7 +258,11 @@ function GapuraEntranceJourney({
           style={{ scale: forestScale, opacity: forestOpacity }}
           className="pointer-events-none absolute inset-0 z-10 origin-center will-change-transform"
         >
-          <ForestPassage progress={scrollYProgress} />
+          {showForest ? (
+            <ForestPassage progress={scrollYProgress} />
+          ) : (
+            <div className="absolute inset-0 bg-[#c5d6e0]" aria-hidden />
+          )}
         </motion.div>
 
         <motion.div
@@ -260,8 +277,8 @@ function GapuraEntranceJourney({
                 fill
                 priority
                 fetchPriority="high"
-                unoptimized
                 sizes="(max-width: 768px) 55vw, 40vw"
+                quality={70}
                 className="object-contain object-bottom"
                 draggable={false}
               />
@@ -271,10 +288,8 @@ function GapuraEntranceJourney({
                 src={gapuraRight}
                 alt=""
                 fill
-                priority
-                fetchPriority="high"
-                unoptimized
                 sizes="(max-width: 768px) 55vw, 40vw"
+                quality={70}
                 className="object-contain object-bottom"
                 draggable={false}
               />
@@ -286,7 +301,7 @@ function GapuraEntranceJourney({
           style={{ scale: heroScale, opacity: heroOpacity }}
           className="absolute inset-0 z-30 will-change-transform"
         >
-          <HeroSlideshow />
+          {showHeroMedia ? <HeroSlideshow /> : null}
           <div className="absolute inset-0 bg-gradient-to-t from-forest/80 via-tamblingan/20 to-mist/30" />
         </motion.div>
 
