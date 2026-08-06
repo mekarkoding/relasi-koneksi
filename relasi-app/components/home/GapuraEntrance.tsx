@@ -253,7 +253,7 @@ function GapuraEntranceJourney({
 
   return (
     <section ref={trackRef} className="relative z-10 h-[240vh]">
-      <div className="sticky top-0 isolate h-screen overflow-hidden bg-[#c5d6e0]">
+      <div className="sticky top-0 isolate h-screen overflow-hidden bg-[#b8b4a6]">
         <motion.div
           style={{ scale: forestScale, opacity: forestOpacity }}
           className="pointer-events-none absolute inset-0 z-10 origin-center will-change-transform"
@@ -261,7 +261,7 @@ function GapuraEntranceJourney({
           {showForest ? (
             <ForestPassage progress={scrollYProgress} />
           ) : (
-            <div className="absolute inset-0 bg-[#c5d6e0]" aria-hidden />
+            <div className="absolute inset-0 bg-[#b8b4a6]" aria-hidden />
           )}
         </motion.div>
 
@@ -279,9 +279,32 @@ function GapuraEntranceJourney({
                 fetchPriority="high"
                 sizes="(max-width: 768px) 55vw, 40vw"
                 quality={70}
-                className="object-contain object-bottom"
+                className="object-contain object-bottom [filter:brightness(1.12)_contrast(0.96)_saturate(0.75)_sepia(0.1)_hue-rotate(-8deg)_drop-shadow(0_14px_24px_rgba(8,10,12,0.4))]"
                 draggable={false}
               />
+              {/* Sun-lit inner face (sun sits upper-left, near the gap) */}
+              <motion.div
+                aria-hidden
+                className="absolute inset-0 will-change-[opacity]"
+                style={{
+                  maskImage:
+                    "linear-gradient(105deg, transparent 40%, black 78%)",
+                  WebkitMaskImage:
+                    "linear-gradient(105deg, transparent 40%, black 78%)",
+                }}
+                animate={{ opacity: [0.5, 0.85, 0.55, 0.85] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Image
+                  src={gapuraLeft}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 55vw, 40vw"
+                  quality={70}
+                  className="object-contain object-bottom [filter:brightness(1.5)_sepia(0.32)_saturate(1.1)]"
+                  draggable={false}
+                />
+              </motion.div>
             </div>
             <div className="relative h-full w-[36%] shrink-0 sm:w-[38%] md:w-[40%]">
               <Image
@@ -290,10 +313,54 @@ function GapuraEntranceJourney({
                 fill
                 sizes="(max-width: 768px) 55vw, 40vw"
                 quality={70}
-                className="object-contain object-bottom"
+                className="object-contain object-bottom [filter:brightness(1.12)_contrast(0.96)_saturate(0.75)_sepia(0.1)_hue-rotate(-8deg)_drop-shadow(0_14px_24px_rgba(8,10,12,0.4))]"
                 draggable={false}
               />
+              {/* Sun-lit left face */}
+              <motion.div
+                aria-hidden
+                className="absolute inset-0 will-change-[opacity]"
+                style={{
+                  maskImage:
+                    "linear-gradient(255deg, transparent 45%, black 82%)",
+                  WebkitMaskImage:
+                    "linear-gradient(255deg, transparent 45%, black 82%)",
+                }}
+                animate={{ opacity: [0.45, 0.8, 0.5, 0.8] }}
+                transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+              >
+                <Image
+                  src={gapuraRight}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 55vw, 40vw"
+                  quality={70}
+                  className="object-contain object-bottom [filter:brightness(1.45)_sepia(0.3)_saturate(1.1)]"
+                  draggable={false}
+                />
+              </motion.div>
             </div>
+          </div>
+
+          {/* Shared atmosphere: directional light matching flipped sun (left) */}
+          <div aria-hidden className="absolute inset-0">
+            <div className="absolute inset-0 bg-[#8a9094]/10 mix-blend-multiply" />
+            {/* Left-side warm highlight (sun is upper-left after bg flip) */}
+            <div className="absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-[#ffd89a]/14 via-[#ffd89a]/05 to-transparent mix-blend-soft-light" />
+            {/* Right side slightly cooler/shadowed */}
+            <div className="absolute inset-y-0 right-0 w-[40%] bg-gradient-to-l from-[#1a1e22]/12 to-transparent mix-blend-multiply" />
+            {/* Ground haze / mist around pillar bases */}
+            <div className="absolute inset-x-0 bottom-0 h-[28%] bg-gradient-to-t from-[#dfe3df]/35 via-[#e8ebe8]/12 to-transparent" />
+            <motion.div
+              className="absolute -left-[10%] bottom-0 h-28 w-[55%] rounded-[100%] bg-white/25 blur-2xl will-change-transform"
+              animate={{ x: ["0%", "14%", "-6%", "0%"], opacity: [0.35, 0.55, 0.4, 0.35] }}
+              transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute -right-[10%] bottom-0 h-32 w-[55%] rounded-[100%] bg-[#f0f2ef]/22 blur-3xl will-change-transform"
+              animate={{ x: ["0%", "-16%", "8%", "0%"], opacity: [0.3, 0.5, 0.35, 0.3] }}
+              transition={{ duration: 17, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
+            />
           </div>
         </motion.div>
 

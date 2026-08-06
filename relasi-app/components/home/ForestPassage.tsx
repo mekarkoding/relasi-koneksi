@@ -1,170 +1,22 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, MotionValue, useTransform } from "framer-motion";
-import danauBg from "@/public/images/danau-tamblingan-2d.webp";
+import { motion, type MotionValue } from "framer-motion";
+import danauBg from "@/public/images/hero/tamblingan-1.jpg";
 
-type LeafTone = "deep" | "moss" | "gold" | "lime";
-
-type FallingLeafSpec = {
-  key: number;
-  left: number;
-  size: number;
-  duration: number;
-  delay: number;
-  driftX: number;
-  sway: number;
-  rotateStart: number;
-  rotateEnd: number;
-  tone: LeafTone;
-};
-
-const TONES: LeafTone[] = ["deep", "moss", "gold", "lime"];
-
-const TONE_FILL: Record<LeafTone, string> = {
-  deep: "#2d4a38",
-  moss: "#4a7a52",
-  gold: "#a3b56a",
-  lime: "#6d9b5e",
-};
-
-const LEAF_COUNT = 14;
-
-function rand(min: number, max: number) {
-  return min + Math.random() * (max - min);
-}
-
-function pickTone(): LeafTone {
-  return TONES[Math.floor(Math.random() * TONES.length)]!;
-}
-
-function createLeaf(key: number, stagger = false): FallingLeafSpec {
-  const rotateStart = rand(-40, 40);
-  return {
-    key,
-    left: rand(2, 96),
-    size: rand(22, 42),
-    duration: rand(9, 16),
-    delay: stagger ? rand(0, 10) : 0,
-    driftX: rand(-90, 90),
-    sway: rand(18, 48),
-    rotateStart,
-    rotateEnd: rotateStart + rand(120, 320) * (Math.random() > 0.5 ? 1 : -1),
-    tone: pickTone(),
-  };
-}
-
-function LeafShape({ tone, size }: { tone: LeafTone; size: number }) {
-  const leafPath =
-    "M16 2C16 2 4 10 4 18c0 6 5 10 12 12 7-2 12-6 12-12C28 10 16 2 16 2Z";
-
-  return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden>
-      <path
-        d={leafPath}
-        fill={TONE_FILL[tone]}
-        stroke="#0a0a0a"
-        strokeWidth="2.2"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-      <path
-        d="M16 6v20M16 12c-3 2-5 5-6 8M16 14c3 2 5 5 6 7"
-        fill="none"
-        stroke="#0a0a0a"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-        opacity={0.85}
-      />
-    </svg>
-  );
-}
-
-function FallingLeaf({
-  leaf,
-  onRespawn,
-}: {
-  leaf: FallingLeafSpec;
-  onRespawn: (key: number) => void;
-}) {
-  return (
-    <motion.div
-      aria-hidden
-      className="pointer-events-none absolute top-0 will-change-transform"
-      style={{ left: `${leaf.left}%` }}
-      initial={{
-        y: "-12vh",
-        x: 0,
-        opacity: 0,
-        rotate: leaf.rotateStart,
-      }}
-      animate={{
-        y: "112vh",
-        x: [0, leaf.driftX * 0.45, -leaf.sway, leaf.driftX],
-        opacity: [0, 1, 1, 1, 0],
-        rotate: leaf.rotateEnd,
-      }}
-      transition={{
-        duration: leaf.duration,
-        delay: leaf.delay,
-        ease: "linear",
-        x: {
-          duration: leaf.duration,
-          delay: leaf.delay,
-          ease: "easeInOut",
-          times: [0, 0.35, 0.65, 1],
-        },
-        opacity: {
-          duration: leaf.duration,
-          delay: leaf.delay,
-          times: [0, 0.08, 0.75, 0.92, 1],
-        },
-      }}
-      onAnimationComplete={() => onRespawn(leaf.key)}
-    >
-      <LeafShape tone={leaf.tone} size={leaf.size} />
-    </motion.div>
-  );
-}
-
-function FallingLeaves() {
-  const [leaves, setLeaves] = useState<FallingLeafSpec[] | null>(null);
-  const nextId = useRef(LEAF_COUNT + 1);
-
-  useEffect(() => {
-    setLeaves(
-      Array.from({ length: LEAF_COUNT }, (_, i) => createLeaf(i + 1, true)),
-    );
-  }, []);
-
-  const respawn = useCallback((finishedKey: number) => {
-    const fresh = createLeaf(nextId.current, false);
-    nextId.current += 1;
-    setLeaves((prev) =>
-      prev
-        ? prev.map((leaf) => (leaf.key === finishedKey ? fresh : leaf))
-        : prev,
-    );
-  }, []);
-
-  if (!leaves) return null;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {leaves.map((leaf) => (
-        <FallingLeaf key={leaf.key} leaf={leaf} onRespawn={respawn} />
-      ))}
-    </div>
-  );
-}
+/** Sun hotspot after horizontal flip of tamblingan-1.jpg (measured peak). */
+const SUN_X = "31.0%";
+const SUN_Y = "24.3%";
 
 /**
- * Passage behind the gapura: Danau Tamblingan backdrop + continuously falling leaves.
+ * Passage behind the gapura: Tamblingan dawn backdrop, with animated
+ * god rays locked to the sun already in the photo.
  */
-export function ForestPassage({ progress }: { progress: MotionValue<number> }) {
-  const mistOpacity = useTransform(progress, [0.15, 0.45, 0.75], [0.35, 0.55, 0]);
-
+export function ForestPassage({
+  progress: _progress,
+}: {
+  progress: MotionValue<number>;
+}) {
   return (
     <div className="absolute inset-0 overflow-hidden">
       <Image
@@ -174,21 +26,100 @@ export function ForestPassage({ progress }: { progress: MotionValue<number> }) {
         // Behind the gate — do not compete with gapura LCP.
         fetchPriority="low"
         sizes="100vw"
-        quality={70}
-        className="object-cover object-center select-none"
+        quality={75}
+        className="object-cover object-[center_40%] select-none -scale-x-100"
         draggable={false}
       />
 
-      <motion.div
-        style={{ opacity: mistOpacity }}
-        className="absolute inset-0 will-change-[opacity]"
+      {/* Soft darken so text/gate stay readable without killing the dawn light */}
+      <div aria-hidden className="absolute inset-0 bg-[#1a1c18]/10" />
+      <div
         aria-hidden
-      >
-        <div className="absolute inset-x-0 top-[20%] h-28 bg-gradient-to-b from-transparent via-white/10 to-transparent blur-md" />
-        <div className="absolute inset-x-0 top-[50%] h-36 bg-gradient-to-b from-transparent via-[#d9e3e9]/12 to-transparent blur-lg" />
-      </motion.div>
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_45%,rgba(12,14,16,0.28)_100%)]"
+      />
+      {/* Ground shadow the gapura bases stand in */}
+      <div
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#0a0c0e]/40 via-[#0a0c0e]/12 to-transparent"
+      />
 
-      <FallingLeaves />
+      {/* Animated god rays originating from the photo's sun (left after flip) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <motion.div
+          className="absolute inset-0 mix-blend-screen will-change-[opacity]"
+          animate={{ opacity: [0.55, 0.9, 0.6, 0.9] }}
+          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            backgroundImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, rgba(255,220,150,0.45) 0%, rgba(255,200,120,0.16) 22%, transparent 52%)`,
+          }}
+        />
+        <motion.div
+          className="absolute inset-0 mix-blend-screen blur-[2px] will-change-transform"
+          style={{
+            backgroundImage: `repeating-conic-gradient(from 335deg at ${SUN_X} ${SUN_Y}, rgba(255,230,180,0.18) 0deg, transparent 3.5deg, transparent 9deg)`,
+            maskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 58%)`,
+            WebkitMaskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 58%)`,
+            transformOrigin: `${SUN_X} ${SUN_Y}`,
+          }}
+          animate={{
+            rotate: [0, 4, -2, 3, 0],
+            opacity: [0.18, 0.34, 0.22, 0.3, 0.18],
+          }}
+          transition={{
+            duration: 14,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute inset-0 mix-blend-screen blur-[3px] will-change-transform"
+          style={{
+            backgroundImage: `repeating-conic-gradient(from 342deg at ${SUN_X} ${SUN_Y}, rgba(255,236,200,0.12) 0deg, transparent 2.5deg, transparent 11deg)`,
+            maskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 50%)`,
+            WebkitMaskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 50%)`,
+            transformOrigin: `${SUN_X} ${SUN_Y}`,
+          }}
+          animate={{
+            rotate: [0, -3, 2, -1, 0],
+            opacity: [0.14, 0.26, 0.16, 0.24, 0.14],
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1.5,
+          }}
+        />
+      </div>
+
+      {/* Low ground mist — soft banks around the gapura bases */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-[42%] overflow-hidden"
+      >
+        <div className="absolute inset-x-0 bottom-0 h-[70%] bg-gradient-to-t from-[#e8ebe8]/55 via-[#dfe4e0]/22 to-transparent" />
+
+        <motion.div
+          className="absolute -left-[20%] bottom-[8%] h-36 w-[70%] rounded-[100%] bg-[#f2f4f1]/45 blur-2xl will-change-transform"
+          animate={{ x: ["0%", "18%", "-8%", "0%"], opacity: [0.45, 0.7, 0.5, 0.45] }}
+          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute -right-[15%] bottom-[4%] h-40 w-[65%] rounded-[100%] bg-[#eef1ee]/40 blur-3xl will-change-transform"
+          animate={{ x: ["0%", "-22%", "10%", "0%"], opacity: [0.4, 0.65, 0.45, 0.4] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+        />
+        <motion.div
+          className="absolute left-[15%] bottom-[-6%] h-28 w-[80%] rounded-[100%] bg-white/35 blur-3xl will-change-transform"
+          animate={{ x: ["0%", "12%", "-14%", "0%"], opacity: [0.35, 0.55, 0.4, 0.35] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 2.5 }}
+        />
+        <motion.div
+          className="absolute left-[30%] bottom-[18%] h-24 w-[50%] rounded-[100%] bg-[#f7f5ef]/30 blur-2xl will-change-transform"
+          animate={{ x: ["0%", "-16%", "10%", "0%"], y: [0, -8, 4, 0], opacity: [0.25, 0.45, 0.3, 0.25] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+        />
+      </div>
     </div>
   );
 }

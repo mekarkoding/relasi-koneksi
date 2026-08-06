@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Leaflet RELASI + KONEKSI</title>
+<style>
+  :root {
+    --mist: #f4f7f5;
+    --mist-dark: #e3eae6;
+    --forest: #1e352f;
+    --forest-light: #2a473f;
+    --tamblingan: #2c4a5e;
+    --lake: #d9e3e9;
+    --marigold: #d4a373;
+    --marigold-dark: #b9885a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { font-family: "Segoe UI", "Plus Jakarta Sans", system-ui, sans-serif; color: var(--forest); }
+  @page { size: A4; margin: 0; }
+
+  .page {
+    width: 210mm;
+    height: 297mm;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    background: var(--mist);
+    display: flex;
+    flex-direction: column;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ---------- header ---------- */
+  .hero {
+    padding: 14mm 16mm 10mm;
+    color: var(--mist);
+    position: relative;
+  }
+  .hero.relasi { background: linear-gradient(135deg, var(--forest) 0%, var(--forest-light) 55%, var(--tamblingan) 100%); }
+  .hero.koneksi { background: linear-gradient(135deg, var(--tamblingan) 0%, #3b617a 55%, var(--forest) 100%); }
+  .hero .brand-row { display: flex; align-items: center; gap: 8mm; }
+  .hero img.logo { width: 22mm; height: 22mm; object-fit: contain; background: var(--mist); border-radius: 50%; padding: 2mm; }
+  .hero h1 { font-size: 30pt; letter-spacing: 2px; line-height: 1.05; }
+  .hero .tagline { font-size: 11.5pt; opacity: .92; margin-top: 2mm; }
+  .hero .badge {
+    display: inline-block; margin-top: 4mm; padding: 1.6mm 5mm;
+    background: var(--marigold); color: var(--forest);
+    border-radius: 99px; font-size: 9.5pt; font-weight: 700; letter-spacing: .5px;
+  }
+
+  /* ---------- body ---------- */
+  .content { flex: 1; padding: 9mm 16mm 6mm; display: flex; flex-direction: column; gap: 6mm; }
+
+  .section-title {
+    font-size: 13pt; font-weight: 800; color: var(--forest);
+    display: flex; align-items: center; gap: 3mm; margin-bottom: 2.5mm;
+  }
+  .section-title::before {
+    content: ""; width: 4mm; height: 4mm; border-radius: 1mm;
+    background: var(--marigold); display: inline-block; flex: 0 0 auto;
+  }
+  p.lead { font-size: 10.5pt; line-height: 1.55; }
+  p.lead strong { color: var(--tamblingan); }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3.5mm; }
+  .grid.three { grid-template-columns: 1fr 1fr 1fr; }
+  .card {
+    background: #fff; border: 1px solid var(--mist-dark);
+    border-radius: 3mm; padding: 4mm 4.5mm;
+  }
+  .card h3 { font-size: 10.5pt; color: var(--tamblingan); margin-bottom: 1.2mm; }
+  .card p { font-size: 9pt; line-height: 1.45; color: #3d5049; }
+
+  .url-box {
+    background: var(--forest); color: var(--mist);
+    border-radius: 3mm; padding: 4.5mm 6mm;
+    display: flex; align-items: center; justify-content: space-between; gap: 6mm;
+  }
+  .url-box .label { font-size: 9pt; text-transform: uppercase; letter-spacing: 1px; opacity: .8; }
+  .url-box .url { font-size: 14pt; font-weight: 800; color: var(--marigold); }
+  .url-box .sub { font-size: 8.5pt; opacity: .85; margin-top: 1mm; }
+
+  ol.steps { counter-reset: step; list-style: none; display: flex; flex-direction: column; gap: 2.6mm; }
+  ol.steps li {
+    counter-increment: step; display: flex; gap: 4mm; align-items: flex-start;
+    background: #fff; border: 1px solid var(--mist-dark); border-radius: 3mm; padding: 3.2mm 4.5mm;
+  }
+  ol.steps li::before {
+    content: counter(step);
+    flex: 0 0 auto; width: 7mm; height: 7mm; border-radius: 50%;
+    background: var(--marigold); color: var(--forest);
+    font-weight: 800; font-size: 10.5pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  ol.steps h3 { font-size: 10pt; color: var(--tamblingan); }
+  ol.steps p { font-size: 8.8pt; line-height: 1.4; color: #3d5049; }
+
+  ul.tips { list-style: none; display: flex; flex-direction: column; gap: 1.8mm; }
+  ul.tips li { font-size: 9pt; line-height: 1.45; padding-left: 5mm; position: relative; color: #3d5049; }
+  ul.tips li::before { content: "✔"; position: absolute; left: 0; color: var(--marigold-dark); font-weight: 700; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 2mm; }
+  .pill {
+    background: var(--lake); color: var(--tamblingan);
+    border-radius: 99px; padding: 1.4mm 4mm; font-size: 8.8pt; font-weight: 700;
+  }
+
+  .note {
+    background: var(--mist-dark); border-left: 3px solid var(--marigold);
+    border-radius: 0 2mm 2mm 0; padding: 3mm 4.5mm; font-size: 8.8pt; line-height: 1.5; color: var(--forest-light);
+  }
+
+  footer {
+    padding: 4mm 16mm; background: var(--forest); color: var(--mist);
+    display: flex; justify-content: space-between; align-items: center; font-size: 8.5pt;
+  }
+  footer .accent { color: var(--marigold); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- ============ HALAMAN 1 : RELASI (untuk masyarakat & pengunjung) ============ -->
+<div class="page">
+  <div class="hero relasi">
+    <div class="brand-row">
+      <img class="logo" src="../relasi-app/public/images/brand/logo.png" alt="Logo Tamblingan">
+      <div>
+        <h1>RELASI</h1>
+        <div class="tagline">Website Wisata &amp; Budaya Kawasan Adat Dalem Tamblingan</div>
+        <span class="badge">UNTUK MASYARAKAT &amp; PENGUNJUNG</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+      <div class="section-title">Apa itu RELASI?</div>
+      <p class="lead">
+        RELASI adalah website resmi untuk memperkenalkan wisata, budaya, dan cerita dari
+        <strong>Catur Desa Adat Dalem Tamblingan</strong> — Desa Gobleg, Munduk, Gesing, dan Umejero —
+        kepada dunia. Website ini tersedia dalam <strong>dua bahasa</strong> (Indonesia &amp; Inggris)
+        dan dapat dibuka dari HP maupun komputer.
+      </p>
+    </div>
+
+    <div>
+      <div class="section-title">Apa saja isinya?</div>
+      <div class="grid">
+        <div class="card">
+          <h3>Beranda</h3>
+          <p>Pintu masuk berupa animasi gapura, ringkasan kawasan, dan unggahan Instagram terbaru.</p>
+        </div>
+        <div class="card">
+          <h3>Wisata</h3>
+          <p>Daftar destinasi wisata beserta deskripsi, foto, dan informasi kunjungannya.</p>
+        </div>
+        <div class="card">
+          <h3>Desa</h3>
+          <p>Profil keempat desa: Gobleg, Munduk, Gesing, dan Umejero.</p>
+        </div>
+        <div class="card">
+          <h3>Artikel</h3>
+          <p>Berita terbaru, sejarah, kemitraan (partnership), dan liputan media.</p>
+        </div>
+        <div class="card">
+          <h3>Media</h3>
+          <p>Galeri foto &amp; video, buklet digital yang bisa dibuka seperti buku, dan peta kawasan.</p>
+        </div>
+        <div class="card">
+          <h3>Tentang</h3>
+          <p>Kisah Adat Dalem Tamblingan dan tim KKN Mekar Banjar yang membangun website ini.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="url-box">
+      <div>
+        <div class="label">Kunjungi sekarang</div>
+        <div class="url">relasi-tamblingan.vercel.app</div>
+        <div class="sub">Pilih bahasa: /id (Indonesia) atau /en (English) — tombol ganti bahasa ada di menu atas.</div>
+      </div>
+    </div>
+
+    <div class="note">
+      Seluruh berita, artikel, foto galeri, dan info wisata di website ini <b>dikelola langsung oleh warga</b>
+      melalui sistem KONEKSI — lihat halaman berikutnya.
+    </div>
+  </div>
+
+  <footer>
+    <span>RELASI — Catur Desa Adat Dalem Tamblingan</span>
+    <span class="accent">KKN Mekar Banjar</span>
+  </footer>
+</div>
+
+<!-- ============ HALAMAN 2 : KONEKSI (untuk operator) ============ -->
+<div class="page">
+  <div class="hero koneksi">
+    <div class="brand-row">
+      <img class="logo" src="../relasi-app/public/images/brand/logo.png" alt="Logo Tamblingan">
+      <div>
+        <h1>KONEKSI</h1>
+        <div class="tagline">Dapur Konten RELASI — Menulis &amp; Menerbitkan Tanpa Coding</div>
+        <span class="badge">UNTUK OPERATOR / PENGELOLA KONTEN</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div>
+      <div class="section-title">Apa itu KONEKSI?</div>
+      <p class="lead">
+        KONEKSI adalah ruang admin tempat operator menulis, mengunggah foto, dan menerbitkan konten
+        ke website RELASI — <strong>cukup lewat browser, tanpa perlu keahlian pemrograman</strong>.
+        Konten yang bisa dikelola:
+      </p>
+      <div class="pill-row" style="margin-top: 2.5mm;">
+        <span class="pill">Berita</span>
+        <span class="pill">Kategori Berita</span>
+        <span class="pill">Sejarah</span>
+        <span class="pill">Partnership</span>
+        <span class="pill">Liputan</span>
+        <span class="pill">Wisata</span>
+        <span class="pill">Desa</span>
+        <span class="pill">Galeri Foto</span>
+        <span class="pill">Galeri Video</span>
+      </div>
+    </div>
+
+    <div class="url-box">
+      <div>
+        <div class="label">Alamat ruang admin</div>
+        <div class="url">koneksi.sanity.studio</div>
+        <div class="sub">Login menggunakan akun yang sudah diundang sebagai anggota (member) proyek.</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-title">Cara menerbitkan konten</div>
+      <ol class="steps">
+        <li><div><h3>Buka &amp; login</h3><p>Kunjungi koneksi.sanity.studio lalu masuk dengan akun Anda.</p></div></li>
+        <li><div><h3>Pilih jenis konten</h3><p>Misalnya: Berita untuk kabar terbaru, Wisata untuk destinasi baru, atau Galeri untuk menambah foto.</p></div></li>
+        <li><div><h3>Isi kontennya</h3><p>Tulis judul &amp; isi dalam dua bahasa (Indonesia dan Inggris), unggah foto, dan isi teks alternatif (alt) untuk setiap gambar.</p></div></li>
+        <li><div><h3>Klik "Publish"</h3><p>Konten yang masih draft tidak akan tampil. Hanya konten yang sudah di-publish yang muncul di website.</p></div></li>
+        <li><div><h3>Tunggu ± 1 menit</h3><p>Website memperbarui diri secara berkala. Buka RELASI dan muat ulang halaman untuk melihat hasilnya.</p></div></li>
+      </ol>
+    </div>
+
+    <div>
+      <div class="section-title">Tips penting</div>
+      <ul class="tips">
+        <li>Gunakan foto arah <b>landscape (melebar)</b> dengan ukuran secukupnya agar website tetap cepat.</li>
+        <li>Dokumen <b>Desa harus tetap empat</b> (Gobleg, Munduk, Gesing, Umejero) — jangan menambah atau menghapus.</li>
+        <li>Ingin menambah operator baru? Admin dapat mengundang lewat <b>sanity.io/manage</b> → Members → role <b>Editor</b>.</li>
+        <li>Salah ketik? Buka kembali dokumennya, perbaiki, lalu klik Publish lagi.</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <span>KONEKSI — Sistem Pengelolaan Konten RELASI</span>
+    <span class="accent">KKN Mekar Banjar</span>
+  </footer>
+</div>
+
+</body>
+</html>

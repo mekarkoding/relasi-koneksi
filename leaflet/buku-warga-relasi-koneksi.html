@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Buku Panduan RELASI &amp; KONEKSI untuk Warga Desa</title>
+<style>
+  :root {
+    --mist: #f4f7f5;
+    --mist-dark: #e3eae6;
+    --forest: #1e352f;
+    --forest-light: #2a473f;
+    --tamblingan: #2c4a5e;
+    --lake: #d9e3e9;
+    --marigold: #d4a373;
+    --marigold-dark: #b9885a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: "Segoe UI", "Plus Jakarta Sans", system-ui, sans-serif;
+    color: var(--forest);
+    background: #fff;
+  }
+  @page { size: A5; margin: 0; }
+
+  .page {
+    width: 148mm;
+    height: 210mm;
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+    background: var(--mist);
+    display: flex;
+    flex-direction: column;
+  }
+  .page:last-child { page-break-after: auto; }
+
+  /* ---- cover ---- */
+  .cover {
+    background: linear-gradient(160deg, var(--forest) 0%, var(--forest-light) 45%, var(--tamblingan) 100%);
+    color: var(--mist);
+    justify-content: space-between;
+    padding: 14mm 12mm 10mm;
+  }
+  .cover .top { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 5mm; margin-top: 8mm; }
+  .cover img.logo {
+    width: 32mm; height: 32mm; object-fit: contain;
+    background: var(--mist); border-radius: 50%; padding: 3mm;
+  }
+  .cover h1 { font-size: 22pt; letter-spacing: 1px; line-height: 1.15; }
+  .cover .subtitle { font-size: 11pt; opacity: .92; line-height: 1.45; max-width: 110mm; }
+  .cover .for-whom {
+    margin-top: 6mm; display: inline-block;
+    background: var(--marigold); color: var(--forest);
+    padding: 2mm 5mm; border-radius: 99px; font-size: 9.5pt; font-weight: 800;
+  }
+  .cover .bottom { text-align: center; font-size: 9pt; opacity: .85; }
+  .cover .bottom strong { color: var(--marigold); }
+
+  /* ---- inner pages ---- */
+  .page-head {
+    padding: 8mm 12mm 5mm;
+    background: var(--forest);
+    color: var(--mist);
+  }
+  .page-head .kicker { font-size: 8.5pt; letter-spacing: 1px; text-transform: uppercase; opacity: .75; color: var(--marigold); }
+  .page-head h2 { font-size: 16pt; margin-top: 1.5mm; line-height: 1.2; }
+  .body { flex: 1; padding: 6mm 12mm 5mm; display: flex; flex-direction: column; gap: 4.5mm; }
+  .page-foot {
+    padding: 3mm 12mm;
+    background: var(--mist-dark);
+    font-size: 8pt; color: var(--forest-light);
+    display: flex; justify-content: space-between;
+  }
+
+  p { font-size: 10.5pt; line-height: 1.55; }
+  p strong { color: var(--tamblingan); }
+
+  .big-idea {
+    background: #fff;
+    border-left: 3.5px solid var(--marigold);
+    border-radius: 0 3mm 3mm 0;
+    padding: 3.5mm 4.5mm;
+    font-size: 11pt; line-height: 1.5; font-weight: 600;
+  }
+
+  .simple-list { list-style: none; display: flex; flex-direction: column; gap: 2.5mm; }
+  .simple-list li {
+    background: #fff; border: 1px solid var(--mist-dark);
+    border-radius: 3mm; padding: 3mm 4mm;
+    font-size: 10pt; line-height: 1.45;
+    display: flex; gap: 3mm; align-items: flex-start;
+  }
+  .simple-list .num {
+    flex: 0 0 auto;
+    width: 6.5mm; height: 6.5mm; border-radius: 50%;
+    background: var(--marigold); color: var(--forest);
+    font-weight: 800; font-size: 10pt;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .simple-list h3 { font-size: 10.5pt; color: var(--tamblingan); margin-bottom: 0.5mm; }
+  .simple-list p { font-size: 9.5pt; color: #3d5049; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+  .box {
+    background: #fff; border: 1px solid var(--mist-dark);
+    border-radius: 3mm; padding: 3.5mm 4mm;
+  }
+  .box h3 { font-size: 10.5pt; color: var(--tamblingan); margin-bottom: 1.5mm; }
+  .box p, .box li { font-size: 9.5pt; line-height: 1.4; color: #3d5049; }
+  .box ul { margin-left: 4mm; }
+
+  .url {
+    background: var(--forest); color: var(--mist);
+    border-radius: 3mm; padding: 3.5mm 4.5mm; text-align: center;
+  }
+  .url .label { font-size: 8pt; text-transform: uppercase; letter-spacing: 1px; opacity: .75; }
+  .url .addr { font-size: 12.5pt; font-weight: 800; color: var(--marigold); margin-top: 1mm; word-break: break-all; }
+  .url .hint { font-size: 8.5pt; opacity: .85; margin-top: 1.5mm; line-height: 1.4; }
+
+  .tip {
+    background: var(--lake);
+    border-radius: 3mm;
+    padding: 3mm 4mm;
+    font-size: 9.5pt; line-height: 1.45;
+  }
+  .tip strong { color: var(--tamblingan); }
+
+  .compare {
+    display: grid; grid-template-columns: 1fr auto 1fr; gap: 2.5mm; align-items: stretch;
+  }
+  .compare .card {
+    background: #fff; border: 1px solid var(--mist-dark);
+    border-radius: 3mm; padding: 3.5mm; text-align: center;
+  }
+  .compare .card h3 { font-size: 12pt; color: var(--forest); }
+  .compare .card p { font-size: 9pt; margin-top: 1.5mm; color: #3d5049; }
+  .compare .vs {
+    display: flex; align-items: center; font-weight: 800;
+    color: var(--marigold-dark); font-size: 10pt;
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== 1. SAMPUL ========== -->
+<div class="page cover">
+  <div class="top">
+    <img class="logo" src="../relasi-app/public/images/brand/logo.png" alt="Logo Tamblingan">
+    <div>
+      <h1>Buku Panduan<br>RELASI &amp; KONEKSI</h1>
+      <p class="subtitle">Cara mudah mengenal website desa dan cara mengisi isinya</p>
+      <span class="for-whom">Untuk Warga Desa</span>
+    </div>
+  </div>
+  <div class="bottom">
+    <div>Catur Desa Adat Dalem Tamblingan</div>
+    <div>Gobleg · Munduk · Gesing · Umejero</div>
+    <div style="margin-top:3mm"><strong>KKN Mekar Banjar</strong></div>
+  </div>
+</div>
+
+<!-- ========== 2. INTI SINGKAT ========== -->
+<div class="page">
+  <div class="page-head">
+    <div class="kicker">Halaman 1</div>
+    <h2>Dua nama, satu tujuan</h2>
+  </div>
+  <div class="body">
+    <p class="big-idea">
+      RELASI = website yang dilihat orang.<br>
+      KONEKSI = tempat menulis isinya.
+    </p>
+
+    <div class="compare">
+      <div class="card">
+        <h3>RELASI</h3>
+        <p>Seperti papan pengumuman di jalan. Semua orang bisa membacanya dari HP atau komputer.</p>
+      </div>
+      <div class="vs">→</div>
+      <div class="card">
+        <h3>KONEKSI</h3>
+        <p>Seperti dapur di belakang. Di sini warga menulis berita dan mengunggah foto.</p>
+      </div>
+    </div>
+
+    <p>
+      Jadi: kalau Anda hanya ingin <strong>melihat</strong> wisata dan berita desa → buka <strong>RELASI</strong>.
+      Kalau Anda ditunjuk untuk <strong>mengisi</strong> berita atau foto → gunakan <strong>KONEKSI</strong>.
+    </p>
+
+    <div class="tip">
+      <strong>Tidak perlu paham komputer berat.</strong> Cukup bisa buka internet, ketik, dan unggah foto — seperti memakai WhatsApp atau Facebook.
+    </div>
+  </div>
+  <div class="page-foot"><span>Untuk warga desa</span><span>1 / 6</span></div>
+</div>
+
+<!-- ========== 3. RELASI ========== -->
+<div class="page">
+  <div class="page-head">
+    <div class="kicker">Halaman 2 · RELASI</div>
+    <h2>Apa yang ada di website?</h2>
+  </div>
+  <div class="body">
+    <p>
+      RELASI menampilkan wajah <strong>Catur Desa Adat Dalem Tamblingan</strong>
+      kepada wisatawan dan warga. Isinya antara lain:
+    </p>
+    <ul class="simple-list">
+      <li><span class="num">1</span><div><h3>Beranda</h3><p>Halaman depan — pintu masuk website.</p></div></li>
+      <li><span class="num">2</span><div><h3>Wisata</h3><p>Tempat-tempat wisata yang bisa dikunjungi.</p></div></li>
+      <li><span class="num">3</span><div><h3>Desa</h3><p>Cerita singkat Gobleg, Munduk, Gesing, dan Umejero.</p></div></li>
+      <li><span class="num">4</span><div><h3>Berita &amp; artikel</h3><p>Kabar desa, sejarah, kerja sama, dan liputan.</p></div></li>
+      <li><span class="num">5</span><div><h3>Galeri &amp; buklet</h3><p>Foto, video, dan buku digital yang bisa dibuka.</p></div></li>
+    </ul>
+    <div class="url">
+      <div class="label">Alamat website</div>
+      <div class="addr">relasi-tamblingan.vercel.app</div>
+      <div class="hint">Bisa dipilih bahasa Indonesia atau English di menu atas.</div>
+    </div>
+  </div>
+  <div class="page-foot"><span>RELASI — website publik</span><span>2 / 6</span></div>
+</div>
+
+<!-- ========== 4. KONEKSI APA ========== -->
+<div class="page">
+  <div class="page-head">
+    <div class="kicker">Halaman 3 · KONEKSI</div>
+    <h2>Apa yang bisa diisi warga?</h2>
+  </div>
+  <div class="body">
+    <p>
+      Lewat KONEKSI, warga yang sudah punya akun bisa menambah atau mengubah isi website.
+      Yang biasanya dikelola:
+    </p>
+    <div class="two-col">
+      <div class="box">
+        <h3>Bisa diisi</h3>
+        <ul>
+          <li>Berita desa</li>
+          <li>Sejarah</li>
+          <li>Kerja sama</li>
+          <li>Liputan</li>
+          <li>Wisata baru</li>
+          <li>Info desa</li>
+          <li>Foto galeri</li>
+          <li>Video galeri</li>
+        </ul>
+      </div>
+      <div class="box">
+        <h3>Tidak perlu diubah sendiri</h3>
+        <ul>
+          <li>Tampilan gapura</li>
+          <li>Buklet / peta khusus</li>
+          <li>Hal-hal teknis website</li>
+        </ul>
+        <p style="margin-top:2.5mm">Kalau butuh ubah itu, tanya tim yang membantu website.</p>
+      </div>
+    </div>
+    <div class="url">
+      <div class="label">Alamat KONEKSI</div>
+      <div class="addr">koneksi.sanity.studio</div>
+      <div class="hint">Hanya untuk orang yang sudah diajak masuk (punya akun).</div>
+    </div>
+  </div>
+  <div class="page-foot"><span>KONEKSI — mengisi konten</span><span>3 / 6</span></div>
+</div>
+
+<!-- ========== 5. CARA PAKAI ========== -->
+<div class="page">
+  <div class="page-head">
+    <div class="kicker">Halaman 4 · Cara kerja</div>
+    <h2>Lima langkah mengisi konten</h2>
+  </div>
+  <div class="body">
+    <ul class="simple-list">
+      <li><span class="num">1</span><div><h3>Buka &amp; masuk</h3><p>Kunjungi koneksi.sanity.studio, lalu login dengan akun Anda.</p></div></li>
+      <li><span class="num">2</span><div><h3>Pilih jenis isi</h3><p>Contoh: Berita (kabar baru), Wisata (tempat baru), atau Galeri (foto).</p></div></li>
+      <li><span class="num">3</span><div><h3>Isi judul, tulisan, foto</h3><p>Usahakan isi dalam dua bahasa: Indonesia dan Inggris. Beri keterangan singkat pada setiap foto.</p></div></li>
+      <li><span class="num">4</span><div><h3>Klik Publish</h3><p>Kalau belum di-Publish, isinya masih tersimpan sebagai draf dan belum muncul di website.</p></div></li>
+      <li><span class="num">5</span><div><h3>Tunggu sebentar</h3><p>Setelah Publish, tunggu sekitar 1 menit, lalu buka RELASI dan muat ulang halaman.</p></div></li>
+    </ul>
+  </div>
+  <div class="page-foot"><span>Langkah sederhana</span><span>4 / 6</span></div>
+</div>
+
+<!-- ========== 6. TIPS ========== -->
+<div class="page">
+  <div class="page-head">
+    <div class="kicker">Halaman 5 · Tips</div>
+    <h2>Agar hasilnya bagus</h2>
+  </div>
+  <div class="body">
+    <ul class="simple-list">
+      <li><span class="num">✓</span><div><h3>Foto melebar (landscape)</h3><p>Lebih bagus ditampilkan di website daripada foto tegak yang terlalu sempit.</p></div></li>
+      <li><span class="num">✓</span><div><h3>Tulis jelas &amp; singkat</h3><p>Seperti cerita ke tetangga — mudah dibaca, jangan terlalu panjang.</p></div></li>
+      <li><span class="num">✓</span><div><h3>Desa tetap empat</h3><p>Gobleg, Munduk, Gesing, Umejero. Jangan menambah atau menghapus nama desa.</p></div></li>
+      <li><span class="num">✓</span><div><h3>Salah ketik?</h3><p>Buka lagi isinya di KONEKSI, perbaiki, lalu klik Publish sekali lagi.</p></div></li>
+    </ul>
+    <div class="tip">
+      <strong>Mau menambah pengelola baru?</strong> Minta admin mengundang lewat sanity.io/manage
+      dengan peran <strong>Editor</strong>. Jangan bagikan kata sandi akun orang lain.
+    </div>
+  </div>
+  <div class="page-foot"><span>Tips warga</span><span>5 / 6</span></div>
+</div>
+
+<!-- ========== 7. PENUTUP ========== -->
+<div class="page">
+  <div class="page-head">
+    <div class="kicker">Halaman 6 · Ringkasan</div>
+    <h2>Ingat ini saja</h2>
+  </div>
+  <div class="body">
+    <p class="big-idea">
+      Lihat website → RELASI<br>
+      Isi website → KONEKSI<br>
+      Selesai isi → klik Publish
+    </p>
+
+    <div class="two-col">
+      <div class="url" style="text-align:left">
+        <div class="label">RELASI</div>
+        <div class="addr" style="font-size:10pt">relasi-tamblingan.vercel.app</div>
+      </div>
+      <div class="url" style="text-align:left">
+        <div class="label">KONEKSI</div>
+        <div class="addr" style="font-size:10pt">koneksi.sanity.studio</div>
+      </div>
+    </div>
+
+    <p>
+      Kalau bingung, tanyakan ke pengelola desa atau tim yang mendampingi website.
+      Lebih baik bertanya daripada takut mencoba.
+    </p>
+
+    <div class="tip" style="text-align:center; margin-top:auto">
+      Website ini milik bersama warga Catur Desa.<br>
+      <strong>Mari jaga dan isi dengan cerita yang baik.</strong>
+    </div>
+  </div>
+  <div class="page-foot"><span>KKN Mekar Banjar</span><span>6 / 6</span></div>
+</div>
+
+</body>
+</html>
