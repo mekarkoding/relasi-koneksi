@@ -24,13 +24,12 @@ import mertajatiBukak from "@/public/images/booklet/mertajati/bukak.jpg";
 import mertajatiKejuang from "@/public/images/booklet/mertajati/kejuang.jpg";
 import mertajatiJelunut from "@/public/images/booklet/mertajati/jelunut.jpg";
 import mertajatiDadapSakti from "@/public/images/booklet/mertajati/dadap-sakti.jpg";
-import mertajatiDadapOong from "@/public/images/booklet/mertajati/dadap-oong.jpg";
+import mertajatiDadapOwong from "@/public/images/booklet/mertajati/dadap-owong.jpg";
 import mertajatiCiplukan from "@/public/images/booklet/mertajati/ciplukan.jpg";
 import mertajatiTekokak from "@/public/images/booklet/mertajati/tekokak.jpg";
 import mertajatiJanggar from "@/public/images/booklet/mertajati/janggar-ulam.jpg";
 import mertajatiLatengKebyar from "@/public/images/booklet/mertajati/lateng-kebyar.jpg";
 import mertajatiLatengKidang from "@/public/images/booklet/mertajati/lateng-kidang.jpg";
-import mertajatiLatengTemesi from "@/public/images/booklet/mertajati/lateng-temesi.jpg";
 import mertajatiPandan from "@/public/images/booklet/mertajati/pandan-hutan.jpg";
 import mertajatiPaku from "@/public/images/booklet/mertajati/paku-pakuan.jpg";
 import mertajatiPakuLumut from "@/public/images/booklet/mertajati/paku-lumut.jpg";
@@ -38,7 +37,8 @@ import mertajatiArabika from "@/public/images/booklet/mertajati/arabika-liar.jpg
 import mertajatiEe from "@/public/images/booklet/mertajati/ee-baas.jpg";
 import mertajatiDengencel from "@/public/images/booklet/mertajati/dengencel.jpg";
 import mertajatiSembung from "@/public/images/booklet/mertajati/kayu-sembung.jpg";
-import mertajatiRacun from "@/public/images/booklet/mertajati/racun.jpg";
+import mertajatiRacun from "@/public/images/booklet/mertajati/racun-kastuba.jpg";
+import mertajatiClematis from "@/public/images/booklet/mertajati/clematis.jpg";
 
 /**
  * Booklets are hardcoded static assets (not CMS-managed).
@@ -88,9 +88,9 @@ export const booklets: Booklet[] = [
         title_id: "Kata Pengantar",
         title_en: "Foreword",
         description_id:
-          "Puji syukur kami panjatkan ke hadirat Tuhan Yang Maha Esa karena booklet ini dapat disusun dengan baik. Booklet ini merupakan salah satu bagian dari program kerja Tim KKN-PPM UGM Mekar Banjar 2026 yang memuat dokumentasi berbagai tumbuhan yang sering ditemukan selama kegiatan susur Hutan Alas Mertajati, khususnya di kawasan Gunung Lesung dan kaki Gunung Lesung.\n\nMelalui booklet ini, kami berharap pembaca dapat mengenal kekayaan tumbuhan yang terdapat di kawasan tersebut serta meningkatkan kepedulian terhadap pentingnya menjaga kelestarian hutan dan lingkungan.\n\nKami mengucapkan terima kasih kepada seluruh pihak yang telah mendukung kegiatan penyusuran hutan, proses pengamatan, dokumentasi, identifikasi tumbuhan, serta penyusunan booklet ini. Secara khusus, kami menyampaikan terima kasih kepada Brasti yang telah membantu dan mendukung proses penyusunan booklet ini.\n\nKami menyadari bahwa booklet ini masih memiliki keterbatasan. Oleh karena itu, kritik dan saran sangat diharapkan untuk penyempurnaan pada masa mendatang. Semoga booklet ini dapat memberikan informasi dan manfaat bagi para pembaca.\n\nTim KKN-PPM UGM Mekar Banjar 2026",
+          "Puji syukur kami panjatkan ke hadirat Tuhan Yang Maha Esa atas tersusunnya booklet ini.\n\nBooklet ini merupakan bagian dari program kerja Tim KKN-PPM UGM Mekar Banjar 2026 yang memuat dokumentasi tumbuhan yang ditemukan selama kegiatan susur Hutan Alas Mertajati, khususnya di kawasan Gunung Lesung dan kaki Gunung Lesung.\n\nKami berharap booklet ini dapat menambah pengetahuan pembaca serta meningkatkan kepedulian terhadap kelestarian hutan. Terima kasih kepada seluruh pihak yang telah mendukung proses pengamatan, dokumentasi, identifikasi, dan penyusunan booklet ini, khususnya Brasti dan Bapak Ketut Basma.\n\nKami menyadari booklet ini masih memiliki keterbatasan. Oleh karena itu, kritik dan saran sangat kami harapkan.\n\nTim KKN-PPM UGM Mekar Banjar 2026",
         description_en:
-          "We give thanks that this booklet could be completed. It is part of the KKN-PPM UGM Mekar Banjar 2026 work program, documenting plants commonly found during forest walks in Alas Mertajati — especially around Gunung Lesung and its foothills.\n\nWe hope readers will come to know the plant richness of this landscape and grow more aware of the need to protect the forest and environment.\n\nOur thanks go to everyone who supported the forest surveys, observation, documentation, plant identification, and the making of this booklet — especially Brasti, for helping prepare it.\n\nWe know this booklet still has limits, and we welcome feedback for future improvements. May it be useful to its readers.\n\nKKN-PPM UGM Mekar Banjar 2026 Team",
+          "We give thanks that this booklet could be completed.\n\nIt is part of the KKN-PPM UGM Mekar Banjar 2026 work program, documenting plants found during forest walks in Alas Mertajati — especially around Gunung Lesung and its foothills.\n\nWe hope it adds to readers’ knowledge and care for the forest. Thanks to everyone who supported the surveys, documentation, identification, and writing — especially Brasti and Bapak Ketut Basma.\n\nWe know this booklet still has limits, and we welcome feedback.\n\nKKN-PPM UGM Mekar Banjar 2026 Team",
       },
       {
         id: "banci-banci",
@@ -98,9 +98,9 @@ export const booklets: Booklet[] = [
         title_id: "Banci-Banci",
         title_en: "Banci-Banci",
         description_id:
-          "Mirip kopi arabika: tajuk dan bunga menyerupai kopi, batang elastis, buah kecil seperti merica yang jarang dimanfaatkan. Orang dahulu memasang perangkap burung di pohon ini.",
+          "Dikenal warga sebagai banci-banci (juga disebut banci-baci). Perdu atau pohon kecil dengan tajuk dan daun yang sekilas menyerupai kopi; bunganya juga dikatakan mirip bunga kopi. Buah kecil seperti lada/merica jarang dimanfaatkan. Batang dan ranting relatif lentur — dahulu dipakai menopang perangkap burung.",
         description_en:
-          "Resembles arabica coffee in crown and flowers, with a flexible trunk and small pepper-like fruit rarely used. Villagers once set bird traps in these trees.",
+          "Known locally as banci-banci. A shrub or small tree whose crown and leaves resemble coffee, with flowers said to look like coffee blossoms. Small pepper-like fruit is rarely used. Flexible twigs were once used to support bird traps.",
       },
       {
         id: "bunut",
@@ -110,9 +110,9 @@ export const booklets: Booklet[] = [
         caption_id: "Ficus sp.",
         caption_en: "Ficus sp.",
         description_id:
-          "Salah satu pohon Ficus tertua di Bali, menyerupai beringin namun akarnya dapat menjadi batang baru (bunut bolong). Daun lebih lebar, kulit lebih tebal dan kemerahan; buahnya dimakan burung.",
+          "Termasuk genus Ficus dan termasuk pohon tertua di Bali. Mirip beringin, tetapi akarnya dapat tumbuh menjadi batang baru (bunut bolong). Daun lebih lebar, kulit lebih tebal dan kemerahan. Buah dimakan burung. Tumbuh dengan pressure leader — menekan tumbuhan lain; akar menjuntai dari atas. Keliling batang dapat mencapai ±70 m, berongga, bukan kayu utuh.",
         description_en:
-          "One of Bali’s oldest Ficus trees, like a banyan but with roots that become new trunks. Wider leaves, thicker reddish bark; birds eat the fruit.",
+          "A Ficus among Bali’s oldest trees. Like a banyan, but roots become new trunks (hollow bunut). Wider leaves, thicker reddish bark; birds eat the fruit. It grows as a pressure leader with hanging roots. Trunk girth can reach ~70 m and is hollow, not solid wood.",
       },
       {
         id: "begonia",
@@ -122,9 +122,9 @@ export const booklets: Booklet[] = [
         caption_id: "Begonia sp.",
         caption_en: "Begonia sp.",
         description_id:
-          "Hidup di lantai hutan lembap atau menempel di batang. Daun tidak simetris, rasa asam segar — bisa dicampur garam sebagai minuman darurat. Bunga putih atau merah; tinggi hingga ±1,5 m.",
+          "Genus Begonia (Begoniaceae). Hidup di lantai hutan lembap/teduh atau menempel di batang. Daun tidak simetris, kaya air, rasa asam segar — dicampur garam sebagai minuman darurat. Bunga putih atau merah; tinggi hingga ±1,5 m. Juga populer sebagai tanaman hias.",
         description_en:
-          "Grows on damp forest floors or as an epiphyte. Asymmetric leaves with a fresh sour taste — mixed with salt as an emergency drink. White or red flowers; up to about 1.5 m tall.",
+          "Genus Begonia (Begoniaceae). Grows on damp, shaded forest floors or on trunks. Asymmetric, watery leaves with a fresh sour taste — mixed with salt as an emergency drink. White or red flowers; up to ~1.5 m. Also grown as an ornamental.",
       },
       {
         id: "balanti",
@@ -134,21 +134,21 @@ export const booklets: Booklet[] = [
         caption_id: "Homalanthus populneus",
         caption_en: "Homalanthus populneus",
         description_id:
-          "Tumbuhan pionir famili Euphorbiaceae yang cepat muncul di lahan terbuka. Kulit dan daun dipakai pewarna hitam tradisional; kayu untuk bakar dan pulp.",
+          "Nama lain Malabinunga (Homalanthus populneus, Euphorbiaceae). Tumbuhan pionir yang cepat muncul di hutan terganggu atau lahan baru. Kulit dan daun dipakai pewarna hitam tradisional; kayu untuk bakar dan pulp.",
         description_en:
-          "A pioneer Euphorbiaceae species that quickly colonizes open ground. Bark and leaves yield traditional black dye; wood is used for fuel and pulp.",
+          "Also called Malabinunga (Homalanthus populneus, Euphorbiaceae). A pioneer that quickly colonizes disturbed forest or newly opened land. Bark and leaves yield traditional black dye; wood is used for fuel and pulp.",
       },
       {
         id: "beri-hutan",
         photo: mertajatiBeri,
-        title_id: "Beri Hutan",
+        title_id: "Beri Hutan / Rasberi Gunung",
         title_en: "Mountain Raspberry",
         caption_id: "Rubus fraxinifolius",
         caption_en: "Rubus fraxinifolius",
         description_id:
-          "Semak rasberi gunung berbuah merah kecil berbutir. Rasa asam-manis segar — matang lebih manis, muda lebih asam dan sepat.",
+          "Semak Rubus fraxinifolius berbuah merah kecil berbutir, daun majemuk bergerigi. Rasa asam-manis segar — matang lebih manis, muda lebih asam dan sepat.",
         description_en:
-          "A mountain raspberry shrub with small red compound fruits. Fresh sweet–tart flavor — sweeter when ripe, more astringent when young.",
+          "A Rubus fraxinifolius shrub with small red compound fruits and toothed compound leaves. Fresh sweet–tart flavor — sweeter when ripe, more sour and astringent when young.",
       },
       {
         id: "bukak",
@@ -158,9 +158,9 @@ export const booklets: Booklet[] = [
         caption_id: "Cerbera manghas",
         caption_en: "Cerbera manghas",
         description_id:
-          "Nama dari buah yang “bukak” (terbuka) saat matang. Buah sering dimakan tupai; di beberapa desa dipakai menggantung ari-ari. Buah berisiko dikonsumsi manusia.",
+          "Nama dari buah yang “bukak” (terbuka) saat matang. Nama ilmiah Cerbera manghas. Buah sering dimakan tupai; di Desa Adat Bayung Gede (Kintamani) dipakai menggantung ari-ari karena dipercaya menyerap bau. Buah berisiko dikonsumsi manusia.",
         description_en:
-          "Named for fruit that splits open when ripe. Squirrels eat the fruit; in some villages it is used when hanging placentas. The fruit is risky for people to eat.",
+          "Named for fruit that splits open when ripe (Cerbera manghas). Squirrels eat the fruit; in Bayung Gede (Kintamani) it is used when hanging placentas, believed to absorb odor. The fruit is risky for people to eat.",
       },
       {
         id: "kejuang",
@@ -170,9 +170,9 @@ export const booklets: Booklet[] = [
         caption_id: "Meliaceae",
         caption_en: "Meliaceae",
         description_id:
-          "Kayu hutan sekerabat majegau/lemulir, lebih umum di dalam hutan. Diameter batang dapat mencapai ±20 cm (keliling ±65 cm).",
+          "Famili Meliaceae, sekerabat majegau dan lemulir, tetapi lebih banyak di dalam hutan. Diameter batang dapat mencapai ±20 cm (keliling ±65 cm).",
         description_en:
-          "A forest timber related to majegau/lemulir, more common inside the forest. Trunk diameter can reach about 20 cm (~65 cm girth).",
+          "Meliaceae timber related to majegau and lemulir, more common inside the forest. Trunk diameter can reach about 20 cm (~65 cm girth).",
       },
       {
         id: "jelunut",
@@ -182,31 +182,31 @@ export const booklets: Booklet[] = [
         caption_id: "Commersonia bartramia",
         caption_en: "Commersonia bartramia",
         description_id:
-          "Flora lokal dataran tinggi yang membantu menjaga daerah tangkapan air dan ekosistem hutan.",
+          "Commersonia bartramia — flora lokal hutan dan dataran tinggi. Membantu menjaga daerah tangkapan air dan ekosistem.",
         description_en:
-          "A local highland plant that helps protect watersheds and forest ecosystems.",
+          "Commersonia bartramia — a local forest and highland plant that helps protect watersheds and ecosystems.",
       },
       {
         id: "dadap-sakti",
         photo: mertajatiDadapSakti,
-        title_id: "Dadap Sakti",
-        title_en: "Dadap Sakti",
+        title_id: "Dapdap Sakti",
+        title_en: "Dapdap Sakti",
         caption_id: "Erythrina subumbrans",
         caption_en: "Erythrina subumbrans",
         description_id:
-          "Pohon Fabaceae tropis Asia. Di Bali dimanfaatkan dalam kegiatan keagamaan dan pengobatan tradisional.",
+          "Erythrina subumbrans (Fabaceae) di wilayah tropis Asia, termasuk Jawa dan Kepulauan Sunda Kecil. Di Bali dimanfaatkan dalam kegiatan keagamaan dan pengobatan tradisional.",
         description_en:
-          "A tropical Asian Fabaceae tree. In Bali it is used in religious practice and traditional medicine.",
+          "Erythrina subumbrans (Fabaceae) of tropical Asia, including Java and the Lesser Sundas. In Bali it is used in religious practice and traditional medicine.",
       },
       {
-        id: "dadap-oong",
-        photo: mertajatiDadapOong,
-        title_id: "Dadap Oong",
-        title_en: "Dadap Oong",
+        id: "dadap-owong",
+        photo: mertajatiDadapOwong,
+        title_id: "Dapdap Owong",
+        title_en: "Dapdap Owong",
         description_id:
-          "Dadap berduri yang saat lapuk menumbuhkan jamur putih enak dimakan. Baik menyimpan air; akar lembut dipakai pelindung tanaman kopi dan punya bintil akar seperti kacang-kacangan.",
+          "Dapdap berduri banyak. Saat tua dan lapuk muncul jamur putih yang enak dimakan. Baik menyimpan air; akar lembut dipakai pelindung tanaman kopi dan punya bintil akar seperti kacang-kacangan.",
         description_en:
-          "A thorny dadap that, when aged and soft, grows edible white fungi. Good for water retention; soft roots shade coffee and carry nitrogen-fixing nodules.",
+          "A thorny dapdap. When old and soft it grows edible white fungi. Good for water retention; soft roots shade coffee and carry nitrogen-fixing nodules.",
       },
       {
         id: "ciplukan",
@@ -216,21 +216,21 @@ export const booklets: Booklet[] = [
         caption_id: "Physalis angulata",
         caption_en: "Physalis angulata",
         description_id:
-          "Herba Solanaceae liar di lahan terbuka. Buah dalam kelopak seperti lentera, kuning–jingga, manis agak asam, dapat dimakan; juga dipakai dalam pengobatan tradisional dengan kehati-hatian.",
+          "Herba Solanaceae liar di lahan terbuka, kebun, dan tepi hutan. Buah dalam kelopak seperti lentera, kuning–jingga, manis agak asam, dapat dimakan; juga dipakai dalam pengobatan tradisional dengan kehati-hatian.",
         description_en:
-          "A wild Solanaceae herb of open ground. Fruit in a lantern-like husk turns yellow–orange, sweet–tart and edible; also used cautiously in traditional medicine.",
+          "A wild Solanaceae herb of open ground, gardens, and forest edges. Fruit in a lantern-like husk turns yellow–orange, sweet–tart and edible; also used cautiously in traditional medicine.",
       },
       {
         id: "tekokak",
         photo: mertajatiTekokak,
-        title_id: "Tekokak",
+        title_id: "Tuung Kokak / Tekokak",
         title_en: "Turkey Berry",
         caption_id: "Solanum torvum",
         caption_en: "Solanum torvum",
         description_id:
-          "Perdu hingga ±3 m dengan bunga putih bergerombol. Buah hijau kecil diolah jadi sayur atau sambal; rasanya sedikit pahit. Umum di pinggir hutan dan lahan terbuka.",
+          "Perdu Solanaceae hingga ±3 m. Bunga putih berbintang bergerombol; buah hijau kecil diolah jadi sayur, sambal, atau campuran masakan — rasanya sedikit pahit. Umum di lahan terbuka, semak, pinggir jalan, dan tepi hutan.",
         description_en:
-          "A shrub up to ~3 m with clustered white flowers. Small green fruit is cooked as vegetable or sambal; slightly bitter. Common along forest edges and open land.",
+          "A Solanaceae shrub up to ~3 m. Clustered starry white flowers; small green fruit is cooked as vegetable or sambal — slightly bitter. Common in open land, scrub, roadsides, and forest edges.",
       },
       {
         id: "janggar-ulam",
@@ -240,9 +240,9 @@ export const booklets: Booklet[] = [
         caption_id: "Syzygium polyanthum",
         caption_en: "Syzygium polyanthum",
         description_id:
-          "Sebutan lokal untuk daun salam (Myrtaceae). Batang kemerahan, tajuk lebat hingga ±25 m, daun harum untuk bumbu; rasa buah mirip jamblang.",
+          "Sebutan lokal daun salam (Syzygium polyanthum, Myrtaceae), sekerabat duwet/jambang. Batang agak kemerahan, tajuk lebat hingga ±25 m, daun bulat telur harum untuk bumbu; rasa buah mirip jamblang.",
         description_en:
-          "Local name for Indonesian bay leaf (Myrtaceae). Reddish trunk, dense crown to ~25 m, fragrant leaves for cooking; fruit tastes like Java plum.",
+          "Local name for Indonesian bay leaf (Syzygium polyanthum, Myrtaceae), related to Java plum. Reddish trunk, dense crown to ~25 m, fragrant egg-shaped leaves for cooking; fruit tastes like jamblang.",
       },
       {
         id: "lateng-kebyar",
@@ -252,9 +252,9 @@ export const booklets: Booklet[] = [
         caption_id: "Renealmia sp.",
         caption_en: "Renealmia sp.",
         description_id:
-          "Daun berbulu/berduri di hutan tropis. Disebut “kebyar” karena menyentuh kulit memberi efek tersengat mendadak.",
+          "Renealmia dengan daun berbulu/berduri di hutan tropis. Disebut “kebyar” karena menyentuh kulit memberi efek tersengat mendadak — “byar…”.",
         description_en:
-          "A tropical forest plant with fine spines on the leaves. Named “kebyar” for the sudden sting when skin is touched.",
+          "A tropical forest Renealmia with fine spines on the leaves. Named “kebyar” for the sudden sting when skin is touched.",
       },
       {
         id: "lateng-kidang",
@@ -264,19 +264,9 @@ export const booklets: Booklet[] = [
         caption_id: "Renealmia sp.",
         caption_en: "Renealmia sp.",
         description_id:
-          "Kerabat lateng dengan bulu daun yang menimbulkan rasa panas dan gatal menyengat bila tersentuh.",
+          "Kerabat lateng (Renealmia) dengan bulu daun yang menimbulkan rasa panas dan gatal menyengat bila tersentuh.",
         description_en:
-          "Related to other lateng plants; leaf hairs cause a hot, stinging itch on contact.",
-      },
-      {
-        id: "lateng-temesi",
-        photo: mertajatiLatengTemesi,
-        title_id: "Lateng Temesi",
-        title_en: "Lateng Temesi",
-        description_id:
-          "Dapat menjadi pohon besar di Alas Mertajati. Bagian muda berambut penyengat; menurut warga berfungsi sebagai pelindung dan penyimpan air, serta inang bagi Ficus.",
-        description_en:
-          "Can grow into a large tree in Alas Mertajati. Young parts have stinging hairs; locals say it shades the forest, stores water, and hosts Ficus.",
+          "Related Renealmia; leaf hairs cause a hot, stinging itch on contact.",
       },
       {
         id: "pandan-hutan",
@@ -286,9 +276,9 @@ export const booklets: Booklet[] = [
         caption_id: "Pandanaceae",
         caption_en: "Pandanaceae",
         description_id:
-          "Tumbuh liar di hutan, tepi sungai, hingga pesisir. Daun untuk anyaman; akar dan buah dipakai obat tradisional. Menjaga kelembapan dan struktur tanah.",
+          "Pandanaceae liar di hutan, tepi sungai, rawa, hingga pesisir. Daun untuk anyaman; akar dan buah dipakai obat tradisional (mis. diabetes, diare, pereda nyeri). Menjaga kelembapan dan struktur tanah.",
         description_en:
-          "Grows wild in forest, river edges, and coasts. Leaves for weaving; roots and fruit used in traditional medicine. Helps soil moisture and structure.",
+          "Wild Pandanaceae of forest, river edges, swamps, and coasts. Leaves for weaving; roots and fruit used in traditional medicine. Helps soil moisture and structure.",
       },
       {
         id: "paku-pakuan",
@@ -298,9 +288,9 @@ export const booklets: Booklet[] = [
         caption_id: "Pteridophyta",
         caption_en: "Pteridophyta",
         description_id:
-          "Tumbuhan berpembuluh tanpa bunga/biji, berkembang biak dengan spora. Banyak jenis dijumpai di jalur lembap dan teduh Alas Mertajati.",
+          "Pteridophyta — tumbuhan berpembuluh tanpa bunga/biji, berkembang biak dengan spora. Hidup di tempat lembap dan teduh: tanah, bebatuan, atau menempel di batang. Banyak jenis dijumpai sepanjang jalur susur.",
         description_en:
-          "Vascular plants without flowers or seeds, reproducing by spores. Many kinds line damp, shaded trails in Alas Mertajati.",
+          "Pteridophyta — vascular plants without flowers or seeds, reproducing by spores. They prefer damp shade on soil, rock, or trunks. Many kinds line the survey trails.",
       },
       {
         id: "paku-lumut",
@@ -308,9 +298,9 @@ export const booklets: Booklet[] = [
         title_id: "Paku Lumut",
         title_en: "Mossy Fern Cover",
         description_id:
-          "Jenis paku penutup lahan yang membantu mencegah erosi dan longsor saat hujan.",
+          "Jenis paku penutup lahan agar tanah tidak tergerus dan longsor saat hujan.",
         description_en:
-          "A ground-covering fern that helps prevent erosion and landslides in the rain.",
+          "A ground-covering fern that helps stop soil wash and landslides in the rain.",
       },
       {
         id: "arabika-liar",
@@ -320,9 +310,9 @@ export const booklets: Booklet[] = [
         caption_id: "Coffea arabica",
         caption_en: "Coffea arabica",
         description_id:
-          "Kopi arabika yang tumbuh alami tanpa penanaman. Karena liar, bijinya menyerap nutrisi habitat dan punya profil rasa khas.",
+          "Coffea arabica yang tumbuh alami tanpa penanaman atau pemeliharaan. Karena liar, bijinya menyerap nutrisi habitat dan punya profil rasa unik.",
         description_en:
-          "Arabica coffee growing without cultivation. Wild growth gives the beans a distinctive flavor shaped by the habitat.",
+          "Coffea arabica growing without cultivation or care. Wild growth gives the beans a distinctive flavor shaped by the habitat.",
       },
       {
         id: "ee-baas",
@@ -332,9 +322,9 @@ export const booklets: Booklet[] = [
         caption_id: "Ficus racemosa (Loa)",
         caption_en: "Ficus racemosa (Loa)",
         description_id:
-          "Pohon sakral (Taru Ee Baas) dengan akar gantung dan buah dimakan satwa. Ada beberapa jenis: Ee Baas berbuah hijau manis-sepat (daun untuk urap), Ee dedem berbuah gelap lebih sepat, dan Ee biasa berbuah sebesar apel.",
+          "Pohon sakral (Taru Ee Baas), sering diidentifikasi sebagai Loa (Ficus racemosa). Akar gantung dan buah dimakan monyet, burung, dan kelelawar. Di Alas Mertajati ada Ee Baas berbuah hijau manis-sepat (daun untuk urap), Ee dedem berbuah gelap lebih sepat (daun pakan ternak), dan Ee biasa dengan batang lebih mulus serta buah sebesar apel.",
         description_en:
-          "A sacred fig (Taru Ee Baas) with hanging roots and wildlife-eaten fruit. Variants include green sweet–astringent Ee Baas (leaves for urap), darker more astringent Ee dedem, and smoother-barked Ee with apple-sized fruit.",
+          "A sacred fig (Taru Ee Baas), often identified as Loa (Ficus racemosa), with hanging roots and fruit eaten by monkeys, birds, and bats. Variants include green sweet–astringent Ee Baas (leaves for urap), darker more astringent Ee dedem (fodder leaves), and smoother-barked Ee with apple-sized fruit.",
       },
       {
         id: "dengencel",
@@ -344,9 +334,9 @@ export const booklets: Booklet[] = [
         caption_id: "Zingiber zerumbet",
         caption_en: "Zingiber zerumbet",
         description_id:
-          "Lempuyang wangi (Zingiber) untuk meredakan peradangan dan gangguan pencernaan, serta bahan sampo alami. Dilindungi ketat oleh hukum adat setempat.",
+          "Lempuyang wangi (Zingiber zerumbet) untuk meredakan peradangan dan gangguan pencernaan, serta bahan sampo alami. Dilindungi ketat oleh hukum adat setempat agar tidak punah.",
         description_en:
-          "Shampoo ginger used for inflammation and digestion, and as a natural shampoo base. Strictly protected under local customary law.",
+          "Shampoo ginger (Zingiber zerumbet) used for inflammation and digestion, and as a natural shampoo base. Strictly protected under local customary law.",
       },
       {
         id: "kayu-sembung",
@@ -356,19 +346,33 @@ export const booklets: Booklet[] = [
         caption_id: "Vernonia arborea",
         caption_en: "Vernonia arborea",
         description_id:
-          "Pohon hutan sekunder untuk konstruksi ringan dan batang korek api. Kerabatnya sembung obat (Blumea balsamifera) dipakai dalam pengobatan tradisional.",
+          "Vernonia arborea — pohon hutan sekunder untuk konstruksi ringan, bahan rumah, dan batang korek api. Kerabatnya sembung obat (Blumea balsamifera) dipakai dalam pengobatan tradisional.",
         description_en:
-          "A secondary-forest tree for light construction and matchsticks. Related medicinal blumea (Blumea balsamifera) is used in traditional remedies.",
+          "Vernonia arborea — a secondary-forest tree for light construction, housing, and matchsticks. Related medicinal blumea (Blumea balsamifera) is used in traditional remedies.",
       },
       {
-        id: "racun",
+        id: "racun-kastuba",
         photo: mertajatiRacun,
-        title_id: "Racun",
-        title_en: "Racun",
+        title_id: "Racun / Kastuba",
+        title_en: "Racun / Kastuba",
+        caption_id: "Euphorbia pulcherrima",
+        caption_en: "Euphorbia pulcherrima",
         description_id:
-          "Tumbuhan lokal yang terdokumentasi selama susur Alas Mertajati. Perhatikan penamaan lokal — jangan dikonsumsi tanpa pengetahuan warga.",
+          "Euphorbia pulcherrima — daun pelindung merah dengan bunga kecil kuning di tengah. Getah putih dapat mengiritasi kulit atau mata; toksisitas umumnya rendah dan tidak dianggap sangat beracun bagi manusia.",
         description_en:
-          "A locally named plant recorded on Alas Mertajati walks. Heed local naming — do not consume without community knowledge.",
+          "Euphorbia pulcherrima — red bracts with small yellow flowers at the center. White sap can irritate skin or eyes; toxicity is generally low and it is not considered highly poisonous to people.",
+      },
+      {
+        id: "clematis",
+        photo: mertajatiClematis,
+        title_id: "Clematis",
+        title_en: "Clematis",
+        caption_id: "Clematis sp.",
+        caption_en: "Clematis sp.",
+        description_id:
+          "Ranunculaceae — liana merambat yang memanjat tumbuhan lain. Buah kering kecil berambut membantu biji tersebar oleh angin. Nama campestris berkaitan dengan habitat di kawasan terbuka atau lapangan.",
+        description_en:
+          "Ranunculaceae — a climbing liana that uses other plants for support. Small hairy dry fruits help seeds spread by wind. The name campestris relates to open-field habitats.",
       },
     ],
   },

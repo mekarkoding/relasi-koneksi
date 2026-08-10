@@ -51,3 +51,9 @@ buklet/
 foto/
 Tamblingan *.jpeg
 Tamblingan *.jpg
+
+# Raw Mertajati booklet sources (optimized copies live under relasi-app/public/)
+MERTAJATI BERCERITA/
+MERTAJATI BERCERITA.pdf
+MERTAJATI BERCERITA.zip
+

@@ -43,51 +43,30 @@ export function ForestPassage({
         className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#0a0c0e]/40 via-[#0a0c0e]/12 to-transparent"
       />
 
-      {/* Animated god rays originating from the photo's sun (left after flip) */}
+      {/* Soft sun glow + one light ray layer (no blur — cheaper to composite) */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <motion.div
-          className="absolute inset-0 mix-blend-screen will-change-[opacity]"
-          animate={{ opacity: [0.55, 0.9, 0.6, 0.9] }}
-          transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+        <div
+          className="absolute inset-0 mix-blend-screen opacity-70"
           style={{
-            backgroundImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, rgba(255,220,150,0.45) 0%, rgba(255,200,120,0.16) 22%, transparent 52%)`,
+            backgroundImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, rgba(255,220,150,0.35) 0%, rgba(255,200,120,0.12) 22%, transparent 48%)`,
           }}
         />
         <motion.div
-          className="absolute inset-0 mix-blend-screen blur-[2px] will-change-transform"
+          className="absolute inset-0 mix-blend-screen"
           style={{
-            backgroundImage: `repeating-conic-gradient(from 335deg at ${SUN_X} ${SUN_Y}, rgba(255,230,180,0.18) 0deg, transparent 3.5deg, transparent 9deg)`,
-            maskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 58%)`,
-            WebkitMaskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 58%)`,
-            transformOrigin: `${SUN_X} ${SUN_Y}`,
-          }}
-          animate={{
-            rotate: [0, 4, -2, 3, 0],
-            opacity: [0.18, 0.34, 0.22, 0.3, 0.18],
-          }}
-          transition={{
-            duration: 14,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute inset-0 mix-blend-screen blur-[3px] will-change-transform"
-          style={{
-            backgroundImage: `repeating-conic-gradient(from 342deg at ${SUN_X} ${SUN_Y}, rgba(255,236,200,0.12) 0deg, transparent 2.5deg, transparent 11deg)`,
+            backgroundImage: `repeating-conic-gradient(from 335deg at ${SUN_X} ${SUN_Y}, rgba(255,230,180,0.12) 0deg, transparent 4deg, transparent 11deg)`,
             maskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 50%)`,
             WebkitMaskImage: `radial-gradient(ellipse at ${SUN_X} ${SUN_Y}, black 0%, transparent 50%)`,
             transformOrigin: `${SUN_X} ${SUN_Y}`,
           }}
           animate={{
-            rotate: [0, -3, 2, -1, 0],
-            opacity: [0.14, 0.26, 0.16, 0.24, 0.14],
+            rotate: [0, 3, -1.5, 0],
+            opacity: [0.16, 0.26, 0.18, 0.16],
           }}
           transition={{
             duration: 18,
             repeat: Infinity,
             ease: "easeInOut",
-            delay: 1.5,
           }}
         />
       </div>
