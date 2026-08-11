@@ -15,11 +15,13 @@ export interface HomeVideo {
 export const homeVideos: HomeVideo[] = [
   {
     id: "adat-profile",
-    youtubeUrl: "https://www.youtube.com/watch?v=xNOvLLW8-Wc",
-    title_id: "Video Profil Adat Dalem Tamblingan",
-    title_en: "Adat Dalem Tamblingan Profile Video",
-    description_id: "Kenali Adat Dalem Tamblingan lebih dekat",
-    description_en: "Get to know Adat Dalem Tamblingan",
+    youtubeUrl: "https://youtu.be/dciDFXfw9B0",
+    title_id: "Mengenal Desa Adat Gobleg: Sejarah, Budaya, dan Tradisi",
+    title_en: "Getting to Know Desa Adat Gobleg: History, Culture, and Tradition",
+    description_id:
+      "Video profil memperkenalkan sejarah, budaya, dan kehidupan Catur Desa Masyarakat Adat Danau Tamblingan sebagai bagian dari kekayaan warisan budaya dan identitas masyarakat lokal.",
+    description_en:
+      "A profile video introducing the history, culture, and daily life of the Catur Desa of the Adat community of Lake Tamblingan — part of the local cultural heritage and identity.",
   },
   {
     id: "kkn-journey",
