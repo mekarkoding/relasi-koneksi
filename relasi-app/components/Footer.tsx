@@ -40,17 +40,21 @@ export function Footer() {
 
         <div>
           <p className="font-semibold text-forest">{t("supportedBy")}</p>
-          <ul className="mt-3 grid max-w-[14rem] grid-cols-2 gap-3">
+          <ul className="mt-3 grid max-w-[16rem] grid-cols-3 gap-2 sm:gap-3">
             {sponsors.map((sponsor) => (
               <li
                 key={sponsor.id}
-                className="relative flex aspect-[3/2] items-center justify-center"
+                className={
+                  sponsor.spanRows
+                    ? "relative row-span-2 flex items-center justify-center"
+                    : "relative flex aspect-[3/2] items-center justify-center"
+                }
               >
                 <Image
                   src={sponsor.logo}
                   alt={sponsor.name}
                   fill
-                  sizes="112px"
+                  sizes="80px"
                   className="object-contain object-center"
                 />
               </li>
